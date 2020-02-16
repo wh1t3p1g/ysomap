@@ -45,9 +45,19 @@ public class Reflections {
 	    return ctor;
 	}
 
+	public static Constructor<?> getConstructor(String classname, Class<?>[] paramTypes) throws ClassNotFoundException, NoSuchMethodException {
+    	Constructor<?> ctor = Class.forName(classname).getConstructor(paramTypes);
+		setAccessible(ctor);
+		return ctor;
+	}
+
 	public static Object newInstance(String className, Object ... args) throws Exception {
         return getFirstCtor(className).newInstance(args);
     }
+
+    public static Object newInstance(String classname, Class<?>[] paramTypes, Object... args) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+		return getConstructor(classname, paramTypes).newInstance(args);
+	}
 
     public static <T> T createWithoutConstructor ( Class<T> classToInstantiate )
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
