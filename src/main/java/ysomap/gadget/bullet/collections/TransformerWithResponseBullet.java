@@ -16,8 +16,8 @@ public class TransformerWithResponseBullet extends TransformerBullet {
     /**
      * 利用URLClassLoader进行远程class或jar文件载入
      * 这里远程服务器挂载可以使用exploit里的xxx
-     * @return
-     * @throws Exception
+     * @return transformers[]
+     * @throws Exception err
      */
     @Override
     public Object getObject() throws Exception {

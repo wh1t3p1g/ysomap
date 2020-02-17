@@ -2,7 +2,6 @@ package ysomap.gadget.payload;
 
 import ysomap.gadget.ObjectGadget;
 
-@SuppressWarnings ( "rawtypes" )
 public interface ObjectPayload <T> extends ObjectGadget <T> {
 
     /**
@@ -10,7 +9,7 @@ public interface ObjectPayload <T> extends ObjectGadget <T> {
      * @param obj
      * @return
      */
-    boolean checkObject(T obj);
+    boolean checkObject(Object obj);
 
     /**
      * 装弹，将最终达成的利用效果拼接反序列化利用链
@@ -18,5 +17,5 @@ public interface ObjectPayload <T> extends ObjectGadget <T> {
      * @param obj
      * @return
      */
-    T pack(T obj);
+    T pack(Object obj) throws Exception;
 }

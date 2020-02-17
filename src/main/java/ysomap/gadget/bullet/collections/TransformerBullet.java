@@ -10,6 +10,7 @@ import java.util.LinkedList;
  * @author wh1t3P1g
  * @since 2020/2/16
  */
+@SuppressWarnings ( "rawtypes" )
 public class TransformerBullet implements ObjectGadget<Object> {
 
     String[] args;

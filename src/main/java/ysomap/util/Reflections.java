@@ -1,7 +1,6 @@
 package ysomap.util;
 
 import com.nqzero.permit.Permit;
-import sun.reflect.ReflectionFactory;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
@@ -58,20 +57,5 @@ public class Reflections {
     public static Object newInstance(String classname, Class<?>[] paramTypes, Object... args) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		return getConstructor(classname, paramTypes).newInstance(args);
 	}
-
-    public static <T> T createWithoutConstructor ( Class<T> classToInstantiate )
-            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        return createWithConstructor(classToInstantiate, Object.class, new Class[0], new Object[0]);
-    }
-
-    @SuppressWarnings ( {"unchecked"} )
-    public static <T> T createWithConstructor ( Class<T> classToInstantiate, Class<? super T> constructorClass, Class<?>[] consArgTypes, Object[] consArgs )
-            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Constructor<? super T> objCons = constructorClass.getDeclaredConstructor(consArgTypes);
-	    setAccessible(objCons);
-        Constructor<?> sc = ReflectionFactory.getReflectionFactory().newConstructorForSerialization(classToInstantiate, objCons);
-	    setAccessible(sc);
-        return (T)sc.newInstance(consArgs);
-    }
 
 }

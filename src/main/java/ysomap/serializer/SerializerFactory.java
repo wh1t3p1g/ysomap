@@ -10,7 +10,7 @@ import ysomap.serializer.json.FastJsonSerializer;
  */
 public class SerializerFactory {
 
-    public static Serializer createSerializer(String type){
+    public static Serializer<?> createSerializer(String type){
         switch( type ){
             case "fastjson":
                 return new FastJsonSerializer();

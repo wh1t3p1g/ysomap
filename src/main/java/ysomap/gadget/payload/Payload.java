@@ -1,30 +1,34 @@
 package ysomap.gadget.payload;
 
 import ysomap.gadget.ObjectGadget;
+import ysomap.exception.ObjectTypeErrorException;
 
 /**
  * @author wh1t3P1g
  * @since 2020/2/15
  */
+@SuppressWarnings({"rawtypes"})
 public abstract class Payload <T> implements ObjectPayload <T> {
 
-    private ObjectGadget<T> bullet;
+    private ObjectGadget bullet;
 
-    public Payload(ObjectGadget<T> bullet) {
-        this.bullet = bullet;
-    }
+    public Payload(){ }
 
     @Override
-    public T getObject() throws Exception {
-        T obj = bullet.getObject();
+    final public T getObject() throws Exception {
+        Object obj = bullet.getObject();
         if(checkObject(obj)){
             return pack(obj);
         }
-        return null;
+        throw new ObjectTypeErrorException(obj);
     }
 
     @Override
-    public boolean checkObject(T obj) {
+    public boolean checkObject(Object obj) {
         return true;// 默认不检查也可以，如需检查重载该函数
+    }
+
+    public void setBullet(ObjectGadget bullet) {
+        this.bullet = bullet;
     }
 }
