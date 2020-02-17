@@ -50,22 +50,44 @@ public class ClassFiles {
 
     public static CtClass makeEmptyClassFile(ClassPool pool, String classname, String body) throws Exception{
         CtClass cc = pool.makeClass(classname);
-        CtConstructor constructor = CtNewConstructor.defaultConstructor(cc);
         if(body != null){
+            CtConstructor constructor = CtNewConstructor.defaultConstructor(cc);
             constructor.insertAfter(body);
+            cc.addConstructor(constructor);
         }
-        cc.addConstructor(constructor);
         return cc;
     }
 
+    public static CtClass makeClassFromExistClass(ClassPool pool, Class<?> existClassTpl, Class<?>[] classpath) throws NotFoundException {
+        insertClassPath(pool, classpath);
+        pool.insertClassPath(new ClassClassPath(existClassTpl));
+        return pool.get(existClassTpl.getName());
+    }
+
+    public static void insertClassPath(ClassPool pool, Class<?>[] classpath){
+        for(Class<?> clazz:classpath){
+            if(clazz == null){
+                continue;
+            }
+            pool.insertClassPath(new ClassClassPath(clazz));
+        }
+    }
+
+    public static void insertSuperClass(ClassPool pool, CtClass cc, Class<?> superClass) throws NotFoundException, CannotCompileException {
+        CtClass superClazz = pool.get(superClass.getName());
+        cc.setSuperclass(superClazz);
+    }
+
     public static void insertStaticBlock(CtClass cc, String code) throws CannotCompileException {
-        CtConstructor staticBlock = cc.makeClassInitializer();
-        staticBlock.insertAfter(code);
+        cc.makeClassInitializer().insertAfter(code);
     }
 
     public static void insertInterface(ClassPool pool, CtClass cc, Class<?> iface) throws NotFoundException {
-        pool.insertClassPath(new ClassClassPath(iface));
         CtClass ifaceClazz = pool.get(iface.getName());
+        if(ifaceClazz == null){
+            pool.insertClassPath(new ClassClassPath(iface));
+            ifaceClazz = pool.get(iface.getName());
+        }
         cc.addInterface(ifaceClazz);
     }
 
@@ -76,6 +98,11 @@ public class ClassFiles {
         CtMethod method = CtNewMethod.make(Modifier.PUBLIC,
                                     returnType, methodName,
                                     params, exceptions, body, cc);
+        cc.addMethod(method);
+    }
+
+    public static void insertMethod(CtClass cc, String src) throws CannotCompileException {
+        CtMethod method = CtNewMethod.make(src, cc);
         cc.addMethod(method);
     }
 

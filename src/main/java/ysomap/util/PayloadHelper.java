@@ -70,4 +70,8 @@ public class PayloadHelper {
         Reflections.setFieldValue(s, "table", tbl);
         return s;
     }
+
+    public static String[] defaultTestCommand(){
+        return new String[]{"open /System/Applications/Calculator.app"};
+    }
 }

