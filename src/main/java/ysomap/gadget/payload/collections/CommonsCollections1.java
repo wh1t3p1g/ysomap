@@ -52,8 +52,8 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
 
     public static void main(String[] args) {
         ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null,3);
-//        new PayloadTester(CommonsCollections1.class).run();// CommonsCollections1
-        new PayloadTester(CommonsCollections1.class)
+//        new PayloadTester(CommonsCollections1.class).run();//ysoserial CommonsCollections1
+        new PayloadTester(CommonsCollections1.class)// ysoserial CommonsCollections3
                 .setBullet(bullet)
                 .run();
     }
