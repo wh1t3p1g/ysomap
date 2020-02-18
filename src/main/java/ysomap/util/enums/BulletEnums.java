@@ -1,4 +1,4 @@
-package ysomap.gadget.enums;
+package ysomap.util.enums;
 
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;

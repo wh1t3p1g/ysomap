@@ -4,14 +4,17 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerBullet;
-import ysomap.gadget.enums.BulletEnums;
-import ysomap.gadget.enums.PayloadEnums;
 import ysomap.gadget.payload.Payload;
 import ysomap.gadget.payload.Releasable;
 import ysomap.serializer.Serializer;
 import ysomap.util.PayloadHelper;
+import ysomap.util.enums.BulletEnums;
+import ysomap.util.enums.PayloadEnums;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author wh1t3P1g

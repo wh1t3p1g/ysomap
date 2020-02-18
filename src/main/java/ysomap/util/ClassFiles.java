@@ -23,15 +23,15 @@ public class ClassFiles {
         return cc.toBytecode();
     }
 
-    public static byte[] makeJarFile(String classname, byte[] bytecodes) {
-        try(ZipOutputStream zipout = new ZipOutputStream(new FileOutputStream("tmp.jar"))){
-            ZipEntry entry = new ZipEntry(classname+".class");
+    public static byte[] makeJarFile(String jarname, byte[] bytecodes) {
+        try(ZipOutputStream zipout = new ZipOutputStream(new FileOutputStream(jarname))){
+            ZipEntry entry = new ZipEntry(jarname.replace(".jar","")+".class");
             zipout.putNextEntry(entry);
             zipout.write(bytecodes);
         }catch (IOException e) {
             e.printStackTrace();
         }
-        File jarFile = new File("tmp.jar");
+        File jarFile = new File(jarname);
         byte[] bytes = new byte[(int)jarFile.length()];
         try(FileInputStream fis = new FileInputStream(jarFile)){
             fis.read(bytes);

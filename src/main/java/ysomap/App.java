@@ -4,9 +4,10 @@
 package ysomap;
 
 import org.apache.commons.cli.*;
-import ysomap.gadget.enums.BulletEnums;
-import ysomap.gadget.enums.ExploitEnums;
-import ysomap.gadget.enums.PayloadEnums;
+import ysomap.runner.ExploitRunner;
+import ysomap.util.enums.BulletEnums;
+import ysomap.util.enums.ExploitEnums;
+import ysomap.util.enums.PayloadEnums;
 import ysomap.runner.PayloadRunner;
 import ysomap.runner.PayloadTester;
 import ysomap.util.OutputHelper;
@@ -30,7 +31,7 @@ public class App {
             } else if(line.hasOption("exploit")){
                 // running exploit
                 System.err.println("* try to execute exploit...");
-
+                new ExploitRunner(line).run();
             } else if(line.hasOption("list")){
                 String list = line.getOptionValue("list");
                 if(list.equals("payloads")){

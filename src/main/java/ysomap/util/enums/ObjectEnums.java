@@ -1,4 +1,4 @@
-package ysomap.gadget.enums;
+package ysomap.util.enums;
 
 /**
  * @author wh1t3P1g

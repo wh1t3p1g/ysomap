@@ -2,7 +2,7 @@ package ysomap.util;
 
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
-import ysomap.gadget.enums.ObjectEnums;
+import ysomap.util.enums.ObjectEnums;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

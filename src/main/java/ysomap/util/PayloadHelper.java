@@ -1,5 +1,6 @@
 package ysomap.util;
 
+import ysomap.exploit.ObjectExploit;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.payload.Payload;
 
@@ -97,5 +98,15 @@ public class PayloadHelper {
             e.printStackTrace();
         }
         return bullet;
+    }
+
+    public static ObjectExploit makeExploit(Class<? extends ObjectExploit> clazz){
+        ObjectExploit exploit = null;
+        try{
+            exploit = clazz.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return exploit;
     }
 }
