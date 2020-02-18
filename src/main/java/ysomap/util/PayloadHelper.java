@@ -1,5 +1,8 @@
 package ysomap.util;
 
+import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.payload.Payload;
+
 import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +13,7 @@ import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIA
  * @author wh1t3P1g
  * @since 2020/2/11
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 public class PayloadHelper {
     static {
         // special case for using TemplatesImpl gadgets with a SecurityManager enabled
@@ -71,7 +75,27 @@ public class PayloadHelper {
         return s;
     }
 
-    public static String[] defaultTestCommand(){
-        return new String[]{"open /System/Applications/Calculator.app"};
+    public static String defaultTestCommand(){
+        return "open /System/Applications/Calculator.app";
+    }
+
+    public static Payload<?> makePayload(Class<? extends Payload> clazz){
+        Payload payload = null;
+        try{
+            payload = clazz.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return payload;
+    }
+
+    public static ObjectGadget<?> makeBullet(Class<? extends ObjectGadget> clazz, String[] args){
+        ObjectGadget bullet = null;
+        try {
+            bullet = (ObjectGadget) Reflections.newInstance(clazz.getName(), args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bullet;
     }
 }

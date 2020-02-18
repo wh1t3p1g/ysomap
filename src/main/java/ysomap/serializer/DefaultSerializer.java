@@ -1,9 +1,6 @@
 package ysomap.serializer;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * 默认产品 ObjectOutputStream的序列化器
@@ -15,9 +12,14 @@ public class DefaultSerializer implements Serializer<byte[]> {
     @Override
     public byte[] serialize(Object obj) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        serialize(obj, out);
+        return out.toByteArray();
+    }
+
+    @Override
+    public void serialize(Object obj, OutputStream out) throws Exception {
         ObjectOutputStream objOut = new ObjectOutputStream(out);
         objOut.writeObject(obj);
-        return out.toByteArray();
     }
 
     @Override

