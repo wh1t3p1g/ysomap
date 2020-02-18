@@ -1,5 +1,7 @@
 package ysomap.gadget.bullet.collections;
 
+import ysomap.annotation.Authors;
+import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
@@ -12,6 +14,8 @@ import java.util.LinkedList;
  * @since 2020/2/16
  */
 @SuppressWarnings ( "rawtypes" )
+@Dependencies({"*"})
+@Authors({ Authors.WH1T3P1G })
 public class TransformerBullet implements ObjectGadget<Object> {
 
     String[] args;

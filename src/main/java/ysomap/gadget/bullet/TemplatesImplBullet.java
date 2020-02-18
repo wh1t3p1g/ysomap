@@ -9,6 +9,8 @@ import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import javassist.ClassPool;
 import javassist.CtClass;
+import ysomap.annotation.Authors;
+import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.util.ClassFiles;
 import ysomap.util.PayloadHelper;
@@ -20,6 +22,9 @@ import java.io.Serializable;
  * @author wh1t3P1g
  * @since 2020/2/17
  */
+@SuppressWarnings({"rawtypes"})
+@Dependencies({"Allowed Templates Deserialize"})
+@Authors({ Authors.WH1T3P1G })
 public class TemplatesImplBullet implements ObjectGadget<Object> {
 
     private Class templatesImpl;

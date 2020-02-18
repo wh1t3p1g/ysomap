@@ -18,12 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * CommonsCollections3 也可以用这个
+ * ysoserial 的 CommonsCollections3 也可以用这个
  * @author wh1t3P1g
  * @since 2020/2/17
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 @Authors({ Authors.FROHOFF })
-@SuppressWarnings({"rawtypes"})
 @Dependencies({"commons-collections:commons-collections:3.2.1","jdk7"})
 public class CommonsCollections1 extends Payload<InvocationHandler> {
 

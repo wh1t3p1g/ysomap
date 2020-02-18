@@ -1,5 +1,8 @@
 package ysomap.gadget.bullet.collections;
 
+import ysomap.annotation.Authors;
+import ysomap.annotation.Dependencies;
+
 import java.net.URLClassLoader;
 import java.util.LinkedList;
 
@@ -7,6 +10,8 @@ import java.util.LinkedList;
  * @author wh1t3P1g
  * @since 2020/2/16
  */
+@Dependencies({"Internet Allowed and Evil Server Prepared"})
+@Authors({ Authors.WH1T3P1G })
 public class TransformerWithResponseBullet extends TransformerBullet {
 
     public TransformerWithResponseBullet(String[] args, int version) {

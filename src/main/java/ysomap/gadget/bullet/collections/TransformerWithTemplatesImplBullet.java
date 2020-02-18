@@ -1,6 +1,8 @@
 package ysomap.gadget.bullet.collections;
 
 import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
+import ysomap.annotation.Authors;
+import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.util.Reflections;
@@ -13,9 +15,12 @@ import java.util.LinkedList;
  * @author wh1t3P1g
  * @since 2020/2/17
  */
+@SuppressWarnings({"rawtypes"})
+@Dependencies({"*"})
+@Authors({ Authors.WH1T3P1G })
 public class TransformerWithTemplatesImplBullet extends TransformerBullet {
 
-    private ObjectGadget tplBullet;
+    ObjectGadget tplBullet;
     Class instantiateTransformer;
 
     public TransformerWithTemplatesImplBullet(String[] args, int version) {
