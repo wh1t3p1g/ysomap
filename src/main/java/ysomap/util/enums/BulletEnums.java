@@ -1,10 +1,7 @@
 package ysomap.util.enums;
 
+import ysomap.exception.YsoClassNotFoundException;
 import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.bullet.TemplatesImplBullet;
-import ysomap.gadget.bullet.collections.TransformerBullet;
-import ysomap.gadget.bullet.collections.TransformerWithResponseBullet;
-import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 
 /**
  * @author wh1t3P1g
@@ -12,10 +9,10 @@ import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
  */
 @SuppressWarnings({"rawtypes"})
 public enum BulletEnums implements ObjectEnums{
-    BULLET1("1", TransformerBullet.class),
-    BULLET2("2", TemplatesImplBullet.class),
-    BULLET3("3", TransformerWithTemplatesImplBullet.class),
-    BULLET4("4", TransformerWithResponseBullet.class)
+    TransformerBullet("1", ysomap.gadget.bullet.collections.TransformerBullet.class),
+    TemplatesImplBullet("2", ysomap.gadget.bullet.TemplatesImplBullet.class),
+    TransformerWithTemplatesImplBullet("3", ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet.class),
+    TransformerWithResponseBullet("4", ysomap.gadget.bullet.collections.TransformerWithResponseBullet.class)
     ;
     private String name;
     private Class clazz;
@@ -35,14 +32,12 @@ public enum BulletEnums implements ObjectEnums{
         return name;
     }
 
-    public static Class getClazzByName(String name){
+    public static Class getClazzByName(String name) throws YsoClassNotFoundException {
         try{
-            BulletEnums bullet = BulletEnums.valueOf("BULLET"+name);
+            BulletEnums bullet = BulletEnums.valueOf(name);
             return bullet.getClazz();
         }catch (IllegalArgumentException e){
-            System.out.println("* bullet"+name+" not found, exit.");
-            System.exit(1);
+            throw new YsoClassNotFoundException("bullet", name);
         }
-        return null;
     }
 }

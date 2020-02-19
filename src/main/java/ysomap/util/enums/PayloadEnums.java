@@ -1,7 +1,7 @@
 package ysomap.util.enums;
 
+import ysomap.exception.YsoClassNotFoundException;
 import ysomap.gadget.payload.Payload;
-import ysomap.gadget.payload.collections.*;
 
 /**
  * @author wh1t3P1g
@@ -9,15 +9,15 @@ import ysomap.gadget.payload.collections.*;
  */
 @SuppressWarnings({"rawtypes"})
 public enum PayloadEnums implements ObjectEnums{
-    PAYLOAD1("1", CommonsCollections1.class),
-    PAYLOAD2("2", CommonsCollections2.class),
-    PAYLOAD3("3", CommonsCollections3.class),
-    PAYLOAD4("4", CommonsCollections4.class),
-    PAYLOAD5("5", CommonsCollections5.class),
-    PAYLOAD6("6", CommonsCollections6.class),
-    PAYLOAD7("7", CommonsCollections7.class),
-    PAYLOAD8("8", CommonsCollections8.class),
-    PAYLOAD9("9", CommonsCollections9.class),
+    CommonsCollections1("1", ysomap.gadget.payload.collections.CommonsCollections1.class),
+    CommonsCollections2("2", ysomap.gadget.payload.collections.CommonsCollections2.class),
+    CommonsCollections3("3", ysomap.gadget.payload.collections.CommonsCollections3.class),
+    CommonsCollections4("4", ysomap.gadget.payload.collections.CommonsCollections4.class),
+    CommonsCollections5("5", ysomap.gadget.payload.collections.CommonsCollections5.class),
+    CommonsCollections6("6", ysomap.gadget.payload.collections.CommonsCollections6.class),
+    CommonsCollections7("7", ysomap.gadget.payload.collections.CommonsCollections7.class),
+    CommonsCollections8("8", ysomap.gadget.payload.collections.CommonsCollections8.class),
+    CommonsCollections9("9", ysomap.gadget.payload.collections.CommonsCollections9.class),
     ;
     private String name;
     private Class clazz;
@@ -37,18 +37,16 @@ public enum PayloadEnums implements ObjectEnums{
         return name;
     }
 
-    public static Class getClazzByName(String name){
+    public static Class getClazzByName(String name) throws YsoClassNotFoundException {
         try{
-            PayloadEnums payload = PayloadEnums.valueOf("PAYLOAD"+name);
+            PayloadEnums payload = PayloadEnums.valueOf(name);
             return payload.getClazz();
         }catch (IllegalArgumentException e){
-            System.out.println("* payload"+name+" not found, exit.");
-            System.exit(1);
+            throw new YsoClassNotFoundException("payload", name);
         }
-        return null;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws YsoClassNotFoundException {
         System.out.println(PayloadEnums.getClazzByName("10"));
     }
 }

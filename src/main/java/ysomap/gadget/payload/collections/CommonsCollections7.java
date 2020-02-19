@@ -4,6 +4,7 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.InvokerTransformer;
+import ysomap.exception.GenerateErrorException;
 import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
@@ -57,7 +58,7 @@ public class CommonsCollections7 extends Payload<TreeBag> {
         return new TemplatesImplBullet(command);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GenerateErrorException {
         ObjectGadget bullet = new TemplatesImplBullet(null);
         new PayloadTester(CommonsCollections7.class)
                 .setBullet(bullet)

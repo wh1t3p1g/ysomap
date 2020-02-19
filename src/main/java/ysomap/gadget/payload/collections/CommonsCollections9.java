@@ -4,6 +4,7 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections.functors.InvokerTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
+import ysomap.exception.GenerateErrorException;
 import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
@@ -93,7 +94,7 @@ public class CommonsCollections9 extends Payload<HashSet> {
         return new TemplatesImplBullet(command);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GenerateErrorException {
         ObjectGadget bullet = new TemplatesImplBullet(null);
         new PayloadTester(CommonsCollections9.class)
                 .setBullet(bullet)

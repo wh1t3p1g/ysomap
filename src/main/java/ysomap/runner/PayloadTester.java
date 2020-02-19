@@ -2,10 +2,11 @@ package ysomap.runner;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
+import ysomap.exception.GenerateErrorException;
+import ysomap.exception.YsoClassNotFoundException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.payload.Payload;
 import ysomap.gadget.payload.Releasable;
-import ysomap.util.PayloadHelper;
 
 /**
  * @author wh1t3P1g
@@ -14,23 +15,23 @@ import ysomap.util.PayloadHelper;
 @SuppressWarnings({"rawtypes","unchecked"})
 public class PayloadTester extends PayloadRunner{
 
-    public PayloadTester(CommandLine options) throws ParseException {
+    public PayloadTester(CommandLine options) throws ParseException, YsoClassNotFoundException, GenerateErrorException {
         super(options);
     }
 
-    public PayloadTester(Class<? extends Payload> payload) {
-        this.payload = PayloadHelper.makePayload(payload);
+    public PayloadTester(Class<? extends Payload> payload) throws GenerateErrorException {
+//        this.payload = PayloadHelper.makePayload(payload);
         defaultBullet();
     }
 
-    public PayloadTester(Class<? extends Payload> payload, ObjectGadget bullet) {
-        this.payload = PayloadHelper.makePayload(payload);
+    public PayloadTester(Class<? extends Payload> payload, ObjectGadget bullet) throws GenerateErrorException {
+//        this.payload = PayloadHelper.makePayload(payload);
         this.bullet = bullet;
     }
 
-    public PayloadTester(Class<? extends Payload> payload, Class<? extends ObjectGadget> bullet, String[] args){
-        this.payload = PayloadHelper.makePayload(payload);
-        this.bullet = PayloadHelper.makeBullet(bullet, args);
+    public PayloadTester(Class<? extends Payload> payload, Class<? extends ObjectGadget> bullet, String[] args) throws GenerateErrorException {
+//        this.payload = PayloadHelper.makePayload(payload);
+//        this.bullet = PayloadHelper.makeBullet(bullet, args);
     }
 
     @Override

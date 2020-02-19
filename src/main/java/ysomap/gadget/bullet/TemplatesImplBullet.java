@@ -11,7 +11,6 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
-import ysomap.gadget.ObjectGadget;
 import ysomap.util.ClassFiles;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
@@ -25,7 +24,7 @@ import java.io.Serializable;
 @SuppressWarnings({"rawtypes"})
 @Dependencies({"set --args command"})
 @Authors({ Authors.WH1T3P1G })
-public class TemplatesImplBullet implements ObjectGadget<Object> {
+public class TemplatesImplBullet extends Bullet<Object> {
 
     private Class templatesImpl;
     private Class abstractTranslet;

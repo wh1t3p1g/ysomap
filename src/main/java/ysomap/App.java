@@ -5,12 +5,12 @@ package ysomap;
 
 import org.apache.commons.cli.*;
 import ysomap.runner.ExploitRunner;
-import ysomap.util.enums.BulletEnums;
-import ysomap.util.enums.ExploitEnums;
-import ysomap.util.enums.PayloadEnums;
 import ysomap.runner.PayloadRunner;
 import ysomap.runner.PayloadTester;
 import ysomap.util.OutputHelper;
+import ysomap.util.enums.BulletEnums;
+import ysomap.util.enums.ExploitEnums;
+import ysomap.util.enums.PayloadEnums;
 
 public class App {
     public static void main(String[] args) {
@@ -47,6 +47,8 @@ public class App {
         }catch (ParseException e){
             System.out.println( "Unexpected exception:" + e.getMessage() );
             printUsages(options);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

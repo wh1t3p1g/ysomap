@@ -3,6 +3,7 @@ package ysomap.gadget.bullet.collections;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.bullet.Bullet;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 
@@ -16,7 +17,7 @@ import java.util.LinkedList;
 @SuppressWarnings ( "rawtypes" )
 @Dependencies({"set --args command --args version"})
 @Authors({ Authors.WH1T3P1G })
-public class TransformerBullet implements ObjectGadget<Object> {
+public class TransformerBullet extends Bullet<Object> {
 
     String args;
 

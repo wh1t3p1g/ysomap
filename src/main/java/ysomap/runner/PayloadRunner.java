@@ -2,14 +2,14 @@ package ysomap.runner;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
+import ysomap.exception.GenerateErrorException;
+import ysomap.exception.YsoClassNotFoundException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.gadget.payload.Payload;
 import ysomap.gadget.payload.Releasable;
 import ysomap.serializer.Serializer;
 import ysomap.util.PayloadHelper;
-import ysomap.util.enums.BulletEnums;
-import ysomap.util.enums.PayloadEnums;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,26 +30,26 @@ public class PayloadRunner implements ObjectRunner{
 
     public PayloadRunner(){}
 
-    public PayloadRunner(CommandLine options) throws ParseException {
-        if(options.hasOption("payload")){
-            this.payload = PayloadHelper.makePayload(
-                    PayloadEnums.getClazzByName(options.getOptionValue("payload")));
-        }else{
-            throw new ParseException("payload not set");
-        }
-
-        if(options.hasOption("bullet") && options.hasOption("args")){
-            this.bullet = PayloadHelper.makeBullet(
-                    BulletEnums.getClazzByName(options.getOptionValue("bullet")),
-                    options.getOptionValues("args")
-            );
-        }else if(options.hasOption("args")){
-            System.err.println("* using pre-design bullet");
-            this.bullet = payload.getDefaultBullet(options.getOptionValue("args"));
-        } else{
-            System.err.println("* setting bullet error, using default bullet<TransformerBullet>");
-            defaultBullet();
-        }
+    public PayloadRunner(CommandLine options) throws ParseException, YsoClassNotFoundException, GenerateErrorException {
+//        if(options.hasOption("payload")){
+//            this.payload = PayloadHelper.makePayload(
+//                    PayloadEnums.getClazzByName(options.getOptionValue("payload")));
+//        }else{
+//            throw new ParseException("payload not set");
+//        }
+//
+//        if(options.hasOption("bullet") && options.hasOption("args")){
+//            this.bullet = PayloadHelper.makeBullet(
+//                    BulletEnums.getClazzByName(options.getOptionValue("bullet")),
+//                    options.getOptionValues("args")
+//            );
+//        }else if(options.hasOption("args")){
+//            System.err.println("* using pre-design bullet");
+//            this.bullet = payload.getDefaultBullet(options.getOptionValue("args"));
+//        } else{
+//            System.err.println("* setting bullet error, using default bullet<TransformerBullet>");
+//            defaultBullet();
+//        }
 
         if(options.hasOption("output")){
             File file = null;

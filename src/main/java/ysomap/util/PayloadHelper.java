@@ -1,8 +1,7 @@
 package ysomap.util;
 
-import ysomap.exploit.ObjectExploit;
+import ysomap.exception.GenerateErrorException;
 import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.payload.Payload;
 
 import java.lang.reflect.*;
 import java.util.HashMap;
@@ -80,33 +79,11 @@ public class PayloadHelper {
         return "open /System/Applications/Calculator.app";
     }
 
-    public static Payload<?> makePayload(Class<? extends Payload> clazz){
-        Payload payload = null;
-        try{
-            payload = clazz.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return payload;
-    }
-
-    public static ObjectGadget<?> makeBullet(Class<? extends ObjectGadget> clazz, String[] args){
-        ObjectGadget bullet = null;
+    public static ObjectGadget makeGadget(Class<? extends ObjectGadget> clazz, String type) throws GenerateErrorException {
         try {
-            bullet = (ObjectGadget) Reflections.newInstance(clazz.getName(), args);
+            return clazz.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new GenerateErrorException(type, clazz.getSimpleName());
         }
-        return bullet;
-    }
-
-    public static ObjectExploit makeExploit(Class<? extends ObjectExploit> clazz){
-        ObjectExploit exploit = null;
-        try{
-            exploit = clazz.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return exploit;
     }
 }

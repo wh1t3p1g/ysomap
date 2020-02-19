@@ -1,0 +1,12 @@
+package ysomap.exception;
+
+/**
+ * @author wh1t3P1g
+ * @since 2020/2/19
+ */
+public class ArgumentsMissMatchException extends Exception {
+
+    public ArgumentsMissMatchException(String message) {
+        super("[-] Arguments missing match, please use -> " + message);
+    }
+}

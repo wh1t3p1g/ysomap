@@ -3,6 +3,7 @@ package ysomap.gadget.payload.collections;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.map.LazyMap;
+import ysomap.exception.GenerateErrorException;
 import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
@@ -64,7 +65,7 @@ public class CommonsCollections6 extends Payload<Hashtable> {
         return new TransformerBullet(command, "3");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GenerateErrorException {
 //        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "3");
         ObjectGadget bullet = new TransformerBullet(null, "3");
         new PayloadTester(CommonsCollections6.class)

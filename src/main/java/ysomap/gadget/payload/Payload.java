@@ -3,6 +3,7 @@ package ysomap.gadget.payload;
 import ysomap.exception.ObjectTypeErrorException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.serializer.Serializer;
+import ysomap.util.Reflections;
 
 /**
  * @author wh1t3P1g
@@ -31,6 +32,12 @@ public abstract class Payload <T> implements ObjectPayload <T> {
 
     public void setBullet(ObjectGadget bullet) {
         this.bullet = bullet;
+    }
+
+    @Override
+    public ObjectGadget set(String key, String value) throws Exception {
+        Reflections.setFieldValue(this, key, value);
+        return this;
     }
 
     public abstract ObjectGadget getDefaultBullet(String command);

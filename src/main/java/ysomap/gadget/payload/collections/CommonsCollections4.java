@@ -5,6 +5,7 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
+import ysomap.exception.GenerateErrorException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.runner.PayloadTester;
@@ -86,7 +87,7 @@ public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
         return new TransformerBullet(command, "3");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GenerateErrorException {
         new PayloadTester(CommonsCollections4.class).run();
     }
 }
