@@ -91,6 +91,11 @@
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
         </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>3.13.3</version>
+        </dependency>
         <!-- dependencies which gadgets needed -->
         <dependency>
             <groupId>commons-collections</groupId>
