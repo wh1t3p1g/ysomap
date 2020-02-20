@@ -3,103 +3,10 @@
  */
 package ysomap;
 
-import org.apache.commons.cli.*;
-import ysomap.runner.ExploitRunner;
-import ysomap.runner.PayloadRunner;
-import ysomap.runner.PayloadTester;
-import ysomap.util.OutputHelper;
-import ysomap.util.enums.BulletEnums;
-import ysomap.util.enums.ExploitEnums;
-import ysomap.util.enums.PayloadEnums;
+import ysomap.runner.ConsoleRunner;
 
 public class App {
     public static void main(String[] args) {
-        CommandLineParser parser = new DefaultParser();
-        Options options = initOptions();
-        try{
-            CommandLine line = parser.parse( options , args );
-            if(line.hasOption("h")){
-                printUsages(options);
-            }else if(line.hasOption("test") && line.hasOption("payload")){
-                // testing
-                System.err.println("* try to test payload...");
-                new PayloadTester(line).run();
-            } else if(line.hasOption("payload")){
-                // running payload
-                System.err.println("* try to generate payload...");
-                new PayloadRunner(line).run();
-            } else if(line.hasOption("exploit")){
-                // running exploit
-                System.err.println("* try to execute exploit...");
-                new ExploitRunner(line).run();
-            } else if(line.hasOption("list")){
-                String list = line.getOptionValue("list");
-                if(list.equals("payloads")){
-                    printPayloads();
-                }else if(list.equals("exploits")){
-                    printExploits();
-                }else if(list.equals("bullets")){
-                    printBullets();
-                }else{
-                    throw new ParseException("list vaule error, choose [payloads,bullets,exploits]");
-                }
-            }
-        }catch (ParseException e){
-            System.out.println( "Unexpected exception:" + e.getMessage() );
-            printUsages(options);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static Options initOptions(){
-        Options options = new Options();
-        options.addOption(
-                new Option("h","help", false, "print usages"));
-        options.addOption(
-                new Option("l","list",true,
-                        "list details about exploits, payloads and bullets"));
-        options.addOption(
-                new Option("a","args",true,
-                        "payload's or exploit's args"));
-        options.addOption(
-                new Option("o","output",true,
-                        "output as a file"));
-
-        options.addOption(
-                new Option("p","payload",true,"choose a gadget"));
-        options.addOption(new Option("b","bullet",true,
-                        "choose a bullet, default using the payload's pre-design bullet"));
-        options.addOption(
-                new Option("e","exploit",true,
-                        "choose a exploit to execute"));
-        options.addOption(
-                new Option("test",false, "run serialize and deserialize"));
-
-        return options;
-    }
-
-    public static void printUsages(Options options){
-        HelpFormatter formatter = new HelpFormatter();
-        String usage = "java -jar ysomap.jar -p payload -b bullet -a arg1 -a arg2\n" +
-                "usage: java -jar ysomap.jar -e exploit -a arg1 -a arg2\n" +
-                "usage: java -jar ysomap.jar -p payload -b bullet -a args -test";
-        formatter.printHelp(usage, options);
-    }
-
-    public static void printPayloads(){
-        System.err.println("* Show all payloads");
-        OutputHelper.printConsoleTable("Payload", PayloadEnums.values());
-    }
-
-    public static void printBullets(){
-        System.err.println("* Show all bullets");
-        OutputHelper.printConsoleTable("Bullets", BulletEnums.values());
-    }
-
-    public static void printExploits(){
-        System.err.println("* Show all exploits");
-        OutputHelper.printConsoleTable("Exploits", ExploitEnums.values());
+        new ConsoleRunner().run();
     }
 }

@@ -14,8 +14,6 @@ public abstract class Payload <T> implements ObjectPayload <T> {
 
     public ObjectGadget bullet;
 
-    public Payload(){ }
-
     @Override
     final public T getObject() throws Exception {
         Object obj = bullet.getObject();
@@ -35,12 +33,12 @@ public abstract class Payload <T> implements ObjectPayload <T> {
     }
 
     @Override
-    public ObjectGadget set(String key, String value) throws Exception {
+    public ObjectGadget set(String key, Object value) throws Exception {
         Reflections.setFieldValue(this, key, value);
         return this;
     }
 
-    public abstract ObjectGadget getDefaultBullet(String command);
+    public abstract ObjectGadget getDefaultBullet(String command) throws Exception;
 
     public abstract Serializer<?> getSerializer();
 }

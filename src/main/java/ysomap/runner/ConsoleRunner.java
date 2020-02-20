@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class ConsoleRunner implements ObjectRunner{
 
+    private String ysomap = ColorStyle.makeWordBoldAndUnderline("ysomap");
+
     private List<String> prompt;
 
     private Completer commandCompleter =
@@ -33,7 +35,6 @@ public class ConsoleRunner implements ObjectRunner{
         Parser parser = new DefaultParser();
         ConsoleSession session = new ConsoleSession();
         try {
-            prompt.add(ColorStyle.makeWordBoldAndUnderline("ysomap"));
             terminal = TerminalBuilder.builder()
                                     .system(true)
                                     .build();
@@ -47,8 +48,8 @@ public class ConsoleRunner implements ObjectRunner{
                 try {
                     lineReader.readLine(makePrompt());
                     words = lineReader.getParsedLine().words();
-                    session.accept(words, prompt);
                     System.out.println(words);
+                    session.accept(words, prompt);
                 } catch (UserInterruptException e) {
                     // Do nothing
                 } catch (EndOfFileException e) {
@@ -64,14 +65,10 @@ public class ConsoleRunner implements ObjectRunner{
     }
 
     public String makePrompt(){
-        if(prompt != null){
-            String temp = Strings.join(prompt, " ", "", "");
-            return temp+" > ";
-        }
-        return "";
-    }
-
-    public static void main(String[] args) {
-        new ConsoleRunner().run();
+        List<String> prompts = new LinkedList<>();
+        prompts.add(ysomap);
+        prompts.addAll(prompt);
+        String temp = Strings.join(prompts, " ", "", "");
+        return temp+" > ";
     }
 }

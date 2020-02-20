@@ -5,11 +5,9 @@ import org.apache.commons.cli.ParseException;
 import ysomap.exception.GenerateErrorException;
 import ysomap.exception.YsoClassNotFoundException;
 import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.gadget.payload.Payload;
 import ysomap.gadget.payload.Releasable;
 import ysomap.serializer.Serializer;
-import ysomap.util.PayloadHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -87,9 +85,6 @@ public class PayloadRunner implements ObjectRunner{
         }
     }
 
-    public void defaultBullet(){
-        bullet = new TransformerBullet(PayloadHelper.defaultTestCommand(),"3");
-    }
 
     public ObjectRunner setSerializer(Serializer serializer) {
         this.serializer = serializer;

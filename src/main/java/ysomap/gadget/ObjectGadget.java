@@ -9,5 +9,5 @@ public interface ObjectGadget <T> {
 
     T getObject() throws Exception;
 
-    ObjectGadget set(String key, String value) throws Exception;
+    ObjectGadget set(String key, Object value) throws Exception;
 }

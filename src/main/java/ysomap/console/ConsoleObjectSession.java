@@ -1,15 +1,19 @@
 package ysomap.console;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import ysomap.exploit.Exploit;
 import ysomap.gadget.ObjectGadget;
+import ysomap.gadget.payload.Payload;
+import ysomap.util.Logger;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 import ysomap.util.enums.BulletEnums;
 import ysomap.util.enums.ExploitEnums;
 import ysomap.util.enums.PayloadEnums;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.io.Closeable;
+import java.io.FileOutputStream;
+import java.util.*;
 
 /**
  * @author wh1t3P1g
@@ -18,14 +22,18 @@ import java.util.LinkedHashMap;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class ConsoleObjectSession implements Session<String> {
 
+    private String sessionID;
     private String type;
     private Class<? extends ObjectGadget> clazz;
     private ObjectGadget obj;
     private HashMap<String, String> args = new LinkedHashMap<>();
     private Object retObj;
+    private List<Object> resources;
 
     public ConsoleObjectSession(String type) {
         this.type = type;
+        sessionID = RandomStringUtils.randomAlphabetic(16);
+        resources = new LinkedList<>();
     }
 
     @Override
@@ -47,9 +55,12 @@ public class ConsoleObjectSession implements Session<String> {
     }
 
     @Override
-    public void set(String key, String value) throws Exception {
-        args.remove(key);// clear current key:value
-        args.put(key, value);
+    public void set(String key, Object value) throws Exception {
+        if(value instanceof String){
+            args.remove(key);// clear current key:value
+            args.put(key, (String) value);
+        }
+
         if(obj != null){
             obj.set(key, value);
         }
@@ -60,17 +71,70 @@ public class ConsoleObjectSession implements Session<String> {
         return Reflections.getField(clazz, key) != null;
     }
 
+    /**
+     * only run exploit or payload
+     * @throws Exception
+     */
     @Override
     public void run() throws Exception {
         if(type.equals("exploit")){
             ((Exploit)obj).run();
+        }else if(type.equals("payload")){
+            Payload payload = (Payload) obj;
+            retObj = payload.getObject();
+            FileOutputStream fos = new FileOutputStream("obj.ser");
+            payload.getSerializer().serialize(retObj, fos);
+            Logger.success("* generate " + payload.getClass().getSimpleName() + " success, plz see obj.ser");
         }else{
-            retObj = obj.getObject();
+            Logger.error("[-] current type<"+ type +"> is not allowed to run");
         }
     }
 
     @Override
     public String get(String key) {
         return args.get(key);
+    }
+
+    @Override
+    public void close() throws Exception {
+        for(Object resource: resources){
+            if(resource instanceof Closeable){
+                ((Closeable) resource).close();
+            }
+        }
+    }
+
+    @Override
+    public ObjectGadget getObj() {
+        return obj;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Class<? extends ObjectGadget> getClazz() {
+        return clazz;
+    }
+
+    public HashMap<String, String> getArgs() {
+        return args;
+    }
+
+    public Object getRetObj() {
+        return retObj;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConsoleObjectSession that = (ConsoleObjectSession) o;
+        return sessionID.equals(that.sessionID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sessionID);
     }
 }

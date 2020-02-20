@@ -28,7 +28,7 @@ public @interface Authors {
 
     String[] value() default {};
 
-    public static class Utils {
+    class Utils {
         public static String[] getAuthors(AnnotatedElement annotated) {
             Authors authors = annotated.getAnnotation(Authors.class);
             if (authors != null) {
