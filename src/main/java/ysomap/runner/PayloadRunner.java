@@ -1,7 +1,5 @@
 package ysomap.runner;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.ParseException;
 import ysomap.exception.GenerateErrorException;
 import ysomap.exception.YsoClassNotFoundException;
 import ysomap.gadget.ObjectGadget;
@@ -9,7 +7,6 @@ import ysomap.gadget.payload.Payload;
 import ysomap.gadget.payload.Releasable;
 import ysomap.serializer.Serializer;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,9 +23,7 @@ public class PayloadRunner implements ObjectRunner{
     ObjectGadget bullet;
     OutputStream out;
 
-    public PayloadRunner(){}
-
-    public PayloadRunner(CommandLine options) throws ParseException, YsoClassNotFoundException, GenerateErrorException {
+    public PayloadRunner() throws YsoClassNotFoundException, GenerateErrorException {
 //        if(options.hasOption("payload")){
 //            this.payload = PayloadHelper.makePayload(
 //                    PayloadEnums.getClazzByName(options.getOptionValue("payload")));
@@ -49,17 +44,17 @@ public class PayloadRunner implements ObjectRunner{
 //            defaultBullet();
 //        }
 
-        if(options.hasOption("output")){
-            File file = null;
-            try {
-                file = new File(options.getOptionValue("output"));
-                out = new FileOutputStream(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
-            out = System.out;
-        }
+//        if(options.hasOption("output")){
+//            File file = null;
+//            try {
+//                file = new File(options.getOptionValue("output"));
+//                out = new FileOutputStream(file);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }else{
+//            out = System.out;
+//        }
     }
 
     @Override

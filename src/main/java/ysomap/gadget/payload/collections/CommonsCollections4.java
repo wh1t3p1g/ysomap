@@ -6,11 +6,9 @@ import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.annotation.Require;
-import ysomap.exception.GenerateErrorException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.Bullet;
 import ysomap.gadget.bullet.collections.TransformerBullet;
-import ysomap.runner.PayloadTester;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.gadget.payload.Payload;
@@ -91,9 +89,5 @@ public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
         bullet.set("args", command);
         bullet.set("version", "3");
         return bullet;
-    }
-
-    public static void main(String[] args) throws GenerateErrorException {
-        new PayloadTester(CommonsCollections4.class).run();
     }
 }

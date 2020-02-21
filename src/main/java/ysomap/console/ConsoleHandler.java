@@ -107,7 +107,6 @@ public class ConsoleHandler {
     public static void run(ConsoleSession cs) throws Exception {
         if(cs.sessions.containsKey("exploit")){// multi threads to run exploit
             Session exploitSession = cs.sessions.get("exploit");
-
             cs.running.add(exploitSession);// add to running sessions
             exploitSession.run();
         }else if(cs.sessions.containsKey("payload") && cs.sessions.containsKey("bullet")){
