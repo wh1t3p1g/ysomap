@@ -1,4 +1,4 @@
-package ysomap.gadget.bullet;
+package ysomap.gadget.bullet.jdk;
 
 import com.sun.org.apache.xalan.internal.xsltc.DOM;
 import com.sun.org.apache.xalan.internal.xsltc.TransletException;
@@ -12,6 +12,7 @@ import javassist.CtClass;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Require;
+import ysomap.gadget.bullet.Bullet;
 import ysomap.util.ClassFiles;
 import ysomap.util.Reflections;
 

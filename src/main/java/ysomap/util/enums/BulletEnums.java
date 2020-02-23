@@ -10,7 +10,7 @@ import ysomap.gadget.ObjectGadget;
 @SuppressWarnings({"rawtypes"})
 public enum BulletEnums implements ObjectEnums{
     TransformerBullet("1", ysomap.gadget.bullet.collections.TransformerBullet.class),
-    TemplatesImplBullet("2", ysomap.gadget.bullet.TemplatesImplBullet.class),
+    TemplatesImplBullet("2", ysomap.gadget.bullet.jdk.TemplatesImplBullet.class),
     TransformerWithTemplatesImplBullet("3", ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet.class),
     TransformerWithResponseBullet("4", ysomap.gadget.bullet.collections.TransformerWithResponseBullet.class)
     ;

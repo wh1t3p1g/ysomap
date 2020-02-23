@@ -7,7 +7,7 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.bullet.TemplatesImplBullet;
+import ysomap.gadget.bullet.jdk.TemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
 import ysomap.serializer.Serializer;
 import ysomap.serializer.SerializerFactory;

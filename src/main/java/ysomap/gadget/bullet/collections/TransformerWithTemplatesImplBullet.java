@@ -5,7 +5,7 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.bullet.TemplatesImplBullet;
+import ysomap.gadget.bullet.jdk.TemplatesImplBullet;
 import ysomap.util.Reflections;
 
 import javax.xml.transform.Templates;
