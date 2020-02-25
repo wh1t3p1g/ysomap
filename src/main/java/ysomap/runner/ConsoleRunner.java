@@ -10,8 +10,10 @@ import ysomap.util.ColorStyle;
 import ysomap.util.Strings;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wh1t3P1g
@@ -21,7 +23,7 @@ public class ConsoleRunner implements ObjectRunner{
 
     private String ysomap = ColorStyle.makeWordBoldAndUnderline("ysomap");
 
-    private List<String> prompt;
+    private Map<String,String> prompt;
 
     private Completer commandCompleter =
             new StringsCompleter("help", "use", "set", "list", "show", "run","exit");
@@ -31,7 +33,7 @@ public class ConsoleRunner implements ObjectRunner{
     public void run(){
         Terminal terminal = null;
         LineReader lineReader = null;
-        prompt = new LinkedList<>();
+        prompt = new LinkedHashMap<>();
         Parser parser = new DefaultParser();
         ConsoleSession session = new ConsoleSession();
         try {
@@ -56,7 +58,11 @@ public class ConsoleRunner implements ObjectRunner{
                     System.out.println("\nBye.");
                     System.exit(0);
                 } catch (Exception e) {
-                    System.out.println("\n"+e.getMessage());
+                    if(e.getMessage() == null){
+                        e.printStackTrace();
+                    }else{
+                        System.out.println("\n"+e.getMessage());
+                    }
                 }
             }
         } catch (IOException e) {
@@ -67,7 +73,7 @@ public class ConsoleRunner implements ObjectRunner{
     public String makePrompt(){
         List<String> prompts = new LinkedList<>();
         prompts.add(ysomap);
-        prompts.addAll(prompt);
+        prompts.addAll(prompt.values());
         String temp = Strings.join(prompts, " ", "", "");
         return temp+" > ";
     }

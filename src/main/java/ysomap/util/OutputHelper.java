@@ -46,7 +46,7 @@ public class OutputHelper {
         }
     }
 
-    public static void printEorBDetails(Class<?> clazz, HashMap<String, String> settings){
+    public static void printEorBDetails(Class<?> clazz, Map<String, String> settings){
         printCommonDetail(clazz);
         System.out.println("\n");
         List<String[]> rows = new LinkedList<String[]>();
@@ -66,11 +66,13 @@ public class OutputHelper {
         printTable(rows);
     }
 
-    public static void printPayloadDetails(Class<?> clazz){
-        printCommonDetail(clazz);
+    public static void printPorEDetails(Class<?> clazz, String type, boolean flag){
+        if(flag){// print common details
+            printCommonDetail(clazz);
+        }
         System.out.println("\n");
         List<String[]> rows = new LinkedList<String[]>();
-        rows.add(new String[] {"Bullet"});
+        rows.add(new String[] {type});
         rows.add(new String[] {"---------------------"});
         String[] bullets = Require.Utils.getRequiresFromClass(clazz);
         for(String bullet:bullets){
