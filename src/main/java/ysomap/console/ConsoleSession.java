@@ -70,6 +70,9 @@ public class ConsoleSession {
                 // clear current sessions
                 clearAll();
                 break;
+            case "":
+                // Do nothing
+                break;
             case "exit":
                 // exit ysomap
                 throw new EndOfFileException();
