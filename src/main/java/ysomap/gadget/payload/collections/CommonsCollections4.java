@@ -59,11 +59,6 @@ public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
-    }
-
-    @Override
     public BadAttributeValueExpException pack(Object obj) throws Exception {
         final Transformer transformerChain = new ChainedTransformer(
                 new Transformer[]{ new ConstantTransformer(1) });

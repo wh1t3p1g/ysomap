@@ -31,11 +31,6 @@ public class CommonsCollections7 extends Payload<TreeBag> {
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
-    }
-
-    @Override
     public TreeBag pack(Object obj) throws Exception {
         // setup harmless chain
         final InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);

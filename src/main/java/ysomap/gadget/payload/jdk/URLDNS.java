@@ -6,8 +6,6 @@ import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.jdk.URLBullet;
 import ysomap.gadget.payload.Payload;
-import ysomap.serializer.Serializer;
-import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 import java.net.URL;
@@ -33,11 +31,6 @@ public class URLDNS extends Payload<Object> {
     @Override
     public ObjectGadget getDefaultBullet(String command) throws Exception {
         return new URLBullet().set("url","http://localhost");
-    }
-
-    @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
     }
 
     @Override

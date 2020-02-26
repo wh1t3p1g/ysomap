@@ -35,11 +35,6 @@ public class CommonsCollections6 extends Payload<Hashtable> {
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
-    }
-
-    @Override
     public Hashtable pack(Object obj) throws Exception {
         Transformer transformerChain = new ChainedTransformer(new Transformer[]{});
 

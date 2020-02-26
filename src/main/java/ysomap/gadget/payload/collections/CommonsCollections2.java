@@ -32,11 +32,6 @@ public class CommonsCollections2 extends Payload<Queue<Object>> {
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
-    }
-
-    @Override
     public Queue<Object> pack(Object obj) throws Exception {
         final InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);
 

@@ -10,8 +10,6 @@ import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.gadget.payload.Payload;
-import ysomap.serializer.Serializer;
-import ysomap.serializer.SerializerFactory;
 import ysomap.util.PayloadHelper;
 import ysomap.util.Reflections;
 
@@ -33,11 +31,6 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
     @Override
     public boolean checkObject(Object obj) {
         return obj instanceof org.apache.commons.collections.Transformer[];
-    }
-
-    @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
     }
 
     @Override

@@ -18,7 +18,11 @@ public enum PayloadEnums implements ObjectEnums{
     CommonsCollections7("7", ysomap.gadget.payload.collections.CommonsCollections7.class),
     CommonsCollections8("8", ysomap.gadget.payload.collections.CommonsCollections8.class),
     CommonsCollections9("9", ysomap.gadget.payload.collections.CommonsCollections9.class),
+    URLDNS("10", ysomap.gadget.payload.jdk.URLDNS.class),
+    RMIConnectWrapped("11", ysomap.gadget.payload.rmi.RMIConnectWrapped.class),
+    RMIConnectWrappedWithProxy("12", ysomap.gadget.payload.rmi.RMIConnectWrappedWithProxy.class),
     ;
+
     private String name;
     private Class clazz;
 

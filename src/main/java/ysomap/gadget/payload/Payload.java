@@ -3,6 +3,7 @@ package ysomap.gadget.payload;
 import ysomap.exception.ObjectTypeErrorException;
 import ysomap.gadget.ObjectGadget;
 import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 /**
@@ -40,5 +41,7 @@ public abstract class Payload <T> implements ObjectPayload <T> {
 
     public abstract ObjectGadget getDefaultBullet(String command) throws Exception;
 
-    public abstract Serializer<?> getSerializer();
+    public Serializer<?> getSerializer(){
+        return SerializerFactory.createSerializer("default");
+    }
 }
