@@ -21,4 +21,6 @@ public interface Session<T> {
     ObjectGadget getObj();
 
     void close() throws Exception;
+
+    boolean isExit();
 }

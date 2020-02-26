@@ -1,6 +1,8 @@
 package ysomap.console;
 
+import org.apache.commons.lang3.StringUtils;
 import ysomap.exception.ArgumentsMissMatchException;
+import ysomap.exception.SessionIDNotFoundException;
 import ysomap.util.ColorStyle;
 import ysomap.util.Logger;
 import ysomap.util.OutputHelper;
@@ -25,16 +27,17 @@ public class ConsoleHandler {
             session.accept(cs.args.get(1));
             // update session data
             switch (type){
-                case "bullet":
                 case "exploit":
+                    cs.clear("payload");
+                case "bullet":
                 case "payload":
                     // reset bullet
                     cs.clear("bullet");
-                    cs.prompt.put(type, promptStr);
                     break;
                 default:
                     throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
             }
+            cs.prompt.put(type, promptStr);
             cs.sessions.put(type, session);
             return;
         }
@@ -104,6 +107,7 @@ public class ConsoleHandler {
 
     public static void run(ConsoleSession cs) throws Exception {
         Object payloadObj = null;
+        String payloadName = null;
 
         if(cs.sessions.containsKey("payload")){
             Session payloadSession = cs.sessions.get("payload");
@@ -111,6 +115,7 @@ public class ConsoleHandler {
             payloadSession.set("bullet", bulletSession.getObj());
             payloadSession.run();
             payloadObj = ((ConsoleObjectSession)payloadSession).getRetObj();
+            payloadName = payloadSession.getObj().getClass().getSimpleName();
             Logger.success("* run payload success");
         }
 
@@ -119,6 +124,9 @@ public class ConsoleHandler {
             if(exploitSession.has("payload")){
                 exploitSession.set("payload", payloadObj);
             }
+            if(exploitSession.has("payloadName")){
+                exploitSession.set("payloadName", payloadName);
+            }
             cs.running.add(exploitSession);// add to running sessions
             exploitSession.run();
             Logger.success("* run exploit success");
@@ -126,7 +134,32 @@ public class ConsoleHandler {
     }
 
     public static void sessions(ConsoleSession cs){
+        // clear stopped sessions
+        cs.removeStoppedSessions();
+        // print running sessions
+        OutputHelper.printSessions(cs.running);
+    }
 
+    public static void kill(ConsoleSession cs) throws SessionIDNotFoundException {
+        if(!cs.args.isEmpty()){
+            for(String s:cs.args){
+                if(s.equals("all")){
+                    cs.stopAllSessions();
+                    Logger.success("* killed all sessions");
+                }else if(StringUtils.isNumeric(s)){
+                    try {
+                        cs.running.get(Integer.parseInt(s)).close();
+                        Logger.success("* killed "+s);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Logger.error("[-] kill "+s+" failed");
+                    }
+                }else{
+                    throw new SessionIDNotFoundException(s);
+                }
+            }
+            cs.removeStoppedSessions();
+        }
     }
 
     public static void help(){
@@ -137,6 +170,8 @@ public class ConsoleHandler {
                 "run                 run current session\n" +
                 "show <type>         show payload/bullet/exploit details\n" +
                 "clear               clear current sessions\n" +
+                "sessions            print current running exploit sessions\n" +
+                "kill <ids/all>      kill sessions, like 'kill 1 2 3' or 'kill all'\n" +
                 "exit                exit ysomap\n";
         System.out.println(usage);
     }

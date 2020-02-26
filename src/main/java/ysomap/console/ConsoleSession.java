@@ -62,6 +62,10 @@ public class ConsoleSession {
                 // print current running exploit sessions
                 ConsoleHandler.sessions(this);
                 break;
+            case "kill":
+                // kill running exploit sessions
+                ConsoleHandler.kill(this);
+                break;
             case "clear":
                 // clear current sessions
                 clearAll();
@@ -98,6 +102,26 @@ public class ConsoleSession {
         settings.get("bullet").clear();
         sessions.remove(type);
         prompt.remove(type);
+    }
+
+    public void stopAllSessions(){
+        for(Session session:running){
+            try {
+                session.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        running.clear();
+    }
+
+    public void removeStoppedSessions(){
+        List<Session> copy = new LinkedList<>(running);
+        for(Session session: copy){
+            if(session.isExit()){
+                running.remove(session);
+            }
+        }
     }
 
 

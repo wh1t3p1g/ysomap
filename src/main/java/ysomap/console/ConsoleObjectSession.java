@@ -11,7 +11,6 @@ import ysomap.util.enums.BulletEnums;
 import ysomap.util.enums.ExploitEnums;
 import ysomap.util.enums.PayloadEnums;
 
-import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.util.*;
 
@@ -77,8 +76,8 @@ public class ConsoleObjectSession implements Session<String> {
      */
     @Override
     public void run() throws Exception {
-        if(type.equals("exploit")){
-            ((Exploit)obj).run();
+        if(type.equals("exploit")){// multi thread running
+            new Thread(((Exploit)obj)).start();
         }else if(type.equals("payload")){
             Payload payload = (Payload) obj;
             retObj = payload.getObject();
@@ -97,10 +96,13 @@ public class ConsoleObjectSession implements Session<String> {
 
     @Override
     public void close() throws Exception {
-        for(Object resource: resources){
-            if(resource instanceof Closeable){
-                ((Closeable) resource).close();
-            }
+//        for(Object resource: resources){
+//            if(resource instanceof Closeable){
+//                ((Closeable) resource).close();
+//            }
+//        }
+        if(obj instanceof Exploit){
+            ((Exploit)obj).stop();
         }
     }
 
@@ -136,5 +138,13 @@ public class ConsoleObjectSession implements Session<String> {
     @Override
     public int hashCode() {
         return Objects.hash(sessionID);
+    }
+
+    @Override
+    public boolean isExit() {
+        if(obj instanceof Exploit){
+            return ((Exploit)obj).isExit();
+        }
+        return false;
     }
 }

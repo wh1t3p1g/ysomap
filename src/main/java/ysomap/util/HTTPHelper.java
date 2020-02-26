@@ -14,12 +14,13 @@ import java.net.InetSocketAddress;
  */
 public class HTTPHelper {
 
-    public static void makeSimpleHTTPServer(int port, String path, HttpHandler handler) throws IOException {
+    public static HttpServer makeSimpleHTTPServer(int port, String path, HttpHandler handler) throws IOException {
         System.err.println("* Opening Payload HTTPServer on " + port);
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext(path, handler);
         server.setExecutor(null);
         server.start();
+        return server;
     }
 
     public static HttpHandler makeHTTPHandler(String filename, String body) throws Exception {

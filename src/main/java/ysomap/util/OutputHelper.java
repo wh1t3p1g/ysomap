@@ -3,13 +3,17 @@ package ysomap.util;
 import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Require;
+import ysomap.console.Session;
 import ysomap.util.enums.ObjectEnums;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wh1t3P1g
@@ -28,6 +32,18 @@ public class OutputHelper {
 
     public static String urlEncode(String body) throws UnsupportedEncodingException {
         return URLEncoder.encode(body, "UTF-8");
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    public static void printSessions(List<Session> sessions){
+        List<String[]> rows = new LinkedList<String[]>();
+        rows.add(new String[] {"ID", "Detail"});
+        rows.add(new String[] {"---------------------","------------------------------------------"});
+        for(Session session:sessions){
+            rows.add(new String[]{String.valueOf(sessions.indexOf(session)),
+                        session.getObj().toString()});
+        }
+        printTable(rows);
     }
 
     public static String[] printClassDescription(Class<?> clazz, String enumName){

@@ -26,7 +26,7 @@ public class ConsoleRunner implements ObjectRunner{
     private Map<String,String> prompt;
 
     private Completer commandCompleter =
-            new StringsCompleter("help", "use", "set", "list", "show", "run","exit");
+            new StringsCompleter("help", "use", "set", "list", "show","sessions","kill", "run","exit");
 
 
     @Override
