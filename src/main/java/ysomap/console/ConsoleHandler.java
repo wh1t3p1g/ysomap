@@ -168,7 +168,7 @@ public class ConsoleHandler {
                 "use <type> <name>   choose a exploit/payload/bullet\n" +
                 "set <key> <value>   set exploit/bullet's arguments\n" +
                 "run                 run current session\n" +
-                "show <type>         show payload/bullet/exploit details\n" +
+                "show options        show payload/bullet/exploit details\n" +
                 "clear               clear current sessions\n" +
                 "sessions            print current running exploit sessions\n" +
                 "kill <ids/all>      kill sessions, like 'kill 1 2 3' or 'kill all'\n" +
