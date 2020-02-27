@@ -71,7 +71,7 @@ public class ConsoleSession {
                 clearAll();
                 break;
             case "":
-                // Do nothing
+                // do nothing
                 break;
             case "exit":
                 // exit ysomap

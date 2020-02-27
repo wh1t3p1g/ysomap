@@ -13,7 +13,12 @@ public enum BulletEnums implements ObjectEnums{
     TemplatesImplBullet("2", ysomap.gadget.bullet.jdk.TemplatesImplBullet.class),
     TransformerWithTemplatesImplBullet("3", ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet.class),
     TransformerWithResponseBullet("4", ysomap.gadget.bullet.collections.TransformerWithResponseBullet.class),
-    RMIConnectBullet("5", ysomap.gadget.bullet.jdk.rmi.RMIConnectBullet.class);
+    RMIConnectBullet("5", ysomap.gadget.bullet.jdk.rmi.RMIConnectBullet.class),
+    RefBullet("6", ysomap.gadget.bullet.jdk.rmi.RefBullet.class),
+    TomcatRefBullet("7", ysomap.gadget.bullet.jdk.rmi.TomcatRefBullet.class),
+    ;
+
+
     private String name;
     private Class clazz;
 

@@ -21,6 +21,7 @@ public enum PayloadEnums implements ObjectEnums{
     URLDNS("10", ysomap.gadget.payload.jdk.URLDNS.class),
     RMIConnectWrapped("11", ysomap.gadget.payload.rmi.RMIConnectWrapped.class),
     RMIConnectWrappedWithProxy("12", ysomap.gadget.payload.rmi.RMIConnectWrappedWithProxy.class),
+    RefWrapper("13", ysomap.gadget.payload.rmi.RefWrapper.class),
     ;
 
     private String name;
