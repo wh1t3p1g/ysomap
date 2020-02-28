@@ -35,7 +35,9 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 
 #### 实际案例分析
 
-CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在于1使用的是`InvokerTransformer`，而3使用的是`templatesImpl`的方式。那么提取相同的前序payload部分，我们只需写两个不同的bullet即可。
+CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在于1使用的是`InvokerTransformer`，而3使用的是`templatesImpl`的方式。那么提取相同的前序payload部分，我们只需写两个不同的bullet即可。而且这两个bullet也同样能被用在其他的payload上。
+
+实际还有就是我在写RMIRegistryExploit时，也有这种可将不变部分重用的地方，而无需2,3之类的出现。
 
 ## 0x03 使用方法
 
@@ -45,6 +47,8 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 执行`java -jar ysomap-0.0.1-SNAPSHOT-all.jar`
 
+payload默认生成obj.ser文件在当前目录，为序列化后的数据。
+
 可使用的命令
 
 #### 1.查看当前可用的exploits/payloads/bullets
@@ -53,7 +57,7 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 #### 2.使用指定的bullet/payload/expliot
 
-`use [bullet|payload|exploit]`
+`use [bullet|payload|exploit] name`
 
 #### 3.查看当前的设置选项
 
