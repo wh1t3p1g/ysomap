@@ -96,6 +96,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
         </dependency>
+
         <!-- dependencies which gadgets needed -->
         <dependency>
             <groupId>commons-collections</groupId>
@@ -123,6 +124,14 @@
             <artifactId>tomcat-catalina</artifactId>
             <version>8.0.36</version>
         </dependency>
+        <dependency>
+            <groupId>com.unboundid</groupId>
+            <artifactId>unboundid-ldapsdk</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+
+
     </dependencies>
 
 </project>
