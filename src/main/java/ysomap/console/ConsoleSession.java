@@ -102,7 +102,9 @@ public class ConsoleSession {
     }
 
     public void clear(String type){
-        settings.get("bullet").clear();
+        if(settings.containsKey(type)){
+            settings.get(type).clear();
+        }
         sessions.remove(type);
         prompt.remove(type);
     }

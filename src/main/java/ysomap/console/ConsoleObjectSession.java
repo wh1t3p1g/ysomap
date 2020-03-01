@@ -77,7 +77,9 @@ public class ConsoleObjectSession implements Session<String> {
     @Override
     public void run() throws Exception {
         if(type.equals("exploit")){// multi thread running
-            new Thread(((Exploit)obj)).start();
+            Exploit exploit = (Exploit)obj;
+            exploit.setExit(false);
+            new Thread(exploit).start();
         }else if(type.equals("payload")){
             Payload payload = (Payload) obj;
             retObj = payload.getObject();

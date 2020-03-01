@@ -27,12 +27,18 @@ public class ConsoleHandler {
             session.accept(cs.args.get(1));
             // update session data
             switch (type){
-                case "exploit":
-                    cs.clear("payload");
                 case "bullet":
-                case "payload":
+                    cs.clear("bullet");
+                    break;
+                case "exploit":// exploit 为最高级 当重新选择exploit时，讲删除payload、exploit、bullet
+                    cs.clear("bullet");
+                    cs.clear("payload");
+                    cs.clear("exploit");
+                    break;
+                case "payload":// payload为次高级 当重新选择exploit时，将删除payload、bullet
                     // reset bullet
                     cs.clear("bullet");
+                    cs.clear("payload");
                     break;
                 default:
                     throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
@@ -127,6 +133,7 @@ public class ConsoleHandler {
             if(exploitSession.has("payloadName")){
                 exploitSession.set("payloadName", payloadName);
             }
+
             cs.running.add(exploitSession);// add to running sessions
             exploitSession.run();
             Logger.success("* run exploit success");

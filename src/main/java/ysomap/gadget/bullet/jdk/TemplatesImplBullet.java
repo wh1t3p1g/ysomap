@@ -45,7 +45,7 @@ public class TemplatesImplBullet extends Bullet<Object> {
         }
         initClazz();
         // create evil bytecodes
-        ClassPool pool = ClassPool.getDefault();
+        ClassPool pool = new ClassPool(true);
         CtClass cc = ClassFiles.makeClassFromExistClass(pool,
                             StubTransletPayload.class,
                             new Class<?>[]{abstractTranslet}

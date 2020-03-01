@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.util.Map;
 
 /**
  * @author wh1t3P1g
@@ -14,10 +15,12 @@ import java.net.InetSocketAddress;
  */
 public class HTTPHelper {
 
-    public static HttpServer makeSimpleHTTPServer(int port, String path, HttpHandler handler) throws IOException {
+    public static HttpServer makeSimpleHTTPServer(int port, Map<String, HttpHandler> paths) throws IOException {
         System.err.println("* Opening Payload HTTPServer on " + port);
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext(path, handler);
+        for(Map.Entry<String, HttpHandler> path: paths.entrySet()){
+            server.createContext(path.getKey(), path.getValue());
+        }
         server.setExecutor(null);
         server.start();
         return server;
