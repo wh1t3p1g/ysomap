@@ -7,6 +7,4 @@ package ysomap.util.enums;
 public interface ObjectEnums {
 
     Class<?> getClazz();
-
-    String getName();
 }

@@ -21,7 +21,7 @@ import java.util.Queue;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 @Authors({ Authors.FROHOFF })
-@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
+@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Dependencies({"org.apache.commons:commons-collections4:4.0"})
 public class CommonsCollections3 extends CommonsCollections2 {
 

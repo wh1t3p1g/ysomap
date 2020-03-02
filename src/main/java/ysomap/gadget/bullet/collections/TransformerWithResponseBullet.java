@@ -13,7 +13,7 @@ import java.util.LinkedList;
  */
 @Dependencies({"evil obj http server"})
 @Authors({ Authors.WH1T3P1G })
-public class TransformerWithResponseBullet extends TransformerBullet {
+public class TransformerWithResponseBullet extends AbstractTransformerBullet {
 
     @Require(name = "args" ,detail = "evil server URL")
     public String args;

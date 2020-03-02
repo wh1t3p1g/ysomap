@@ -115,7 +115,7 @@ public class OutputHelper {
         rows.add(new String[] {"-----","---------------------", "---------------------", "------------------------------------------"});
 
         for(int i=0; i< enums.length; i++){
-            rows.add(OutputHelper.printClassDescription(enums[i].getClazz(), enums[i].getName()));
+            rows.add(OutputHelper.printClassDescription(enums[i].getClazz(), String.valueOf(i)));
         }
 
         printTable(rows);

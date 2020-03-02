@@ -9,37 +9,30 @@ import ysomap.gadget.payload.Payload;
  */
 @SuppressWarnings({"rawtypes"})
 public enum PayloadEnums implements ObjectEnums{
-    CommonsCollections1("1", ysomap.gadget.payload.collections.CommonsCollections1.class),
-    CommonsCollections2("2", ysomap.gadget.payload.collections.CommonsCollections2.class),
-    CommonsCollections3("3", ysomap.gadget.payload.collections.CommonsCollections3.class),
-    CommonsCollections4("4", ysomap.gadget.payload.collections.CommonsCollections4.class),
-    CommonsCollections5("5", ysomap.gadget.payload.collections.CommonsCollections5.class),
-    CommonsCollections6("6", ysomap.gadget.payload.collections.CommonsCollections6.class),
-    CommonsCollections7("7", ysomap.gadget.payload.collections.CommonsCollections7.class),
-    CommonsCollections8("8", ysomap.gadget.payload.collections.CommonsCollections8.class),
-    CommonsCollections9("9", ysomap.gadget.payload.collections.CommonsCollections9.class),
-    URLDNS("10", ysomap.gadget.payload.jdk.URLDNS.class),
-    RMIConnectWrapped("11", ysomap.gadget.payload.rmi.RMIConnectWrapped.class),
-    RMIConnectWrappedWithProxy("12", ysomap.gadget.payload.rmi.RMIConnectWrappedWithProxy.class),
-    RefWrapper("13", ysomap.gadget.payload.rmi.RefWrapper.class),
+    CommonsCollections1(ysomap.gadget.payload.collections.CommonsCollections1.class),
+    CommonsCollections2(ysomap.gadget.payload.collections.CommonsCollections2.class),
+    CommonsCollections3(ysomap.gadget.payload.collections.CommonsCollections3.class),
+    CommonsCollections4(ysomap.gadget.payload.collections.CommonsCollections4.class),
+    CommonsCollections5(ysomap.gadget.payload.collections.CommonsCollections5.class),
+    CommonsCollections6(ysomap.gadget.payload.collections.CommonsCollections6.class),
+    CommonsCollections7(ysomap.gadget.payload.collections.CommonsCollections7.class),
+    CommonsCollections8(ysomap.gadget.payload.collections.CommonsCollections8.class),
+    CommonsCollections9(ysomap.gadget.payload.collections.CommonsCollections9.class),
+    URLDNS(ysomap.gadget.payload.jdk.URLDNS.class),
+    RMIConnectWrapped(ysomap.gadget.payload.rmi.RMIConnectWrapped.class),
+    RMIConnectWrappedWithProxy(ysomap.gadget.payload.rmi.RMIConnectWrappedWithProxy.class),
+    RefWrapper(ysomap.gadget.payload.rmi.RefWrapper.class),
     ;
 
-    private String name;
     private Class clazz;
 
-    PayloadEnums(String name, Class<? extends Payload> clazz){
-        this.name = name;
+    PayloadEnums(Class<? extends Payload> clazz){
         this.clazz = clazz;
     }
 
     @Override
     public Class getClazz() {
         return clazz;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public static Class getClazzByName(String name) throws YsoClassNotFoundException {
@@ -51,7 +44,4 @@ public enum PayloadEnums implements ObjectEnums{
         }
     }
 
-    public static void main(String[] args) throws YsoClassNotFoundException {
-        System.out.println(PayloadEnums.getClazzByName("10"));
-    }
 }

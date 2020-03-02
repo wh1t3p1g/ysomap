@@ -16,7 +16,6 @@ import java.util.Map;
 public class HTTPHelper {
 
     public static HttpServer makeSimpleHTTPServer(int port, Map<String, HttpHandler> paths) throws IOException {
-        System.err.println("* Opening Payload HTTPServer on " + port);
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         for(Map.Entry<String, HttpHandler> path: paths.entrySet()){
             server.createContext(path.getKey(), path.getValue());

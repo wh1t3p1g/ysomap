@@ -9,32 +9,27 @@ import ysomap.gadget.ObjectGadget;
  */
 @SuppressWarnings({"rawtypes"})
 public enum BulletEnums implements ObjectEnums{
-    TransformerBullet("1", ysomap.gadget.bullet.collections.TransformerBullet.class),
-    TemplatesImplBullet("2", ysomap.gadget.bullet.jdk.TemplatesImplBullet.class),
-    TransformerWithTemplatesImplBullet("3", ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet.class),
-    TransformerWithResponseBullet("4", ysomap.gadget.bullet.collections.TransformerWithResponseBullet.class),
-    RMIConnectBullet("5", ysomap.gadget.bullet.jdk.rmi.RMIConnectBullet.class),
-    RefBullet("6", ysomap.gadget.bullet.jdk.rmi.RefBullet.class),
-    TomcatRefBullet("7", ysomap.gadget.bullet.jdk.rmi.TomcatRefBullet.class),
+    TransformerBullet(ysomap.gadget.bullet.collections.TransformerBullet.class),
+    TemplatesImplBullet(ysomap.gadget.bullet.jdk.TemplatesImplBullet.class),
+    TransformerWithTemplatesImplBullet(ysomap.gadget.bullet.collections.TransformerWithTemplatesImplBullet.class),
+    TransformerWithResponseBullet(ysomap.gadget.bullet.collections.TransformerWithResponseBullet.class),
+    TransformerWithJNDIBullet(ysomap.gadget.bullet.collections.TransformerWithJNDIBullet.class),
+    RMIConnectBullet(ysomap.gadget.bullet.jdk.rmi.RMIConnectBullet.class),
+    RefBullet(ysomap.gadget.bullet.jdk.rmi.RefBullet.class),
+    TomcatRefBullet(ysomap.gadget.bullet.jdk.rmi.TomcatRefBullet.class),
+    JdbcRowSetImplBullet(ysomap.gadget.bullet.jdk.JdbcRowSetImplBullet.class),
     ;
 
 
-    private String name;
     private Class clazz;
 
-    BulletEnums(String name, Class<? extends ObjectGadget> clazz) {
-        this.name = name;
+    BulletEnums(Class<? extends ObjectGadget> clazz) {
         this.clazz = clazz;
     }
 
     @Override
     public Class getClazz() {
         return clazz;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public static Class getClazzByName(String name) throws YsoClassNotFoundException {

@@ -10,8 +10,6 @@ import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.Bullet;
 import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.gadget.payload.Payload;
-import ysomap.serializer.Serializer;
-import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 import java.util.HashMap;
@@ -24,7 +22,7 @@ import java.util.Map;
  * @since 2020/2/18
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
+@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
 @Authors({Authors.SCRISTALLI, Authors.HANYRAX, Authors.EDOARDOVIGNATI})
 public class CommonsCollections6 extends Payload<Hashtable> {

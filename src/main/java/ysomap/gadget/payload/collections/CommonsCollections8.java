@@ -11,8 +11,6 @@ import ysomap.gadget.ObjectGadget;
 import ysomap.gadget.bullet.Bullet;
 import ysomap.gadget.bullet.collections.TransformerBullet;
 import ysomap.gadget.payload.Payload;
-import ysomap.serializer.Serializer;
-import ysomap.serializer.SerializerFactory;
 import ysomap.util.Reflections;
 
 import java.lang.reflect.Field;
@@ -26,7 +24,7 @@ import java.util.Map;
  */
 @SuppressWarnings({"rawtypes","unchecked"})
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
-@Require(bullets = {"TransformerBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
+@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
 @Authors({ Authors.WH1T3P1G })
 public class CommonsCollections8 extends Payload<Hashtable> {
 
