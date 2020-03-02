@@ -10,7 +10,7 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 
 ### DONE
 
-- [x] CommonsCollections系列
+- [x] CommonsCollections系列，可达成远程jar载入、命令执行、代码执行、发起jndi效果
 - [x] RMIRegistryExploit 包括最初的和绕过方式，原理http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/
 - [x] RMIListener 原JRMPListener
 - [x] RMIRefListener 配合jndi使用，利用原理http://blog.0kami.cn/2020/02/09/jndi-with-rmi/
