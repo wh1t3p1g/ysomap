@@ -17,7 +17,7 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 - [x] SimpleHTTPServer 挂载恶意的class文件或jar文件，填写具体代码或需执行的命令即可
 - [x] URLDNS
 - [x] LDAPRefListener、LDAPLocalChainListener 前者使用reference的方式，后者使用目标环境下的反序列化利用链，[原理](http://blog.0kami.cn/2020/03/01/jndi-with-ldap/)
-- [x] RMIConnectWithUnicastRemoteObject 增加JRMP反连Payload，这部分暂时没有在攻击RMI Registry的时候成功？虽然[原理](https://mogwailabs.de/blog/2020/02/an-trinhs-rmi-registry-bypass/)上为绕过方法之一,但在测试时并未成功，暂时还没有找到原因
+- [x] RMIConnectWithUnicastRemoteObject 增加JRMP反连Payload，这部分暂时没有在攻击RMI Registry的时候成功？虽然[原理](https://mogwailabs.de/blog/2020/02/an-trinhs-rmi-registry-bypass/)上为绕过方法之一,但在测试时并未成功，[原因](http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/)第0x07部分
 
 ## 0x01 起因
 
