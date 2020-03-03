@@ -1,7 +1,7 @@
 package ysomap.runner;
 
-import ysomap.gadget.bullet.Bullet;
-import ysomap.gadget.payload.Payload;
+import ysomap.core.bean.Bullet;
+import ysomap.core.bean.Payload;
 import ysomap.serializer.Serializer;
 
 /**

@@ -1,6 +1,6 @@
 package ysomap.console;
 
-import ysomap.gadget.ObjectGadget;
+import ysomap.core.ObjectGadget;
 
 /**
  * @author wh1t3P1g

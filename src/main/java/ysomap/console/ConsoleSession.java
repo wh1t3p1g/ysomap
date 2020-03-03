@@ -1,8 +1,13 @@
 package ysomap.console;
 
 import org.jline.reader.EndOfFileException;
+import org.reflections.Reflections;
+import ysomap.annotation.Bullets;
+import ysomap.annotation.Exploits;
+import ysomap.annotation.Payloads;
 import ysomap.exception.ArgumentsMissMatchException;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**
@@ -19,6 +24,9 @@ public class ConsoleSession {
     public HashMap<String,Session> sessions;
     public List<Session> running;
     public Map<String, String> prompt;// from ConsoleRunner
+    public Map<String, Class<?>> bullets;
+    public Map<String, Class<?>> payloads;
+    public Map<String, Class<?>> exploits;
 
     public ConsoleSession() {
         args = new LinkedList<>();
@@ -28,6 +36,10 @@ public class ConsoleSession {
         settings.put("bullet", new LinkedHashMap<>());
         sessions = new LinkedHashMap<>();
         running = new LinkedList<>();
+        Reflections reflections = new Reflections("ysomap.core");
+        bullets = loadClass(reflections, Bullets.class);
+        payloads = loadClass(reflections, Payloads.class);
+        exploits = loadClass(reflections, Exploits.class);
     }
 
     public void accept(List<String> words, Map<String, String> prompt) throws Exception {
@@ -127,6 +139,15 @@ public class ConsoleSession {
                 running.remove(session);
             }
         }
+    }
+
+    public Map<String, Class<?>> loadClass(Reflections reflections, Class<? extends Annotation> annotation){
+        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(annotation);
+        Map<String, Class<?>> retMap = new LinkedHashMap<>();
+        for(Class<?> clazz: classes){
+            retMap.put(clazz.getSimpleName(), clazz);
+        }
+        return retMap;
     }
 
 

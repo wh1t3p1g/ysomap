@@ -58,11 +58,12 @@ public class ConsoleRunner implements ObjectRunner{
                     System.out.println("\nBye.");
                     System.exit(0);
                 } catch (Exception e) {
-                    if(e.getMessage() == null){
-                        e.printStackTrace();
-                    }else{
-                        System.out.println("\n"+e.getMessage());
-                    }
+                    e.printStackTrace(); // 直接打印 防止某些应用返回的错误信息有用
+//                    if(e.getMessage() == null){
+//                        e.printStackTrace();
+//                    }else{
+//                        System.out.println("\n"+e.getMessage());
+//                    }
                 }
             }
         } catch (IOException e) {

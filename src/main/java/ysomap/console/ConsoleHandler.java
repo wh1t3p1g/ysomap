@@ -3,12 +3,10 @@ package ysomap.console;
 import org.apache.commons.lang3.StringUtils;
 import ysomap.exception.ArgumentsMissMatchException;
 import ysomap.exception.SessionIDNotFoundException;
+import ysomap.exception.YsoClassNotFoundException;
 import ysomap.util.ColorStyle;
 import ysomap.util.Logger;
 import ysomap.util.OutputHelper;
-import ysomap.util.enums.BulletEnums;
-import ysomap.util.enums.ExploitEnums;
-import ysomap.util.enums.PayloadEnums;
 
 import java.util.Map;
 
@@ -22,27 +20,36 @@ public class ConsoleHandler {
     public static void use(ConsoleSession cs) throws Exception {
         if(cs.args.size() == 2){
             String type = cs.args.get(0);
+            String currentClazz = cs.args.get(1);
             Session session = new ConsoleObjectSession(type);
             String promptStr = type+"("+ ColorStyle.makeWordRed(cs.args.get(1))+")";
-            session.accept(cs.args.get(1));
+            Class<?> clazz = null;
+
             // update session data
             switch (type){
                 case "bullet":
                     cs.clear("bullet");
+                    clazz = cs.bullets.getOrDefault(currentClazz, null);
                     break;
                 case "exploit":// exploit 为最高级 当重新选择exploit时，讲删除payload、exploit、bullet
                     cs.clear("bullet");
                     cs.clear("payload");
                     cs.clear("exploit");
+                    clazz = cs.exploits.getOrDefault(currentClazz, null);
                     break;
                 case "payload":// payload为次高级 当重新选择exploit时，将删除payload、bullet
                     // reset bullet
                     cs.clear("bullet");
                     cs.clear("payload");
+                    clazz = cs.payloads.getOrDefault(currentClazz, null);
                     break;
                 default:
                     throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
             }
+            if(clazz == null){
+                throw new YsoClassNotFoundException(type, currentClazz);
+            }
+            session.accept(clazz);
             cs.prompt.put(type, promptStr);
             cs.sessions.put(type, session);
             return;
@@ -73,13 +80,13 @@ public class ConsoleHandler {
             Logger.success("* show all "+type);
             switch(type){
                 case "exploits":
-                    OutputHelper.printConsoleTable("Exploits", ExploitEnums.values());
+                    OutputHelper.printConsoleTable("Exploits", cs.exploits.values());
                     return;
                 case "payloads":
-                    OutputHelper.printConsoleTable("Payload", PayloadEnums.values());
+                    OutputHelper.printConsoleTable("Payload", cs.payloads.values());
                     return;
                 case "bullets":
-                    OutputHelper.printConsoleTable("Bullets", BulletEnums.values());
+                    OutputHelper.printConsoleTable("Bullets", cs.bullets.values());
                     return;
             }
         }
@@ -122,7 +129,6 @@ public class ConsoleHandler {
             payloadSession.run();
             payloadObj = ((ConsoleObjectSession)payloadSession).getRetObj();
             payloadName = payloadSession.getObj().getClass().getSimpleName();
-            Logger.success("* run payload success");
         }
 
         if(cs.sessions.containsKey("exploit")){// multi threads to run exploit
@@ -136,7 +142,7 @@ public class ConsoleHandler {
 
             cs.running.add(exploitSession);// add to running sessions
             exploitSession.run();
-            Logger.success("* run exploit success");
+            Logger.success("* exploit is running");
         }
     }
 

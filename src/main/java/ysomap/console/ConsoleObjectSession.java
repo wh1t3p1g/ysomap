@@ -1,15 +1,12 @@
 package ysomap.console;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import ysomap.exploit.Exploit;
-import ysomap.gadget.ObjectGadget;
-import ysomap.gadget.payload.Payload;
+import ysomap.core.ObjectGadget;
+import ysomap.core.bean.Exploit;
+import ysomap.core.bean.Payload;
 import ysomap.util.Logger;
 import ysomap.util.PayloadHelper;
-import ysomap.util.Reflections;
-import ysomap.util.enums.BulletEnums;
-import ysomap.util.enums.ExploitEnums;
-import ysomap.util.enums.PayloadEnums;
+import ysomap.util.ReflectionHelper;
 
 import java.io.FileOutputStream;
 import java.util.*;
@@ -19,7 +16,7 @@ import java.util.*;
  * @since 2020/2/19
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class ConsoleObjectSession implements Session<String> {
+public class ConsoleObjectSession implements Session<Class<?>> {
 
     private String sessionID;
     private String type;
@@ -27,29 +24,17 @@ public class ConsoleObjectSession implements Session<String> {
     private ObjectGadget obj;
     private HashMap<String, String> args = new LinkedHashMap<>();
     private Object retObj;
-    private List<Object> resources;
 
     public ConsoleObjectSession(String type) {
         this.type = type;
         sessionID = RandomStringUtils.randomAlphabetic(16);
-        resources = new LinkedList<>();
     }
 
     @Override
-    public void accept(String name) throws Exception {
-        switch (type){
-            case "exploit":
-                clazz = ExploitEnums.getClazzByName(name);
-                break;
-            case "payload":
-                clazz = PayloadEnums.getClazzByName(name);
-                break;
-            case "bullet":
-                clazz = BulletEnums.getClazzByName(name);
-                break;
-        }
+    public void accept(Class<?> clazz) throws Exception {
         if(clazz != null){
-            obj = PayloadHelper.makeGadget(clazz, type);
+            this.clazz = (Class<? extends ObjectGadget>) clazz;
+            obj = PayloadHelper.makeGadget(this.clazz, type);
         }
     }
 
@@ -67,7 +52,7 @@ public class ConsoleObjectSession implements Session<String> {
 
     @Override
     public boolean has(String key) {
-        return Reflections.getField(clazz, key) != null;
+        return ReflectionHelper.getField(clazz, key) != null;
     }
 
     /**
