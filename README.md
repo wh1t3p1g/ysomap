@@ -11,12 +11,12 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 ### DONE
 
 - [x] CommonsCollections系列，可达成远程jar载入、命令执行、代码执行、发起jndi效果
-- [x] RMIRegistryExploit 包括最初的和绕过方式，原理http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/
+- [x] RMIRegistryExploit 包括最初的和绕过方式，[原理](http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/)
 - [x] RMIListener 原JRMPListener
-- [x] RMIRefListener 配合jndi使用，利用原理http://blog.0kami.cn/2020/02/09/jndi-with-rmi/
+- [x] RMIRefListener 配合jndi使用，利用[原理](http://blog.0kami.cn/2020/02/09/jndi-with-rmi/)
 - [x] SimpleHTTPServer 挂载恶意的class文件或jar文件，填写具体代码或需执行的命令即可
 - [x] URLDNS
-- [x] LDAPRefListener、LDAPLocalChainListener 前者使用reference的方式，后者使用目标环境下的反序列化利用链，原理http://blog.0kami.cn/2020/03/01/jndi-with-ldap/
+- [x] LDAPRefListener、LDAPLocalChainListener 前者使用reference的方式，后者使用目标环境下的反序列化利用链，[原理](http://blog.0kami.cn/2020/03/01/jndi-with-ldap/)
 - [x] RMIConnectWithUnicastRemoteObject 增加JRMP反连Payload，这部分暂时没有在攻击RMI Registry的时候成功？虽然[原理](https://mogwailabs.de/blog/2020/02/an-trinhs-rmi-registry-bypass/)上为绕过方法之一,但在测试时并未成功，暂时还没有找到原因
 
 ## 0x01 起因
