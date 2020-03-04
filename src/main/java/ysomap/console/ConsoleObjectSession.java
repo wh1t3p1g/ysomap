@@ -70,9 +70,9 @@ public class ConsoleObjectSession implements Session<Class<?>> {
             retObj = payload.getObject();
             FileOutputStream fos = new FileOutputStream("obj.ser");
             payload.getSerializer().serialize(retObj, fos);
-            Logger.success("* generate " + payload.getClass().getSimpleName() + " success, plz see obj.ser");
+            Logger.success("generate " + payload.getClass().getSimpleName() + " success, plz see obj.ser");
         }else{
-            Logger.error("[-] current type<"+ type +"> is not allowed to run");
+            Logger.error("current type<"+ type +"> is not allowed to run");
         }
     }
 

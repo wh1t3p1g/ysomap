@@ -77,7 +77,7 @@ public class ConsoleHandler {
     public static void list(ConsoleSession cs) throws ArgumentsMissMatchException {
         if(cs.args.size() == 1){
             String type = cs.args.get(0);
-            Logger.success("* show all "+type);
+            Logger.success("show all "+type);
             switch(type){
                 case "exploits":
                     OutputHelper.printConsoleTable("Exploits", cs.exploits.values());
@@ -97,19 +97,19 @@ public class ConsoleHandler {
         if(cs.args.size() == 1 && cs.args.get(0).equals("options")){
             if(cs.sessions.containsKey("exploit")){
                 ConsoleObjectSession session = (ConsoleObjectSession) cs.sessions.get("exploit");
-                Logger.strongWarn("* print exploit details:\n");
+                Logger.strongWarn("print exploit details:\n");
                 OutputHelper.printEorBDetails(session.getClazz(), cs.settings.get("exploit"));
                 OutputHelper.printPorEDetails(session.getClazz(), "payload", false);
             }
 
             if(cs.sessions.containsKey("payload")){
                 ConsoleObjectSession session = (ConsoleObjectSession) cs.sessions.get("payload");
-                Logger.strongWarn("* print payload details:\n");
+                Logger.strongWarn("print payload details:\n");
                 OutputHelper.printPorEDetails(session.getClazz(), "bullet", true);
             }
 
             if(cs.sessions.containsKey("bullet")){
-                Logger.strongWarn("* print bullet details:\n");
+                Logger.strongWarn("print bullet details:\n");
                 ConsoleObjectSession bullet = (ConsoleObjectSession) cs.sessions.get("bullet");
                 OutputHelper.printEorBDetails(bullet.getClazz(), cs.settings.get("bullet"));
             }
@@ -142,7 +142,7 @@ public class ConsoleHandler {
 
             cs.running.add(exploitSession);// add to running sessions
             exploitSession.run();
-            Logger.success("* exploit is running");
+            Logger.success("exploit is running");
         }
     }
 
@@ -158,14 +158,14 @@ public class ConsoleHandler {
             for(String s:cs.args){
                 if(s.equals("all")){
                     cs.stopAllSessions();
-                    Logger.success("* killed all sessions");
+                    Logger.success("killed all sessions");
                 }else if(StringUtils.isNumeric(s)){
                     try {
                         cs.running.get(Integer.parseInt(s)).close();
-                        Logger.success("* killed "+s);
+                        Logger.success("killed "+s);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Logger.error("[-] kill "+s+" failed");
+                        Logger.error("kill "+s+" failed");
                     }
                 }else{
                     throw new SessionIDNotFoundException(s);

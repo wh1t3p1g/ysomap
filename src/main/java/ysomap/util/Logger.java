@@ -7,19 +7,19 @@ package ysomap.util;
 public class Logger {
 
     public static void success(String message){
-        System.out.println(ColorStyle.makeWordGreen(message));
+        System.out.println(ColorStyle.makeWordGreen("[+] "+message));
     }
 
     public static void error(String message){
-        System.out.println(ColorStyle.makeWordRed(message));
+        System.out.println(ColorStyle.makeWordRed("[-] "+message));
     }
 
     public static void warn(String message){
-        System.out.println(ColorStyle.makeWordBold(message));
+        System.out.println(ColorStyle.makeWordBold("* "+message));
     }
 
     public static void strongWarn(String message){
-        System.out.println(ColorStyle.makeWordBoldAndUnderline(message));
+        System.out.println(ColorStyle.makeWordBoldAndUnderline("* "+message));
     }
 
     public static void normal(String message){
