@@ -142,7 +142,6 @@ public class ConsoleHandler {
 
             cs.running.add(exploitSession);// add to running sessions
             exploitSession.run();
-            Logger.success("exploit is running");
         }
     }
 
