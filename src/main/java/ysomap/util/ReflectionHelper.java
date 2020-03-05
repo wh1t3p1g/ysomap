@@ -1,6 +1,8 @@
 package ysomap.util;
 
 import com.nqzero.permit.Permit;
+import ysomap.annotation.NotNull;
+import ysomap.exception.ArgumentsNotCompleteException;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
@@ -56,6 +58,18 @@ public class ReflectionHelper {
 
     public static Object newInstance(String classname, Class<?>[] paramTypes, Object... args) throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		return getConstructor(classname, paramTypes).newInstance(args);
+	}
+
+	public static void checkClassFieldsNotNull(Object obj) throws ArgumentsNotCompleteException {
+    	if(obj == null){
+    		throw new ArgumentsNotCompleteException("null");
+		}
+		Field[] fields = obj.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			if(field.isAnnotationPresent(NotNull.class)){
+				NotNull.Util.checkValueNotNull(obj, field.getName());
+			}
+		}
 	}
 
 }

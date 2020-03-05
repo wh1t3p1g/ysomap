@@ -5,6 +5,7 @@ import ysomap.exception.ObjectTypeErrorException;
 import ysomap.core.ObjectGadget;
 import ysomap.serializer.Serializer;
 import ysomap.serializer.SerializerFactory;
+import ysomap.util.Logger;
 import ysomap.util.ReflectionHelper;
 
 /**
@@ -18,9 +19,16 @@ public abstract class Payload <T> implements ObjectPayload<T> {
 
     @Override
     final public T getObject() throws Exception {
+        // check bullet args first
+        ReflectionHelper.checkClassFieldsNotNull(bullet);
+        // start to generate payload
+        Logger.success("generate payload("+this.getClass().getSimpleName()+") started!");
         Object obj = bullet.getObject();
         if(checkObject(obj)){
-            return pack(obj);
+            // arm bullet
+            T retObj = pack(obj);
+            Logger.success("generate payload("+this.getClass().getSimpleName()+") done!");
+            return retObj;
         }
         throw new ObjectTypeErrorException(obj);
     }

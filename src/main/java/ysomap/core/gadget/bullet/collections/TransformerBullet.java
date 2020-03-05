@@ -14,8 +14,11 @@ import java.util.LinkedList;
 @Authors({ Authors.WH1T3P1G })
 public class TransformerBullet extends AbstractTransformerBullet {
 
+    @NotNull
     @Require(name="args",detail="evil system command")
     public String args;
+
+    @NotNull
     @Require(name="version", type="int", detail = "commons-collections version, plz choose 3 or 4")
     public String version = "3";// 默认生成commonscollections 3.2.1
 

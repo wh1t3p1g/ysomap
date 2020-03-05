@@ -9,10 +9,7 @@ import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import javassist.ClassPool;
 import javassist.CtClass;
-import ysomap.annotation.Authors;
-import ysomap.annotation.Bullets;
-import ysomap.annotation.Dependencies;
-import ysomap.annotation.Require;
+import ysomap.annotation.*;
 import ysomap.core.bean.Bullet;
 import ysomap.util.ClassFiles;
 import ysomap.util.ReflectionHelper;
@@ -33,6 +30,7 @@ public class TemplatesImplBullet extends Bullet<Object> {
     private Class abstractTranslet;
     private Class transformerFactoryImpl;
 
+    @NotNull
     @Require(name = "body" ,detail = "evil code (start with 'code:') or evil commands")
     private String body;
 

@@ -1,10 +1,7 @@
 package ysomap.core.gadget.bullet.collections;
 
 import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
-import ysomap.annotation.Authors;
-import ysomap.annotation.Bullets;
-import ysomap.annotation.Dependencies;
-import ysomap.annotation.Require;
+import ysomap.annotation.*;
 import ysomap.core.ObjectGadget;
 import ysomap.core.gadget.bullet.jdk.TemplatesImplBullet;
 
@@ -21,9 +18,11 @@ import java.util.LinkedList;
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithTemplatesImplBullet extends AbstractTransformerBullet {
 
+    @NotNull
     @Require(name = "args" ,detail = "evil code (start with 'code:') or evil commands")
     public String args;
 
+    @NotNull
     @Require(name="version", type="int", detail = "commons-collections version, plz choose 3 or 4")
     public String version = "3";// 默认生成commonscollections 3.2.1
 

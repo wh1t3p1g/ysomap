@@ -1,6 +1,7 @@
 package ysomap.core.gadget.bullet.jdk;
 
 import ysomap.annotation.Bullets;
+import ysomap.annotation.NotNull;
 import ysomap.annotation.Require;
 import ysomap.core.bean.Bullet;
 
@@ -17,6 +18,7 @@ import java.net.URLStreamHandler;
 @Bullets
 public class URLBullet extends Bullet<URL> {
 
+    @NotNull
     @Require(name = "url", detail = "set a dnslog url")
     private String url;
 

@@ -16,8 +16,11 @@ import java.util.LinkedList;
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithJNDIBullet extends AbstractTransformerBullet {
 
+    @NotNull
     @Require(name="jndiURL",detail="jndi lookup url, like rmi://xxxx")
     public String jndiURL;
+
+    @NotNull
     @Require(name="version", type="int", detail = "commons-collections version, plz choose 3 or 4")
     public String version = "3";// 默认生成commonscollections 3.2.1
 
