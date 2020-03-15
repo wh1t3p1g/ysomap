@@ -23,4 +23,6 @@ public interface Session<T> {
     void close() throws Exception;
 
     boolean isExit();
+
+    void setAll() throws Exception;
 }

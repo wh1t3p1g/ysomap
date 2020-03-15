@@ -4,9 +4,9 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
-import ysomap.core.gadget.bullet.jdk.URLBullet;
+import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
+import ysomap.core.gadget.bullet.jdk.URLBullet;
 import ysomap.util.ReflectionHelper;
 
 import java.net.URL;
@@ -31,7 +31,7 @@ public class URLDNS extends Payload<Object> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
+    public Bullet getDefaultBullet(String command) throws Exception {
         return new URLBullet().set("url","http://localhost");
     }
 

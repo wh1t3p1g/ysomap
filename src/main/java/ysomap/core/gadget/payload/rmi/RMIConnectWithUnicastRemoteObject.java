@@ -5,7 +5,7 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
+import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
 import ysomap.core.gadget.bullet.jdk.rmi.RMIConnectBullet;
 import ysomap.util.ReflectionHelper;
@@ -35,7 +35,7 @@ public class RMIConnectWithUnicastRemoteObject extends Payload<UnicastRemoteObje
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
+    public Bullet getDefaultBullet(String command) throws Exception {
         return new RMIConnectBullet();
     }
 

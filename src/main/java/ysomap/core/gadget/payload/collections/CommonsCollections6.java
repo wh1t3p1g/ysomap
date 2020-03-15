@@ -7,10 +7,9 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
 import ysomap.core.bean.Bullet;
-import ysomap.core.gadget.bullet.collections.TransformerBullet;
 import ysomap.core.bean.Payload;
+import ysomap.core.gadget.bullet.collections.TransformerBullet;
 import ysomap.util.ReflectionHelper;
 
 import java.util.HashMap;
@@ -62,7 +61,7 @@ public class CommonsCollections6 extends Payload<Hashtable> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
+    public Bullet getDefaultBullet(String command) throws Exception {
         //ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "3");
         Bullet bullet = new TransformerBullet();
         bullet.set("args", command);

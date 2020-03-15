@@ -15,7 +15,7 @@ import ysomap.util.ReflectionHelper;
 @SuppressWarnings({"rawtypes"})
 public abstract class Payload <T> implements ObjectPayload<T> {
 
-    public ObjectGadget bullet;
+    public Bullet bullet;
 
     @Override
     final public T getObject() throws Exception {
@@ -38,7 +38,7 @@ public abstract class Payload <T> implements ObjectPayload<T> {
         return true;// 默认不检查也可以，如需检查重载该函数
     }
 
-    public void setBullet(ObjectGadget bullet) {
+    public void setBullet(Bullet bullet) {
         this.bullet = bullet;
     }
 
@@ -48,7 +48,7 @@ public abstract class Payload <T> implements ObjectPayload<T> {
         return this;
     }
 
-    public abstract ObjectGadget getDefaultBullet(String command) throws Exception;
+    public abstract Bullet getDefaultBullet(String command) throws Exception;
 
     public Serializer<?> getSerializer(){
         return SerializerFactory.createSerializer("default");

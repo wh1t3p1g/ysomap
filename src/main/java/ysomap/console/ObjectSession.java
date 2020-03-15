@@ -4,6 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import ysomap.core.ObjectGadget;
 import ysomap.core.bean.Exploit;
 import ysomap.core.bean.Payload;
+import ysomap.serializer.Serializer;
 import ysomap.util.Logger;
 import ysomap.util.PayloadHelper;
 import ysomap.util.ReflectionHelper;
@@ -16,16 +17,16 @@ import java.util.*;
  * @since 2020/2/19
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class ConsoleObjectSession implements Session<Class<?>> {
+public class ObjectSession implements Session<Class<?>> {
 
     private String sessionID;
     private String type;
     private Class<? extends ObjectGadget> clazz;
     private ObjectGadget obj;
-    private HashMap<String, String> args = new LinkedHashMap<>();
+    private HashMap<String, String> settings = new LinkedHashMap<>();
     private Object retObj;
 
-    public ConsoleObjectSession(String type) {
+    public ObjectSession(String type) {
         this.type = type;
         sessionID = RandomStringUtils.randomAlphabetic(16);
     }
@@ -41,11 +42,11 @@ public class ConsoleObjectSession implements Session<Class<?>> {
     @Override
     public void set(String key, Object value) throws Exception {
         if(value instanceof String){
-            args.remove(key);// clear current key:value
-            args.put(key, (String) value);
+            settings.remove(key);// clear current key:value
+            settings.put(key, (String) value);
         }
 
-        if(obj != null){
+        if(obj != null){ // 暂时不将值直接set到obj上，到run的时候再set，这样可以解决重复使用的问题
             obj.set(key, value);
         }
     }
@@ -61,6 +62,7 @@ public class ConsoleObjectSession implements Session<Class<?>> {
      */
     @Override
     public void run() throws Exception {
+        // start running
         if(type.equals("exploit")){// multi thread running
             Exploit exploit = (Exploit)obj;
             exploit.setExit(false);
@@ -69,16 +71,31 @@ public class ConsoleObjectSession implements Session<Class<?>> {
             Payload payload = (Payload) obj;
             retObj = payload.getObject();
             FileOutputStream fos = new FileOutputStream("obj.ser");
-            payload.getSerializer().serialize(retObj, fos);
-            Logger.success("generate " + payload.getClass().getSimpleName() + " success, plz see obj.ser");
+            Serializer serializer = payload.getSerializer();
+            if(serializer != null){
+                payload.getSerializer().serialize(retObj, fos);
+                Logger.success("generate " + payload.getClass().getSimpleName() + " success, plz see obj.ser");
+            }else{
+                Logger.success(payload.getClass().getSimpleName() + " not serializable, so do nothing");
+            }
+
         }else{
             Logger.error("current type<"+ type +"> is not allowed to run");
         }
     }
 
+    public void setAll() throws Exception {
+        // setting
+        if(obj != null){
+            for(Map.Entry<String, String> setting:settings.entrySet()){
+                obj.set(setting.getKey(), setting.getValue());
+            }
+        }
+    }
+
     @Override
     public String get(String key) {
-        return args.get(key);
+        return settings.get(key);
     }
 
     @Override
@@ -106,8 +123,8 @@ public class ConsoleObjectSession implements Session<Class<?>> {
         return clazz;
     }
 
-    public HashMap<String, String> getArgs() {
-        return args;
+    public HashMap<String, String> getSettings() {
+        return settings;
     }
 
     public Object getRetObj() {
@@ -118,7 +135,7 @@ public class ConsoleObjectSession implements Session<Class<?>> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ConsoleObjectSession that = (ConsoleObjectSession) o;
+        ObjectSession that = (ObjectSession) o;
         return sessionID.equals(that.sessionID);
     }
 

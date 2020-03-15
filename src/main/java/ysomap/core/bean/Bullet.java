@@ -13,8 +13,16 @@ public abstract class Bullet<T> implements ObjectGadget<T> {
     public Bullet(){ }
 
     @Override
-    public ObjectGadget set(String key, Object value) throws Exception {
+    public Bullet set(String key, Object value) throws Exception {
         ReflectionHelper.setFieldValue(this, key, value);
         return this;
+    }
+
+    public String get(String key) {
+        try {
+            return (String) ReflectionHelper.getFieldValue(this, key);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

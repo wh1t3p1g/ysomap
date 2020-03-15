@@ -21,7 +21,6 @@ public class HTTPHelper {
             server.createContext(path.getKey(), path.getValue());
         }
         server.setExecutor(null);
-        server.start();
         return server;
     }
 

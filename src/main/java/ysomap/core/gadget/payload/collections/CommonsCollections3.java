@@ -8,7 +8,6 @@ import ysomap.annotation.Authors;
 import ysomap.annotation.Dependencies;
 import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
-import ysomap.core.ObjectGadget;
 import ysomap.core.bean.Bullet;
 import ysomap.core.gadget.bullet.collections.TransformerWithTemplatesImplBullet;
 import ysomap.util.ReflectionHelper;
@@ -45,7 +44,7 @@ public class CommonsCollections3 extends CommonsCollections2 {
     }
 
     @Override
-    public ObjectGadget getDefaultBullet(String command) throws Exception {
+    public Bullet getDefaultBullet(String command) throws Exception {
         Bullet bullet = new TransformerWithTemplatesImplBullet();
         bullet.set("args", command);
         bullet.set("version","4");

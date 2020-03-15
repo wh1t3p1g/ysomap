@@ -19,13 +19,15 @@ public class PayloadRunner{
         System.setProperty("com.sun.jndi.rmi.object.trustURLCodebase","true");
         System.setProperty("com.sun.jndi.ldap.object.trustURLCodebase","true");
         if(payload != null && bullet != null){
-            serializer = payload.getSerializer();
+
             payload.setBullet(bullet);
             Object obj = payload.getObject();
-            serializer.deserialize(serializer.serialize(obj));
+            serializer = payload.getSerializer();
+            if(serializer != null){
+                serializer.deserialize(serializer.serialize(obj));
+            }
         }
     }
-
 
     public PayloadRunner setSerializer(Serializer serializer) {
         this.serializer = serializer;
