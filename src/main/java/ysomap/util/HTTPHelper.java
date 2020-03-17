@@ -37,12 +37,12 @@ public class HTTPHelper {
         byte[] obj = ClassFiles.makeClassWithDefaultConstructor(
                 filename.replace(".class",""), body);
 
-        if(filename.endsWith(".class")){
-            handler = new PayloadHandler(obj);
-        }else if(filename.endsWith(".jar")){
-            handler = new PayloadHandler(
-                    ClassFiles.makeJarFile(filename, obj));
-        }
+//        if(filename.endsWith(".class")){
+//            handler = new PayloadHandler(obj);
+//        }else if(filename.endsWith(".jar")){
+//            handler = new PayloadHandler(
+//                    ClassFiles.makeJarFile(filename, obj));
+//        }
         return handler;
     }
 

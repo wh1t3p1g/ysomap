@@ -46,7 +46,7 @@ public class ObjectSession implements Session<Class<?>> {
             settings.put(key, (String) value);
         }
 
-        if(obj != null){ // 暂时不将值直接set到obj上，到run的时候再set，这样可以解决重复使用的问题
+        if(obj != null){
             obj.set(key, value);
         }
     }

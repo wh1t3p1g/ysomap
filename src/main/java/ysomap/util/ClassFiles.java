@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -23,11 +24,20 @@ public class ClassFiles {
         return cc.toBytecode();
     }
 
-    public static byte[] makeJarFile(String jarname, byte[] bytecodes) {
+    public static byte[] makeJarWithMultiClazz(String jarname, Map<String, byte[]> bytecodes){
         try(ZipOutputStream zipout = new ZipOutputStream(new FileOutputStream(jarname))){
-            ZipEntry entry = new ZipEntry(jarname.replace(".jar","")+".class");
-            zipout.putNextEntry(entry);
-            zipout.write(bytecodes);
+            for(Map.Entry<String, byte[]> clazz:bytecodes.entrySet()){
+                String classname = clazz.getKey();
+                byte[] bytecode = clazz.getValue();
+                if(classname.endsWith(".class")){
+                    classname = classname.replaceFirst("\\.class$", "");
+                }
+                classname = classname.replace(".","/");
+                classname += ".class";
+                ZipEntry entry = new ZipEntry(classname);// 填充文件内容
+                zipout.putNextEntry(entry);
+                zipout.write(bytecode);
+            }
         }catch (IOException e) {
             e.printStackTrace();
         }

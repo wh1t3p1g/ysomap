@@ -10,6 +10,9 @@ import ysomap.core.gadget.bullet.objects.ClassWithEvilConstructor;
 import ysomap.serializer.Serializer;
 import ysomap.util.ClassFiles;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author wh1t3P1g
  * @since 2020/3/15
@@ -35,8 +38,10 @@ public class EvilFileWrapper extends Payload<byte[]> {
     public byte[] pack(Object obj) throws Exception {
         String type = bullet.get("type");
         if(type.equals("jar")){
-            String filename = bullet.get("classname")+".jar";
-            return ClassFiles.makeJarFile(filename, (byte[]) obj);
+            String classname = bullet.get("classname");
+            Map<String, byte[]> classes = new HashMap<>();
+            classes.put(classname, (byte[]) obj);
+            return ClassFiles.makeJarWithMultiClazz(classname + ".jar", classes);
         }else {
             return (byte[]) obj;
         }

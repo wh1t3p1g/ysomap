@@ -33,6 +33,7 @@ public class ConsoleSession {
     public List<String> args;
     /**
      * 将需要设置的参数，以类型区分，如bullet有bullet需要设置的参数，exploit有exploit要设置的参数
+     * 主要用于数据展示
      */
     public HashMap<String, Map<String, String>> settings;
     /**
@@ -223,7 +224,6 @@ public class ConsoleSession {
                 if(item.getKey().equals("payload")){// payload session 不需要设置参数
                     continue;
                 }
-
                 String key = args.get(0);
                 String value = args.get(1);
                 Session session = item.getValue();
