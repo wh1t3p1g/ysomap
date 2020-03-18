@@ -24,7 +24,7 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 
 ### TODO
 
-- [] 支持[tomcat下通用回显](https://xz.aliyun.com/t/7388)
+- [ ] 支持[tomcat下通用回显](https://xz.aliyun.com/t/7388)
 
 ## 0x01 起因
 
@@ -77,7 +77,7 @@ payload默认生成obj.ser文件在当前目录，为序列化后的数据。
 4. `show options`可以看到包括payload和bullet的配置信息
 5. 配置完成后`run`,payload模式会自动在当前目录下生成一个`obj.ser`文件
 
-** 可使用的命令 **
+**可使用的命令**
 
 #### 1.查看当前可用的exploits/payloads/bullets
 
