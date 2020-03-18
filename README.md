@@ -22,6 +22,10 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 - [x] JMXMLetExploit 利用MLet的形式动态加载远程MBean.jar文件
 - [x] JMXEvilMLetServer 挂载恶意MLet.xml文件和jmxmletpayload.jar文件，jar文件可执行任意命令，任意代码执行暂时没写
 
+### TODO
+
+- [] 支持[tomcat下通用回显](https://xz.aliyun.com/t/7388)
+
 ## 0x01 起因
 
 在实际分析ysoserial的利用链时，有时候会觉得框架写的太死，有以下几个缺点：
@@ -46,6 +50,7 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 ## 0x03 使用方法
 
+### 生成
 使用`mvn clean package -DskipTests`
 
 生成`ysomap-0.0.1-SNAPSHOT-all.jar`
@@ -54,7 +59,25 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 payload默认生成obj.ser文件在当前目录，为序列化后的数据。
 
-可使用的命令
+### 基础使用
+
+框架采用方式跟msf类似
+
+总体的workflow：
+
+调用一个exploit
+1. `use exploit xxxx`设置一个exploit
+2. `show options`获得当前exploit需要配置的信息，如果需要设置一个gadget则`use payload xxx`
+3. 设置完成后`run`
+
+调用一个payload
+1. `use payload xxxx` 设置一个payload
+2. `show options`获得当前payload的配置信息，会提示可以选择的bullet信息
+3. `use bullet xxxx` 给当前的payload装上子弹
+4. `show options`可以看到包括payload和bullet的配置信息
+5. 配置完成后`run`,payload模式会自动在当前目录下生成一个`obj.ser`文件
+
+** 可使用的命令 **
 
 #### 1.查看当前可用的exploits/payloads/bullets
 
