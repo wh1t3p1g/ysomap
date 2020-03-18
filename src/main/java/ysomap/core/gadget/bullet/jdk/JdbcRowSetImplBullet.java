@@ -14,7 +14,7 @@ import ysomap.core.bean.Bullet;
 public class JdbcRowSetImplBullet extends Bullet<JdbcRowSetImpl> {
 
     @NotNull
-    @Require(name = "jndiURL", detail = "jndi lookup url, like rmi://xxxx")
+    @Require(name = "jndiURL", detail = "jndi lookup url, like rmi://xxxx:1099/xxx")
     public String jndiURL;
 
     @Override

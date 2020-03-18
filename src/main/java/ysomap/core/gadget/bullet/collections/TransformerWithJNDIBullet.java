@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class TransformerWithJNDIBullet extends AbstractTransformerBullet {
 
     @NotNull
-    @Require(name="jndiURL",detail="jndi lookup url, like rmi://xxxx")
+    @Require(name="jndiURL",detail="jndi lookup url, like rmi://xxxx:1099/xxxx")
     public String jndiURL;
 
     @NotNull

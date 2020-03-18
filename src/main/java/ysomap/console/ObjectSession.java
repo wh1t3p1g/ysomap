@@ -4,13 +4,15 @@ import org.apache.commons.lang3.RandomStringUtils;
 import ysomap.core.ObjectGadget;
 import ysomap.core.bean.Exploit;
 import ysomap.core.bean.Payload;
-import ysomap.serializer.Serializer;
+import ysomap.serializer.SerializerFactory;
 import ysomap.util.Logger;
 import ysomap.util.PayloadHelper;
 import ysomap.util.ReflectionHelper;
 
-import java.io.FileOutputStream;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author wh1t3P1g
@@ -70,14 +72,10 @@ public class ObjectSession implements Session<Class<?>> {
         }else if(type.equals("payload")){
             Payload payload = (Payload) obj;
             retObj = payload.getObject();
-            FileOutputStream fos = new FileOutputStream("obj.ser");
-            Serializer serializer = payload.getSerializer();
-            if(serializer != null){
-                payload.getSerializer().serialize(retObj, fos);
-                Logger.success("generate " + payload.getClass().getSimpleName() + " success, plz see obj.ser");
-            }else{
-                Logger.success(payload.getClass().getSimpleName() + " not serializable, so do nothing");
-            }
+            SerializerFactory.serialize(
+                    payload.getClass().getSimpleName(),
+                    payload.getSerializer(),
+                    retObj);
 
         }else{
             Logger.error("current type<"+ type +"> is not allowed to run");

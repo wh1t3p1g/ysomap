@@ -5,7 +5,6 @@ import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import ysomap.serializer.Serializer;
 
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 /**
@@ -15,6 +14,8 @@ import java.io.OutputStream;
  */
 public class FastJsonSerializer implements Serializer<String> {
 
+    public static String OUTPUT = "console";
+
     @Override
     public String serialize(Object obj) throws Exception {
         return JSON.toJSONString(obj, SerializerFeature.WriteClassName);
@@ -23,12 +24,16 @@ public class FastJsonSerializer implements Serializer<String> {
     @Override
     public void serialize(Object obj, OutputStream out) throws Exception {
         String result = serialize(obj);
-        ObjectOutputStream objOut = new ObjectOutputStream(out);
-        objOut.writeObject(result);
+        out.write(result.getBytes());
     }
 
     @Override
     public Object deserialize(String obj) throws Exception {
         return JSON.parseObject(obj, Feature.SupportNonPublicField);
+    }
+
+    @Override
+    public String getOutputType() {
+        return OUTPUT;
     }
 }

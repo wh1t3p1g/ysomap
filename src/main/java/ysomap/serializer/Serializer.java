@@ -14,4 +14,5 @@ public interface Serializer<T> {
 
     Object deserialize(T obj) throws Exception;
 
+    String getOutputType();
 }

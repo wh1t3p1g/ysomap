@@ -9,6 +9,8 @@ import java.io.*;
  */
 public class DefaultSerializer implements Serializer<byte[]> {
 
+    public static String OUTPUT = "file";
+
     @Override
     public byte[] serialize(Object obj) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -29,4 +31,8 @@ public class DefaultSerializer implements Serializer<byte[]> {
         return objIn.readObject();
     }
 
+    @Override
+    public String getOutputType() {
+        return DefaultSerializer.OUTPUT;
+    }
 }
