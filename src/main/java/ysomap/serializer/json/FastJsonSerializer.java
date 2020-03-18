@@ -2,6 +2,7 @@ package ysomap.serializer.json;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import ysomap.serializer.Serializer;
 
@@ -29,7 +30,8 @@ public class FastJsonSerializer implements Serializer<String> {
 
     @Override
     public Object deserialize(String obj) throws Exception {
-        return JSON.parseObject(obj, Feature.SupportNonPublicField);
+        ParserConfig config = new ParserConfig();
+        return JSON.parseObject(obj, Object.class, config, Feature.SupportNonPublicField);
     }
 
     @Override

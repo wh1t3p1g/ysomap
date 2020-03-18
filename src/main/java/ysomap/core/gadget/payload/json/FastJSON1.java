@@ -1,7 +1,7 @@
 package ysomap.core.gadget.payload.json;
 
 import ysomap.annotation.Authors;
-import ysomap.annotation.Exploits;
+import ysomap.annotation.Payloads;
 import ysomap.annotation.Require;
 import ysomap.core.bean.Bullet;
 import ysomap.core.gadget.bullet.json.JdbcRowSetImplJsonBullet;
@@ -11,9 +11,9 @@ import ysomap.core.gadget.bullet.json.JdbcRowSetImplJsonBullet;
  * @since 2020/3/18
  */
 @SuppressWarnings({"rawtypes"})
-@Exploits
+@Payloads
 @Authors({ Authors.WH1T3P1G })
-@Require(bullets = {"JdbcRowSetImplJsonBullet"})
+@Require(bullets = {"JdbcRowSetImplJsonBullet","TemplatesImplJsonBullet"})
 public class FastJSON1 extends AbstractJson {
 
     @Override
