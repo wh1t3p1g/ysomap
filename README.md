@@ -53,7 +53,7 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 ### 生成
 使用`mvn clean package -DskipTests`
 
-生成`ysomap-0.0.1-SNAPSHOT-all.jar`
+生成的jar位于`cli/target/ysomap-cli-0.0.1-SNAPSHOT-all.jar`
 
 执行`java -jar ysomap-0.0.1-SNAPSHOT-all.jar`
 
