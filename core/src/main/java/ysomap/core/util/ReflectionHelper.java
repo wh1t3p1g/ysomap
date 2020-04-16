@@ -5,8 +5,10 @@ import sun.reflect.ReflectionFactory;
 import ysomap.common.annotation.NotNull;
 import ysomap.common.exception.ArgumentsNotCompleteException;
 
-import java.lang.reflect.*;
-import java.util.HashMap;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 @SuppressWarnings ( {"restriction","rawtypes", "unchecked"} )
 public class ReflectionHelper {
@@ -87,9 +89,12 @@ public class ReflectionHelper {
 	} )
 	public static <T> T createWithConstructor ( Class<T> classToInstantiate, Class<? super T> constructorClass, Class<?>[] consArgTypes,
 												Object[] consArgs ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		Constructor<? super T> objCons = constructorClass.getDeclaredConstructor(consArgTypes);
+		// 可以根据提供的Class的构造器来为classToInstantiate新建对象
+    	Constructor<? super T> objCons = constructorClass.getDeclaredConstructor(consArgTypes);
 		objCons.setAccessible(true);
-		Constructor<?> sc = ReflectionFactory.getReflectionFactory().newConstructorForSerialization(classToInstantiate, objCons);
+		// 实现不调用原有构造器去实例化一个对象，相当于动态增加了一个构造器
+		Constructor<?> sc = ReflectionFactory.getReflectionFactory()
+							.newConstructorForSerialization(classToInstantiate, objCons);
 		sc.setAccessible(true);
 		return (T) sc.newInstance(consArgs);
 	}
@@ -101,27 +106,6 @@ public class ReflectionHelper {
 	public static <T> T createWithoutConstructor ( Class<T> classToInstantiate )
 			throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
     	return createWithConstructor(classToInstantiate, Object.class, new Class[0], new Object[0]);
-	}
-
-	public static HashMap makeMap (Object v1, Object v2 ) throws Exception, ClassNotFoundException, NoSuchMethodException, InstantiationException,
-			IllegalAccessException, InvocationTargetException {
-		HashMap s = new HashMap();
-		ReflectionHelper.setFieldValue(s, "size", 2);
-		Class nodeC;
-		try {
-			nodeC = Class.forName("java.util.HashMap$Node");
-		}
-		catch ( ClassNotFoundException e ) {
-			nodeC = Class.forName("java.util.HashMap$Entry");
-		}
-		Constructor nodeCons = nodeC.getDeclaredConstructor(int.class, Object.class, Object.class, nodeC);
-		ReflectionHelper.setAccessible(nodeCons);
-
-		Object tbl = Array.newInstance(nodeC, 2);
-		Array.set(tbl, 0, nodeCons.newInstance(0, v1, v1, null));
-		Array.set(tbl, 1, nodeCons.newInstance(0, v2, v2, null));
-		ReflectionHelper.setFieldValue(s, "table", tbl);
-		return s;
 	}
 
 }

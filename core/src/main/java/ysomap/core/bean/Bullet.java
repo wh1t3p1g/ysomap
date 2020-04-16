@@ -1,5 +1,6 @@
 package ysomap.core.bean;
 
+import ysomap.common.util.Logger;
 import ysomap.core.ObjectGadget;
 import ysomap.core.util.ReflectionHelper;
 
@@ -22,6 +23,7 @@ public abstract class Bullet<T> implements ObjectGadget<T> {
         try {
             return (String) ReflectionHelper.getFieldValue(this, key);
         } catch (Exception e) {
+            Logger.error("Key "+key+" not found");
             return null;
         }
     }

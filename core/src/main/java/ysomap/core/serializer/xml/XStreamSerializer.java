@@ -15,6 +15,13 @@ public class XStreamSerializer implements Serializer<String> {
     public static String OUTPUT = "console";
     public static XStream xStream = new XStream();
 
+    static {
+//        xStream.addPermission(NoTypePermission.NONE);
+//        xStream.addPermission(NullPermission.NULL);
+//        xStream.allowTypeHierarchy(Collections.class);
+//        xStream.allowTypesByWildcard(new String[]{"*.*"});
+    }
+
     @Override
     public String serialize(Object obj) throws Exception {
         return xStream.toXML(obj);

