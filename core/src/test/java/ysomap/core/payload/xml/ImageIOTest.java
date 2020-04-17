@@ -18,7 +18,7 @@ public class ImageIOTest {
         Bullet bullet = payload.getDefaultBullet("open /System/Applications/Calculator.app");
         payload.setBullet(bullet);
         Object obj = payload.getObject();
-//        serializer.serialize(obj, System.out);
-        serializer.deserialize(serializer.serialize(obj));
+        String xml = (String) serializer.serialize(obj);
+        serializer.deserialize(xml);
     }
 }

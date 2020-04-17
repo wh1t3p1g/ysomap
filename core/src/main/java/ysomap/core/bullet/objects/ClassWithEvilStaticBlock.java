@@ -1,5 +1,6 @@
 package ysomap.core.bullet.objects;
 
+import ysomap.common.annotation.Bullets;
 import ysomap.common.annotation.NotNull;
 import ysomap.common.annotation.Require;
 import ysomap.core.bean.Bullet;
@@ -9,6 +10,7 @@ import ysomap.core.util.ClassFiles;
  * @author wh1t3P1g
  * @since 2020/3/15
  */
+@Bullets
 public class ClassWithEvilStaticBlock extends Bullet<byte[]> {
 
     @NotNull
@@ -19,6 +21,9 @@ public class ClassWithEvilStaticBlock extends Bullet<byte[]> {
     @Require(name = "body", detail = "代码或命令，如果是代码以'code:'打头")
     public String body;
 
+    @NotNull
+    @Require(name = "type", detail = "所需生成的文件类型，支持class或jar")
+    public String type = null;
 
     @Override
     public byte[] getObject() throws Exception {

