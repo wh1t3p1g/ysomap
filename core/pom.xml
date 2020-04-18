@@ -40,6 +40,7 @@
             <artifactId>javax.activation-api</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <!-- gadget dependencies -->
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -60,7 +61,6 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.24</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.xbean/xbean-reflect -->
         <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-reflect</artifactId>
@@ -80,6 +80,11 @@
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-dbcp</artifactId>
             <version>7.0.47</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>2.4.3</version>
         </dependency>
     </dependencies>
 
