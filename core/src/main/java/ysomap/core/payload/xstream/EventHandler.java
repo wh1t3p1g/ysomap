@@ -19,7 +19,7 @@ import ysomap.core.util.ReflectionHelper;
 @Payloads
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
-@Dependencies({"Gadget For XStream"})
+@Dependencies({"Gadget For XStream","<=com.thoughtworks.xstream:xstream:1.4.6"})
 @Require(bullets = {"ProcessBuilderBullet","JdbcRowSetImplBullet"})
 public class EventHandler extends Payload<Object> {
     @Override

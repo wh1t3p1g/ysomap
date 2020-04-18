@@ -22,7 +22,7 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 - [x] JMXMLetExploit 利用MLet的形式动态加载远程MBean.jar文件
 - [x] JMXEvilMLetServer 挂载恶意MLet.xml文件和jmxmletpayload.jar文件，jar文件可执行任意命令，任意代码执行暂时没写
 - [x] 支持fastjson JdbcRowSetImpl、TemplatesImpl gadget，[原理](http://blog.0kami.cn/2020/04/13/talk-about-fastjson-deserialization/)
-- [x] 支持XStream EventHandler、ImageIO、LazyIterator gadget，[原理]()
+- [x] 支持XStream EventHandler、ImageIO、LazyIterator、Groovy gadget，[原理](http://blog.0kami.cn/2020/04/18/talk-about-xstream-deserialization/)
 
 ### TODO
 

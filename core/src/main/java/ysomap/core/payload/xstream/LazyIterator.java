@@ -21,7 +21,7 @@ import java.util.Random;
 @Payloads
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
-@Dependencies({"Gadget For XStream","这里当前只支持执行任意命令"})
+@Dependencies({"Gadget For XStream","这里当前只支持执行任意命令","<=com.thoughtworks.xstream:xstream:1.4.10"})
 @Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock"})
 public class LazyIterator extends Payload<Object> {
     @Override
