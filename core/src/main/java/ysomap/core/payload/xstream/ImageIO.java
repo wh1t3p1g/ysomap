@@ -1,4 +1,4 @@
-package ysomap.core.payload.xml;
+package ysomap.core.payload.xstream;
 
 import ysomap.common.annotation.Authors;
 import ysomap.common.annotation.Dependencies;

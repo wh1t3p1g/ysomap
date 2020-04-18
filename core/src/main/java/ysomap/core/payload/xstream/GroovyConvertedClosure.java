@@ -1,4 +1,4 @@
-package ysomap.core.payload.xml;
+package ysomap.core.payload.xstream;
 
 import groovy.lang.Closure;
 import org.codehaus.groovy.runtime.ConvertedClosure;

@@ -1,4 +1,4 @@
-package ysomap.core.payload.xml;
+package ysomap.core.payload.xstream;
 
 import org.junit.Test;
 import ysomap.core.bean.Bullet;

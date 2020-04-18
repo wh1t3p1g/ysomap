@@ -1,4 +1,4 @@
-package ysomap.core.payload.xml;
+package ysomap.core.payload.xstream;
 
 import groovy.util.Expando;
 import org.codehaus.groovy.runtime.MethodClosure;
