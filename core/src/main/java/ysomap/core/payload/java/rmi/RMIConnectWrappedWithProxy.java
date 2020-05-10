@@ -16,7 +16,7 @@ import java.rmi.server.RemoteRef;
  * @since 2020/2/26
  */
 @Payloads
-@Require(bullets = {"RMIConnectBullet"})
+@Require(bullets = {"RMIConnectBullet"}, param = false)
 @Dependencies({"using to bypass jdk>=8u121","wrapped with Dynamic Proxy"})
 @Authors({ Authors.WH1T3P1G })
 public class RMIConnectWrappedWithProxy extends RMIConnectWrapped {

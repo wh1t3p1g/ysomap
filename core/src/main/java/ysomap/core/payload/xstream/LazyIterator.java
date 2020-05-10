@@ -22,7 +22,7 @@ import java.util.Random;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"Gadget For XStream","这里当前只支持执行任意命令","<=com.thoughtworks.xstream:xstream:1.4.10"})
-@Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock"})
+@Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock"}, param = false)
 public class LazyIterator extends Payload<Object> {
     @Override
     public Bullet getDefaultBullet(String command) throws Exception {

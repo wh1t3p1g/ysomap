@@ -24,7 +24,7 @@ import java.util.HashMap;
 @SuppressWarnings({"rawtypes", "unchecked"})
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"Gadget For XStream","org.codehaus.groovy:groovy:2.4.3"})
-@Require(bullets = {"JdbcRowSetImplBullet", "ProcessBuilderBullet"})
+@Require(bullets = {"JdbcRowSetImplBullet", "ProcessBuilderBullet"}, param = false)
 public class GroovyExpando extends Payload<Object> {
     @Override
     public Serializer<?> getSerializer() {

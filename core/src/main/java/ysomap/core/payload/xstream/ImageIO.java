@@ -32,7 +32,7 @@ import java.util.Iterator;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"Gadget For XStream","<=com.thoughtworks.xstream:xstream:1.4.10"})
-@Require(bullets = {"ProcessBuilderBullet","JdbcRowSetImplBullet"})
+@Require(bullets = {"ProcessBuilderBullet","JdbcRowSetImplBullet"}, param = false)
 public class ImageIO extends Payload<Object> {
 
     @Override

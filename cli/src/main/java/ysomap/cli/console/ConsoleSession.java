@@ -331,8 +331,7 @@ public class ConsoleSession {
                         running.get(Integer.parseInt(s)).close();
                         Logger.success("killed "+s);
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        Logger.error("kill "+s+" failed");
+                        throw new SessionIDNotFoundException(s);
                     }
                 }else{
                     throw new SessionIDNotFoundException(s);

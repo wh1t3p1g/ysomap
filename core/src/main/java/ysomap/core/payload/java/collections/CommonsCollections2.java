@@ -22,7 +22,7 @@ import java.util.Queue;
 @SuppressWarnings({"rawtypes","unchecked"})
 @Payloads
 @Authors({ Authors.FROHOFF })
-@Require(bullets = {"TemplatesImplBullet"})
+@Require(bullets = {"TemplatesImplBullet"}, param = false)
 @Dependencies({ "org.apache.commons:commons-collections4:4.0" })
 public class CommonsCollections2 extends Payload<Queue<Object>> {
 

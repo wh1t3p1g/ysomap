@@ -17,7 +17,7 @@ import javax.naming.Reference;
  */
 @SuppressWarnings({"rawtypes"})
 @Payloads
-@Require(bullets = {"TomcatRefBullet","RefBullet"})
+@Require(bullets = {"TomcatRefBullet","RefBullet"}, param = false)
 @Dependencies({"allowed jndi remote codebase"})
 @Authors({ Authors.WH1T3P1G })
 public class RefWrapper extends Payload<ReferenceWrapper> {

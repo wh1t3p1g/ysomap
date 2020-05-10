@@ -22,7 +22,7 @@ import java.util.HashMap;
 @Payloads
 @Authors({ Authors.GEBL })
 @Dependencies({"*"})
-@Require(bullets = {"URLBullet"})
+@Require(bullets = {"URLBullet"}, param = false)
 public class URLDNS extends Payload<Object> {
 
     @Override

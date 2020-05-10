@@ -48,7 +48,7 @@ https://github.com/JetBrains/jdk8u_jdk/commit/af2361ee2878302012214299036b3a8b4e
 @SuppressWarnings({"rawtypes"})
 @Payloads
 @Authors({ Authors.MATTHIASKAISER, Authors.JASINNER })
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
+@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
 @Dependencies({"commons-collections:commons-collections:3.2.1, without security manager"})
 public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
 

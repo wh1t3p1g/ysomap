@@ -21,7 +21,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"*"})
-@Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock"})
+@Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock"}, param = false)
 public class EvilFileWrapper extends Payload<byte[]> {
 
     @Override

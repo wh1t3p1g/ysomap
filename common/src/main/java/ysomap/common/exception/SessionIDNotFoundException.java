@@ -7,6 +7,6 @@ package ysomap.common.exception;
 public class SessionIDNotFoundException extends BaseException {
 
     public SessionIDNotFoundException(String id) {
-        super("[-] Session ID("+ id + ") not found, plz check again");
+        super("[-] Session ID("+ id + ") killing failed, plz check again");
     }
 }

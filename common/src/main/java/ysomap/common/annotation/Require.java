@@ -6,7 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 /**
  * @author wh1t3P1g
@@ -18,6 +20,7 @@ public @interface Require {
 
     String name() default "null";
     String type() default "String";
+    boolean param() default true;
     String detail() default "null";
     String[] bullets() default {};
 
@@ -29,6 +32,20 @@ public @interface Require {
                 if(field.isAnnotationPresent(Require.class)){
                     Require anno = field.getAnnotation(Require.class);
                     ret.put(anno.name(), new String[]{anno.type(), anno.detail()});
+                }
+            }
+            return ret;
+        }
+
+        public static Set<String> getFieldNames(Class<?> clazz){
+            Set<String> ret = new HashSet<>();
+            Field[] fields = clazz.getDeclaredFields();
+            for(Field field: fields){
+                if(field.isAnnotationPresent(Require.class)){
+                    Require anno = field.getAnnotation(Require.class);
+                    if(anno.param()){
+                        ret.add(anno.name());
+                    }
                 }
             }
             return ret;

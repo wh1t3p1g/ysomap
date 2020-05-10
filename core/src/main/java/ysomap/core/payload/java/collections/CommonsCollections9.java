@@ -26,7 +26,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes","unchecked"})
 @Payloads
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
-@Require(bullets = {"TemplatesImplBullet"})
+@Require(bullets = {"TemplatesImplBullet"}, param = false)
 @Authors({ Authors.WH1T3P1G })
 public class CommonsCollections9 extends Payload<HashSet> {
 

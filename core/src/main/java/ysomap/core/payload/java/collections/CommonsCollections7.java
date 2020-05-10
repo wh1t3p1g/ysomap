@@ -21,7 +21,7 @@ import ysomap.core.util.ReflectionHelper;
 @SuppressWarnings({"rawtypes","unchecked"})
 @Payloads
 @Dependencies({"org.apache.commons:commons-collections4:4.0"})
-@Require(bullets = {"TemplatesImplBullet"})
+@Require(bullets = {"TemplatesImplBullet"}, param = false)
 @Authors({ Authors.NAVALORENZO })
 public class CommonsCollections7 extends Payload<TreeBag> {
 

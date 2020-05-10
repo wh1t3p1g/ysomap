@@ -14,7 +14,7 @@ import ysomap.core.bullet.json.JdbcRowSetImplJsonBullet;
 @SuppressWarnings({"rawtypes"})
 @Payloads
 @Authors({ Authors.WH1T3P1G })
-@Require(bullets = {"JdbcRowSetImplJsonBullet","TemplatesImplJsonBullet"})
+@Require(bullets = {"JdbcRowSetImplJsonBullet","TemplatesImplJsonBullet"}, param = false)
 @Dependencies({"开启AutoType 或 低版本fastjson"})
 public class FastJSON1 extends AbstractJson {
 

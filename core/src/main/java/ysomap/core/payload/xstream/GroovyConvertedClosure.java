@@ -23,7 +23,7 @@ import java.lang.reflect.Proxy;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"Gadget For XStream","org.codehaus.groovy:groovy:2.4.3"})
-@Require(bullets = {"ClosureWithRuntimeBullet"})
+@Require(bullets = {"ClosureWithRuntimeBullet"}, param = false)
 public class GroovyConvertedClosure extends Payload<Object> {
 
     @Override

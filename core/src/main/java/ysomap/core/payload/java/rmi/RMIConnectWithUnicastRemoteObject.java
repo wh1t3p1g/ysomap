@@ -24,7 +24,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 @SuppressWarnings({"rawtypes"})
 @Payloads
-@Require(bullets = {"RMIConnectBullet"})
+@Require(bullets = {"RMIConnectBullet"}, param = false)
 @Dependencies({"return a UnicastRemoteObject object", "not working for rmi"})
 @Authors({ Authors.WH1T3P1G })
 public class RMIConnectWithUnicastRemoteObject extends Payload<UnicastRemoteObject> {

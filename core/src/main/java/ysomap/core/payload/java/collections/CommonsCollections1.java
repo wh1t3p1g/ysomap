@@ -26,7 +26,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes","unchecked"})
 @Payloads
 @Authors({ Authors.FROHOFF })
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"})
+@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
 @Dependencies({"commons-collections:commons-collections:3.2.1","jdk7"})
 public class CommonsCollections1 extends Payload<InvocationHandler> {
 

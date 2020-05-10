@@ -8,5 +8,6 @@ public class ArgumentsMissMatchException extends BaseException {
 
     public ArgumentsMissMatchException(String message) {
         super("[-] Arguments missing match, please use -> " + message);
+
     }
 }
