@@ -25,7 +25,7 @@ import java.rmi.server.UnicastRemoteObject;
 @SuppressWarnings({"rawtypes"})
 @Payloads
 @Require(bullets = {"RMIConnectBullet"}, param = false)
-@Dependencies({"using to bypass jdk>=8u121", "return a UnicastRemoteObject object(An Trinh)"})
+@Dependencies({"using to bypass jdk>=8u232 <=8u242", "return a UnicastRemoteObject object(An Trinh)"})
 @Authors({ Authors.WH1T3P1G , Authors.LALA })
 public class RMIConnectWithUnicastRemoteObject extends Payload<UnicastRemoteObject> {
 
