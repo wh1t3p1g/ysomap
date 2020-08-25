@@ -23,6 +23,12 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>ysomap</groupId>
+            <artifactId>thirdparty</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.javassist</groupId>
@@ -33,6 +39,11 @@
             <groupId>com.nqzero</groupId>
             <artifactId>permit-reflect</artifactId>
             <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.1</version>
         </dependency>
 
         <dependency>
@@ -91,6 +102,7 @@
             <artifactId>groovy</artifactId>
             <version>2.4.3</version>
         </dependency>
+
     </dependencies>
 
 </project>

@@ -19,15 +19,15 @@ import java.net.URLStreamHandler;
 public class URLBullet extends Bullet<URL> {
 
     @NotNull
-    @Require(name = "url", detail = "set a dnslog url")
-    private String url;
+    @Require(name = "dnslog", detail = "set a dnslog url")
+    private String dnslog;
 
     @Override
     public URL getObject() throws Exception {
         //Avoid DNS resolution during payload creation
         //Since the field <code>java.net.URL.handler</code> is transient, it will not be part of the serialized payload.
         URLStreamHandler handler = new SilentURLStreamHandler();
-        return new URL(null, url, handler); // URL to use as the Key
+        return new URL(null, dnslog, handler); // URL to use as the Key
     }
 
     static class SilentURLStreamHandler extends URLStreamHandler {

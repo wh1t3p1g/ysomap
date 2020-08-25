@@ -32,7 +32,7 @@ public class URLDNS extends Payload<Object> {
 
     @Override
     public Bullet getDefaultBullet(String command) throws Exception {
-        return new URLBullet().set("url","http://localhost");
+        return new URLBullet().set("dnslog",command);
     }
 
     @Override

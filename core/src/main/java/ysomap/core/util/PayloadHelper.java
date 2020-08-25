@@ -1,6 +1,7 @@
 package ysomap.core.util;
 
 import com.sun.org.apache.bcel.internal.classfile.Utility;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import ysomap.common.exception.GenerateErrorException;
 import ysomap.core.ObjectGadget;
 
@@ -123,5 +124,9 @@ public class PayloadHelper {
         classes.put("java.lang.Object", Object.class);
         classes.put("java.lang.Runtime", Runtime.class);
         return classLoader;
+    }
+
+    public static Object makeSimplePrincipalCollection(){
+        return new SimplePrincipalCollection();
     }
 }

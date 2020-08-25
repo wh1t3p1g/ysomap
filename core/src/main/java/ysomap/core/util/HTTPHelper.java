@@ -3,17 +3,24 @@ package ysomap.core.util;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import okhttp3.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author wh1t3P1g
  * @since 2020/2/17
  */
 public class HTTPHelper {
+
+    private static OkHttpClient client = new OkHttpClient.Builder()
+                                    .connectTimeout(3, TimeUnit.SECONDS)
+                                    .build();
+
 
     public static HttpServer makeSimpleHTTPServer(int port, Map<String, HttpHandler> paths) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
@@ -66,4 +73,30 @@ public class HTTPHelper {
             System.err.println("return payload and close");
         }
     }
+
+    public static Response post(String url, RequestBody body, Headers headers){
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(headers)
+                .post(body)
+                .build();
+        try(Response response = client.newCall(request).execute()){
+            return response;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static Response get(String url, Headers headers){
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(headers)
+                .build();
+        try(Response response = client.newCall(request).execute()){
+            return response;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
 }

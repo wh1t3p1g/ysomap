@@ -12,6 +12,7 @@
         <module>core</module>
         <module>cli</module>
         <module>common</module>
+        <module>thirdparty</module>
     </modules>
 
     <properties>
