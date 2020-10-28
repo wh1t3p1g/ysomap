@@ -17,9 +17,9 @@ public class GroovyConvertedClosureTest {
         Bullet bullet = payload.getDefaultBullet("open /System/Applications/Calculator.app");
         payload.setBullet(bullet);
         Serializer serializer = payload.getSerializer();
-        String serialized = (String) serializer.serialize(payload.getObject());
-        serializer.serialize(payload.getObject(), System.out);
-        Object obj = serializer.deserialize(serialized);
-        System.out.println(obj);
+//        String serialized = (String) serializer.serialize(payload.getObject());
+//        serializer.serialize(payload.getObject(), System.out);
+//        Object obj = serializer.deserialize(serialized);
+//        System.out.println(obj);
     }
 }

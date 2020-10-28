@@ -3,7 +3,6 @@ package ysomap.core.payload.xstream;
 import org.junit.Test;
 import ysomap.core.bean.Bullet;
 import ysomap.core.bean.Payload;
-import ysomap.core.serializer.Serializer;
 
 /**
  * @author wh1t3P1g
@@ -18,7 +17,7 @@ public class EventHandlerTest {
 //        Bullet bullet = new JdbcRowSetImplBullet();
 //        bullet.set("jndiURL","rmi://localhost:1099/test");
         treeset.setBullet(bullet);
-        Serializer serializer = treeset.getSerializer();
-        serializer.deserialize(serializer.serialize(treeset.getObject()));
+//        Serializer serializer = treeset.getSerializer();
+//        serializer.deserialize(serializer.serialize(treeset.getObject()));
     }
 }

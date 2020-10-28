@@ -12,7 +12,7 @@ import java.util.LinkedList;
 @Bullets
 @Dependencies({"evil obj http server"})
 @Authors({ Authors.WH1T3P1G })
-public class TransformerWithResponseBullet extends AbstractTransformerBullet {
+public class TransformerWithURLClassLoaderBullet extends AbstractTransformerBullet {
 
     @NotNull
     @Require(name = "jarUrl" ,detail = "evil server URL, like http://localhost:80/EvilObj.jar")
