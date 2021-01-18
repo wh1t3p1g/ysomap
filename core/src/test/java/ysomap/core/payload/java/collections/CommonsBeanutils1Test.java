@@ -20,6 +20,6 @@ public class CommonsBeanutils1Test {
         bullet.set("objectName", "EvilObj");
         payload.setBullet(bullet);
         Serializer serializer = payload.getSerializer();
-        serializer.deserialize(serializer.serialize(payload.getObject()));
+//        serializer.deserialize(serializer.serialize(payload.getObject()));
     }
 }
