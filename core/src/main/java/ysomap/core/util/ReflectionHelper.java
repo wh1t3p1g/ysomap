@@ -47,7 +47,7 @@ public class ReflectionHelper {
 	}
 
 	public static Constructor<?> getConstructor(String classname, Class<?>[] paramTypes) throws ClassNotFoundException, NoSuchMethodException {
-    	Constructor<?> ctor = Class.forName(classname).getConstructor(paramTypes);
+    	Constructor<?> ctor = Class.forName(classname).getDeclaredConstructor(paramTypes);
 		setAccessible(ctor);
 		return ctor;
 	}

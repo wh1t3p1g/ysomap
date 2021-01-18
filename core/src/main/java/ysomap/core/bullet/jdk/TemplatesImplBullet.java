@@ -41,6 +41,8 @@ public class TemplatesImplBullet extends Bullet<Object> {
     @Require(name = "tomcatEcho", type = "boolean", detail = "选择tomcat回显，默认为false")
     private String tomcatEcho = "false";
 
+    public String action = "outputProperties";
+
     @Override
     public Object getObject() throws Exception {
         if(body.startsWith("code:")){// code mode
