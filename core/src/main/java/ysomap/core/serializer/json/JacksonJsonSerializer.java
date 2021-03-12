@@ -1,26 +1,23 @@
 package ysomap.core.serializer.json;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ysomap.core.serializer.Serializer;
 
 import java.io.OutputStream;
 
 /**
- * fastjson 序列化器
  * @author wh1t3P1g
- * @since 2020/2/15
+ * @since 2021/3/7
  */
-public class FastJsonSerializer implements Serializer<String> {
+public class JacksonJsonSerializer implements Serializer<String> {
 
-    public static Serializer serializer = new FastJsonSerializer();
+    public static Serializer serializer = new JacksonJsonSerializer();
     public static String OUTPUT = "console";
 
     @Override
     public String serialize(Object obj) throws Exception {
-        return JSON.toJSONString(obj, SerializerFeature.WriteClassName);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(obj);
     }
 
     @Override
@@ -33,9 +30,9 @@ public class FastJsonSerializer implements Serializer<String> {
 
     @Override
     public Object deserialize(String obj) throws Exception {
-        ParserConfig config = new ParserConfig();
-        return JSON.parseObject(obj, Object.class, config, Feature.SupportNonPublicField);
-//        return JSON.parse(obj);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enableDefaultTyping();
+        return objectMapper.readValue(obj, Object.class);
     }
 
     @Override

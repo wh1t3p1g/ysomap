@@ -83,4 +83,8 @@ public class CommonsCollections4 extends Payload<BadAttributeValueExpException>{
                 .set("args", command)
                 .set("version", "3");
     }
+
+    public static void main(String[] args) {
+
+    }
 }
