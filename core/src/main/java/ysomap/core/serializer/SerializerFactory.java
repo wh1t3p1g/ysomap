@@ -3,6 +3,7 @@ package ysomap.core.serializer;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.json.FastJsonSerializer;
 import ysomap.core.serializer.json.JacksonJsonSerializer;
+import ysomap.core.serializer.xml.XMLDecoderSerializer;
 import ysomap.core.serializer.xml.XStreamSerializer;
 
 import java.io.FileOutputStream;
@@ -24,6 +25,8 @@ public class SerializerFactory {
                 return JacksonJsonSerializer.serializer;
             case "xstream":
                 return XStreamSerializer.serializer;
+            case "xmldecoder":
+                return XMLDecoderSerializer.serializer;
             default:
                 return DefaultSerializer.serializer;
         }

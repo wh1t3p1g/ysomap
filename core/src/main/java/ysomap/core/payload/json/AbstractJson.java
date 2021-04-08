@@ -2,7 +2,7 @@ package ysomap.core.payload.json;
 
 import ysomap.core.bean.Payload;
 import ysomap.core.serializer.Serializer;
-import ysomap.core.serializer.json.FastJsonSerializer;
+import ysomap.core.serializer.SerializerFactory;
 
 /**
  * @author wh1t3P1g
@@ -12,6 +12,6 @@ public abstract class AbstractJson extends Payload<Object> {
 
     @Override
     public Serializer<?> getSerializer() {
-        return new FastJsonSerializer();
+        return SerializerFactory.createSerializer("fastjson");
     }
 }
