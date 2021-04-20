@@ -20,7 +20,7 @@ import java.util.PriorityQueue;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.FROHOFF })
 @Require(bullets = {"TemplatesImplBullet"},param = false)
-@Dependencies({"commons-beanutils:commons-beanutils:1.9.2", "commons-collections:commons-collections:3.1", "commons-logging:commons-logging:1.2"})
+@Dependencies({"commons-beanutils:commons-beanutils:1.9.2", "commons-logging:commons-logging:1.2"})
 public class CommonsBeanutils1 extends Payload<Object> {
 
     @Override
