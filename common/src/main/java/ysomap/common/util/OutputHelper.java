@@ -104,4 +104,5 @@ public class OutputHelper {
 
         printTable(rows);
     }
+
 }

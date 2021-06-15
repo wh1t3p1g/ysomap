@@ -17,6 +17,17 @@ public class ColorStyle {
                 .toAnsi();
     }
 
+    public static String makeWordRedAndBoldAndUnderline(String word){
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED))
+                .style(AttributedStyle::bold)
+                .style(AttributedStyle::underline)
+                .append(word)
+                .style(AttributedStyle::underlineOff)
+                .style(AttributedStyle::boldOff)
+                .toAnsi();
+    }
+
     public static String makeWordGreen(String word){
         return new AttributedStringBuilder()
                 .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN))

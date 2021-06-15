@@ -11,4 +11,8 @@ public class GenerateErrorException extends BaseException {
     public GenerateErrorException(String type, String classname) {
         super("[-] generate "+type+"("+ ColorStyle.makeWordRed(classname) +") error");
     }
+
+    public GenerateErrorException(String info) {
+        super("[-] generate "+ ColorStyle.makeWordRed(info) +" error");
+    }
 }

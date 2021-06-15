@@ -3,8 +3,6 @@ package ysomap.core.util;
 import com.sun.org.apache.bcel.internal.classfile.Utility;
 import com.sun.org.apache.xpath.internal.objects.XString;
 import org.apache.shiro.subject.SimplePrincipalCollection;
-import ysomap.common.exception.GenerateErrorException;
-import ysomap.core.ObjectGadget;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -109,13 +107,13 @@ public class PayloadHelper {
         return "open /System/Applications/Calculator.app";
     }
 
-    public static ObjectGadget makeGadget(Class<? extends ObjectGadget> clazz, String type) throws GenerateErrorException {
-        try {
-            return clazz.newInstance();
-        } catch (Exception e) {
-            throw new GenerateErrorException(type, clazz.getSimpleName());
-        }
-    }
+//    public static ObjectGadget makeGadget(Class<? extends ObjectGadget> clazz, String type) throws GenerateErrorException {
+//        try {
+//            return clazz.newInstance();
+//        } catch (Exception e) {
+//            throw new GenerateErrorException(type, clazz.getSimpleName());
+//        }
+//    }
 
     public static String makeBCELStr(byte[] classbytes) throws IOException {
         return "$$BCEL$$" + Utility.encode(classbytes, true);

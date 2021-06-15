@@ -16,14 +16,14 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>ysomap-${project.artifactId}-${project.version}-all</finalName>
+                    <finalName>ysomap</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
                             <mainClass>ysomap.cli.App</mainClass>
                         </manifest>
                     </archive>
-                    <descriptor>assembly.xml</descriptor>
+                    <descriptor>../assembly.xml</descriptor>
                 </configuration>
                 <executions>
                     <execution>
@@ -40,6 +40,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>de.vandermeer</groupId>
+            <artifactId>asciitable</artifactId>
+            <version>0.3.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/de.vandermeer/ascii-utf-themes -->
+        <dependency>
+            <groupId>de.vandermeer</groupId>
+            <artifactId>ascii-utf-themes</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
@@ -51,12 +62,6 @@
         <dependency>
             <groupId>ysomap</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>ysomap</groupId>
-            <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
