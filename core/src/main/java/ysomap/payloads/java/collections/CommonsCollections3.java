@@ -20,7 +20,11 @@ import java.util.Queue;
 @Payloads
 @Targets({Targets.JDK})
 @Authors({ Authors.FROHOFF })
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
+@Require(bullets = {"TransformerBullet",
+        "TransformerWithJNDIBullet",
+        "TransformerWithSleepBullet",
+        "TransformerWithURLClassLoaderBullet",
+        "TransformerWithFileWriteBullet"}, param = false)
 @Dependencies({"org.apache.commons:commons-collections4:4.0"})
 public class CommonsCollections3 extends CommonsCollections2 {
 

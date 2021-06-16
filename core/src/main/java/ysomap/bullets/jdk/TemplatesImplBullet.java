@@ -129,6 +129,10 @@ public class TemplatesImplBullet implements Bullet<Object> {
 
         private static final long serialVersionUID = -5971610431559700674L;
 
+        public StubTransletPayload(){
+            transletVersion = 101;
+        }
+
         public void transform (DOM document, SerializationHandler[] handlers ) throws TransletException {}
 
         @Override

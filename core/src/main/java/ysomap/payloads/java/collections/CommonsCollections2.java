@@ -17,7 +17,7 @@ import java.util.Queue;
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-@Payloads
+//@Payloads
 @Targets({Targets.JDK})
 @Authors({ Authors.FROHOFF })
 @Require(bullets = {"TemplatesImplBullet"}, param = false)
@@ -31,7 +31,12 @@ public class CommonsCollections2 extends AbstractPayload<Queue<Object>> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TemplatesImplBullet().set("body", args[0]);
+        Bullet bullet = new TemplatesImplBullet();
+        bullet.set("type", args[0]);
+        bullet.set("body", args[1]);
+        bullet.set("effect", args[2]);
+        bullet.set("exception", args[3]);
+        return bullet;
     }
 
     @Override

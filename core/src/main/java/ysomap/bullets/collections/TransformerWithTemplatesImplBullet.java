@@ -10,11 +10,12 @@ import java.util.LinkedList;
 
 /**
  * jdk.xml.enableTemplatesImplDeserialization=true
+ * 这个bullet不是很有必要
  * @author wh1t3P1g
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes"})
-@Bullets
+//@Bullets
 @Dependencies({"<=commons-collections 3.2.1", "<=commons-collections 4.0"})
 @Details("执行后，执行任意代码，依赖TemplatesImpl")
 @Authors({ Authors.WH1T3P1G })

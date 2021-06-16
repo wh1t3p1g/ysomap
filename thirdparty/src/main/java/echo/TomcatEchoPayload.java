@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class TomcatEchoPayload extends AbstractTranslet implements Serializable {
 
     public TomcatEchoPayload() throws Exception {
+        transletVersion = 101;
         Object o;
         Object resp;
         String s;

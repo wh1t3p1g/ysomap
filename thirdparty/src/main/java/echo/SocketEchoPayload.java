@@ -18,11 +18,11 @@ import java.nio.file.Paths;
  */
 public class SocketEchoPayload extends AbstractTranslet implements Serializable, Runnable {
 
-
     private static String host;
     private static int port;
 
     public SocketEchoPayload(){
+        transletVersion = 101;
         new Thread(this).start();
     }
 

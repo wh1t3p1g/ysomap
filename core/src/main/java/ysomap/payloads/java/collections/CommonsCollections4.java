@@ -43,10 +43,14 @@ This only works in JDK 8u76 and WITHOUT a security manager
 https://github.com/JetBrains/jdk8u_jdk/commit/af2361ee2878302012214299036b3a8b4ed36974#diff-f89b1641c408b60efe29ee513b3d22ffR70
  */
 @SuppressWarnings({"rawtypes"})
-@Payloads
+//@Payloads
 @Targets({Targets.JDK})
 @Authors({ Authors.MATTHIASKAISER, Authors.JASINNER })
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
+@Require(bullets = {"TransformerBullet",
+        "TransformerWithJNDIBullet",
+        "TransformerWithSleepBullet",
+        "TransformerWithURLClassLoaderBullet",
+        "TransformerWithFileWriteBullet"}, param = false)
 @Dependencies({"commons-collections:commons-collections:3.2.1, without security manager"})
 public class CommonsCollections4 extends AbstractPayload<BadAttributeValueExpException> {
 

@@ -19,9 +19,13 @@ import java.util.Map;
  * @since 2020/2/18
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-@Payloads
+//@Payloads
 @Targets({Targets.JDK})
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
+@Require(bullets = {"TransformerBullet",
+        "TransformerWithJNDIBullet",
+        "TransformerWithSleepBullet",
+        "TransformerWithURLClassLoaderBullet",
+        "TransformerWithFileWriteBullet"}, param = false)
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
 @Authors({Authors.SCRISTALLI, Authors.HANYRAX, Authors.EDOARDOVIGNATI})
 public class CommonsCollections6 extends AbstractPayload<Hashtable> {

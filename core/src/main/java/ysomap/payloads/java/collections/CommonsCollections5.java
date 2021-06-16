@@ -24,7 +24,11 @@ import java.util.Map;
 @Payloads
 @Targets({Targets.JDK})
 @Authors({ Authors.MATTHIASKAISER })
-@Require(bullets = {"TransformerBullet","TransformerWithJNDIBullet","TransformerWithTemplatesImplBullet","TransformerWithResponseBullet"}, param = false)
+@Require(bullets = {"TransformerBullet",
+        "TransformerWithJNDIBullet",
+        "TransformerWithSleepBullet",
+        "TransformerWithURLClassLoaderBullet",
+        "TransformerWithFileWriteBullet"}, param = false)
 @Dependencies({"commons-collections:commons-collections:3.2.1"})
 public class CommonsCollections5 extends AbstractPayload<HashSet> {
 
