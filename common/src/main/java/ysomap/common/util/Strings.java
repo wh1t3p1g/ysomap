@@ -1,9 +1,6 @@
 package ysomap.common.util;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Strings {
     public static String join(Iterable<String> strings, String sep, String prefix, String suffix) {
@@ -49,5 +46,17 @@ public class Strings {
 
     public static class ToStringComparator implements Comparator<Object> {
         public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString()); }
+    }
+
+    public static String randomString(int length){
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        Random random = new Random();
+
+        return random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(length)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }

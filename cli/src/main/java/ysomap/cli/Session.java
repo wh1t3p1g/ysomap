@@ -154,7 +154,7 @@ public class Session {
             }else{
                 Logger.normal("Current Payload: "+ColorStyle.makeWordRed("null"));
             }
-            Printer.printCandidates("payloads", clazz);
+            Printer.printCandidates("payloads", clazz, true, console.payloads);
         }
 
         if("bullets".equals(type) && payload != null){
@@ -164,7 +164,7 @@ public class Session {
             }else{
                 Logger.normal("Current Bullet: "+ColorStyle.makeWordRed("null"));
             }
-            Printer.printCandidates("bullets", clazz);
+            Printer.printCandidates("bullets", clazz, true, console.bullets);
         }
     }
 
@@ -175,7 +175,7 @@ public class Session {
             Class<?> clazz = exploit.getClass();
             Logger.normal("Current Exploit: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
             if(payload == null){
-                Printer.printCandidates("payloads", clazz);
+                Printer.printCandidates("payloads", clazz, false, null);
             }
             Printer.printSettings(clazz, settings.get("exploit"));
         }
@@ -184,7 +184,7 @@ public class Session {
             Class<?> clazz = payload.getClass();
             Logger.normal("Current Payload: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
             if(bullet == null){
-                Printer.printCandidates("bullets", clazz);
+                Printer.printCandidates("bullets", clazz, false, null);
             }
         }
 

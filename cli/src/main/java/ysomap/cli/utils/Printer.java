@@ -1,6 +1,9 @@
 package ysomap.cli.utils;
 
-import de.vandermeer.asciitable.*;
+import de.vandermeer.asciitable.AT_ColumnWidthCalculator;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.asciitable.CWC_FixedWidth;
+import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.asciithemes.a8.A8_Grids;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import ysomap.cli.Session;
@@ -41,11 +44,19 @@ public class Printer {
         printTable(at, cwc);
     }
 
-    public static void printCandidates(String type, Class<?> clazz){
+    public static void printCandidates(String type, Class<?> clazz, boolean detail, Map<String, MetaData> dataMap){
         List<String> candidates = Arrays.asList(Require.Utils.getRequiresFromClass(clazz));
         if(candidates.size() > 0){
             String c = candidates.stream().map(ColorStyle::makeWordRedAndBoldAndUnderline).collect(Collectors.joining(", "));
             Logger.normal("You can choose "+type+": "+c);
+            if(detail){
+                List<MetaData> candidatesMetaData = candidates.stream().map(dataMap::get).collect(Collectors.toList());
+                if("payloads".equals(type)){
+                    printPayloadsInfo(candidatesMetaData);
+                }else if("bullets".equals(type)){
+                    printBulletsInfo(candidatesMetaData);
+                }
+            }
         }else{
             Logger.normal("No need to set a "+type);
         }
@@ -105,6 +116,7 @@ public class Printer {
         at.addRow("Payloads", "Author", "Targets", "Dependencies");
         at.addRule();
         for(MetaData metaData:data){
+            if(metaData == null)continue;
             at.addRow(metaData.getSimpleName(),
                     metaData.getAuthor(),
                     metaData.getTarget(),
@@ -140,6 +152,6 @@ public class Printer {
         at.getRenderer().setCWC(cwc);
         at.getContext().setGrid(A8_Grids.lineDobuleTripple());
         System.out.println(at.render());
-        Logger.normal("\n");
+        Logger.success("print current table done!");
     }
 }

