@@ -33,11 +33,19 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 ## #3 使用方法
 
 ### 生成
+由于最新版XStream的payload需要JDK8的环境进行编译，所以后续运行需在JDK8的环境下运行
+
 使用`mvn clean package -DskipTests`
 
-生成的jar位于`cli/target/ysomap-cli-0.0.1-SNAPSHOT-all.jar`
+生成的jar位于`cli/target/ysomap.jar`
 
-执行`java -jar ysomap-0.0.1-SNAPSHOT-all.jar`
+版本>=v0.0.1支持两种运行模式
+
+1. cli模式
+执行`java -jar ysomap.jar cli`,终端模式
+   
+2. script模式
+执行`java -jar ysomap.jar script /path/to/script.yso`，脚本模式
 
 ### 基础使用方法
 
