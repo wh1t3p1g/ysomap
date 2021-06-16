@@ -48,7 +48,7 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 ### DONE
 
 - [x] 支持CommonsCollections系列payload
-- [x] 支持执行效果bullet：远程jar载入、命令执行、代码执行、发起jndi效果、tomcat内存马、延时判断、文件写入
+- [x] 支持执行效果bullet：远程jar载入、命令执行、代码执行、发起jndi效果、tomcat内存马、延时判断、文件写入、socket shell。
 - [x] 支持现有RMI系列攻击包 [原理1](http://blog.0kami.cn/2020/02/06/rmi-registry-security-problem/) [原理2](http://blog.0kami.cn/2020/02/09/jndi-with-rmi/) [原理3](https://mogwailabs.de/blog/2020/02/an-trinhs-rmi-registry-bypass/)
 - [x] 支持现有LDAP系列攻击包 [原理](http://blog.0kami.cn/2020/03/01/jndi-with-ldap/)
 - [x] 支持HTTP服务动态挂载恶意的class文件或jar文件
@@ -56,6 +56,7 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 - [x] 支持现有JMX系列攻击包 [原理](http://blog.0kami.cn/2020/03/10/java-jmx-rmi/)
 - [x] 支持fastjson JdbcRowSetImpl、TemplatesImpl gadget [原理](http://blog.0kami.cn/2020/04/13/talk-about-fastjson-deserialization/)
 - [x] 支持现有XStream系列payload包 [原理](http://blog.0kami.cn/2020/04/18/talk-about-xstream-deserialization/)
+- [x] 支持weblogic XMLDecoder payloads
 
 ### TODO
 

