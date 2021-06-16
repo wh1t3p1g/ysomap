@@ -51,6 +51,7 @@ public class Console {
         exploits = loadMetaData("ysomap.exploits", Exploits.class);
         payloads = loadMetaData("ysomap.payloads", Payloads.class);
         bullets = loadMetaData("ysomap.bullets", Bullets.class);
+        Logger.success("exploits("+exploits.values().size()+") payloads("+payloads.values().size()+") bullets("+bullets.values().size()+")");
     }
 
     public void run(){
