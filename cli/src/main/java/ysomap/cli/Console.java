@@ -17,10 +17,13 @@ import ysomap.common.annotation.Payloads;
 import ysomap.common.exception.ArgumentsMissMatchException;
 import ysomap.common.exception.BaseException;
 import ysomap.common.exception.YsoClassNotFoundException;
+import ysomap.common.exception.YsoFileNotFoundException;
 import ysomap.common.util.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.nio.file.Files;
 import java.util.*;
 
 import static org.jline.builtins.Completers.TreeCompleter.node;
@@ -115,6 +118,9 @@ public class Console {
                 break;
             case "kill":
                 kill();
+                break;
+            case "script":
+                script();
                 break;
             case "run":
                 curSession.run();
@@ -219,7 +225,7 @@ public class Console {
         );
 
         Completer commonCompleter = new Completers.TreeCompleter(
-                node("help","exit","run","sessions","kill","stop"));
+                node("help","exit","run","sessions","kill","stop","script"));
         return new AggregateCompleter(useCompleter, listCompleter, showCompleter, setCompleter, sessionCompleter,commonCompleter);
     }
 
@@ -351,6 +357,29 @@ public class Console {
 
         }else{
             throw new ArgumentsMissMatchException("kill [uuid|all]");
+        }
+    }
+
+    public void script() throws Exception {
+        if(args.size() == 1){
+            String filepath = args.get(0);
+            File file = new File(filepath);
+            if(!file.exists()){
+                throw new YsoFileNotFoundException(filepath);
+            }
+            Logger.success("Start to parse script file{"+filepath+"}");
+            List<String> contents = Files.readAllLines(file.toPath());
+            Parser parser = new DefaultParser();
+            ParsedLine parsedLine = null;
+            List<String> words;
+            for(String line:contents){
+                parsedLine = parser.parse(line, line.length()+1, Parser.ParseContext.ACCEPT_LINE);
+                words = parsedLine.words();
+                dispatch(words);
+            }
+            Logger.success("Script loaded!");
+        }else{
+            throw new ArgumentsMissMatchException("script /path/to/script");
         }
     }
 

