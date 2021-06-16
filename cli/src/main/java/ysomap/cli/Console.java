@@ -398,4 +398,8 @@ public class Console {
                 "exit                exit ysomap\n";
         System.out.println(usage);
     }
+
+    public void setArgs(List<String> args) {
+        this.args = args;
+    }
 }
