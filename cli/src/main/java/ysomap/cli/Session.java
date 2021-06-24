@@ -203,11 +203,14 @@ public class Session {
         }
 
         if(isExploit){
+            while(exploit.isRunning()){
+                Logger.success("Pre exploit is running now, plz wait for 2 second!");
+                Thread.sleep(2*1000);
+            }
             if(exploit.has("payload")){
                 exploit.set("payload", obj);
             }
-            exploit.setExit(false);
-            isRunning = true;
+            exploit.setStatus(ysomap.common.util.Status.RUNNING);
             new Thread(exploit).start();
         }else if(obj != null){
             SerializerFactory.serialize(

