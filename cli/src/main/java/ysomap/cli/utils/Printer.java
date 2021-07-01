@@ -31,9 +31,9 @@ public class Printer {
         at.addRule();
         sessions.forEach((uuid, session)->{
             if(uuid.equals(curSession)) {
-                at.addRow("*current*", session.isRunning?"running":"stopped", session.toString());
+                at.addRow("*current*", session.isRunning()?"running":"stopped", session.toString());
             }else{
-                at.addRow(uuid, session.isRunning?"running":"stopped", session.toString());
+                at.addRow(uuid, session.isRunning()?"running":"stopped", session.toString());
             }
             at.addRule();
         });

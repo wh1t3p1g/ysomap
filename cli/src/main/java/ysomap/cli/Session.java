@@ -30,7 +30,6 @@ public class Session {
     public Bullet bullet;
 
     public Map<String, HashMap<String, Object>> settings = new HashMap<>();
-    public boolean isRunning = false;
     private Console console;
     private boolean isExploit = false;
     private boolean isEmpty = true;
@@ -223,9 +222,8 @@ public class Session {
     }
 
     public void close(){
-        if(isRunning && exploit != null){
+        if(isRunning() && exploit != null){
             exploit.stop();
-            isRunning = false;
         }
     }
 
@@ -235,7 +233,6 @@ public class Session {
         exploit = null;
         payload = null;
         bullet = null;
-        isRunning = false;
         isExploit = false;
         isEmpty = true;
         settings.get("exploit").clear();
@@ -257,5 +254,12 @@ public class Session {
 
     public boolean isEmpty(){
         return isEmpty;
+    }
+
+    public boolean isRunning(){
+        if(exploit != null){
+            return exploit.isRunning();
+        }
+        return false;
     }
 }

