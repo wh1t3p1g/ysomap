@@ -72,14 +72,6 @@
                     <groupId>ysomap</groupId>
                     <artifactId>common</artifactId>
                 </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>ysomap</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
                 <exclusion>
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-stdlib-common</artifactId>
@@ -97,6 +89,12 @@
                     <artifactId>tomcat-jsp-api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>ysomap</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
