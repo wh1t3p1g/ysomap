@@ -1,6 +1,7 @@
 package ysomap.core.serializer;
 
 import ysomap.common.util.Logger;
+import ysomap.core.serializer.hessian.HessianSerializer;
 import ysomap.core.serializer.json.FastJsonSerializer;
 import ysomap.core.serializer.json.JacksonJsonSerializer;
 import ysomap.core.serializer.xml.XMLDecoderSerializer;
@@ -27,6 +28,8 @@ public class SerializerFactory {
                 return XStreamSerializer.serializer;
             case "xmldecoder":
                 return XMLDecoderSerializer.serializer;
+            case "hessian":
+                return HessianSerializer.serializer;
             default:
                 return DefaultSerializer.serializer;
         }

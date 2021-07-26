@@ -23,7 +23,9 @@
                             <mainClass>ysomap.cli.App</mainClass>
                         </manifest>
                     </archive>
-                    <descriptor>../assembly.xml</descriptor>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
                 <executions>
                     <execution>
@@ -44,7 +46,6 @@
             <artifactId>asciitable</artifactId>
             <version>0.3.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/de.vandermeer/ascii-utf-themes -->
         <dependency>
             <groupId>de.vandermeer</groupId>
             <artifactId>ascii-utf-themes</artifactId>
@@ -60,15 +61,19 @@
             <artifactId>jline</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+
+
+        <dependency>
             <groupId>ysomap</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
-        </dependency>
+
     </dependencies>
 </project>

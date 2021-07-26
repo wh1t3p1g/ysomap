@@ -13,4 +13,6 @@ public abstract class XStreamPayload<T> extends AbstractPayload<T> {
     public Serializer<?> getSerializer() {
         return SerializerFactory.createSerializer("xstream");
     }
+
+
 }
