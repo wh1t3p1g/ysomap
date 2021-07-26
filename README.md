@@ -6,31 +6,11 @@
 
 Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 
-## #1 起因
+Ysomap是一款适配于各类实际复杂环境的Java反序列化利用框架，可动态配置具备不同执行效果的Java反序列化利用链payload，以应对不同场景下的反序列化利用。
 
-在实际分析ysoserial的利用链时，有时候会觉得框架写的太死，有以下几个缺点：
+此外，ysomap支持多种exploits，用于生成或配置一些evil server，或者是常见漏洞的exp。
 
-1. 同一个利用链如果想改变一下最后的利用效果，如命令执行改成代码执行，我们需要改写这个利用链或者是重新增加一个利用链。这时，我们其实可以看到利用链的前半部分是不变的，变的只是后续的利用效果。
-2. ysoserial仅实现了常规的序列化利用链，对于类似JSON格式的序列化利用链，以当前的这个框架扩展起来会比较麻烦
-
-所以萌生了开发一个更加灵活的框架来扩展反序列化利用链，也就是当前这个试验品ysomap。
-
-PS：YSOMAP项目为另一个项目的子项目，后续将开源该项目，敬请期待......
-
-## #2 原理
-
-我将利用链切分成了两个部分**payload**和**bullet**：
-
-1. payload：指代利用链的前序部分
-2. bullet：指代最终利用链可达成的效果
-
-#### 实际案例分析
-
-CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在于1使用的是`InvokerTransformer`，而3使用的是`templatesImpl`的方式。那么提取相同的前序payload部分，我们只需写两个不同的bullet即可。而且这两个bullet也同样能被用在其他的payload上。
-
-实际还有就是我在写RMIRegistryExploit时，也有这种可将不变部分重用的地方，而无需2,3之类的出现。
-
-## #3 使用方法
+## #1 如何使用
 
 ### 生成
 由于最新版XStream的payload需要JDK8的环境进行编译，所以后续运行需在JDK8的环境下运行
@@ -51,7 +31,7 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 参见[YSOMAP食用指北](https://github.com/wh1t3p1g/ysomap/wiki/YSOMAP%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8C%97)
 
-## #4 当前可用列表
+## #2 当前进度
 
 ### DONE
 
@@ -70,6 +50,31 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 - [ ] 支持weblogic系列攻击包
 - [ ] 支持websphere系列攻击包
+
+## #3 由来
+
+在实际分析ysoserial的利用链时，有时候会觉得框架写的太死，有以下几个缺点：
+
+1. 同一个利用链如果想改变一下最后的利用效果，如命令执行改成代码执行，我们需要改写这个利用链或者是重新增加一个利用链。这时，我们其实可以看到利用链的前半部分是不变的，变的只是后续的利用效果。
+2. ysoserial仅实现了常规的序列化利用链，对于类似JSON格式的序列化利用链，以当前的这个框架扩展起来会比较麻烦
+
+所以萌生了开发一个更加灵活的框架来扩展反序列化利用链，也就是当前这个试验品ysomap。
+
+PS：YSOMAP项目为另一个项目的子项目，后续将开源该项目，敬请期待......
+
+## #4 原理
+
+我将利用链切分成了两个部分**payload**和**bullet**：
+
+1. payload：指代利用链的前序部分
+2. bullet：指代最终利用链可达成的效果
+
+#### 实际案例分析
+
+CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在于1使用的是`InvokerTransformer`，而3使用的是`templatesImpl`的方式。那么提取相同的前序payload部分，我们只需写两个不同的bullet即可。而且这两个bullet也同样能被用在其他的payload上。
+
+实际还有就是我在写RMIRegistryExploit时，也有这种可将不变部分重用的地方，而无需2,3之类的出现。
+
 
 ## #5 免责申明
 
