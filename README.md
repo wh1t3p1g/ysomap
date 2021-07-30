@@ -82,4 +82,5 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 ## #6 致谢
 
-@ysoserial：https://github.com/frohoff/ysoserial
+@ysoserial: https://github.com/frohoff/ysoserial
+@marshalsec: https://github.com/mbechler/marshalsec

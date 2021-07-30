@@ -7,7 +7,7 @@ import java.io.*;
  * @author wh1t3P1g
  * @since 2020/2/15
  */
-public class DefaultSerializer implements Serializer<byte[]> {
+public class DefaultSerializer extends BaseSerializer<byte[]> {
 
     public static Serializer serializer = new DefaultSerializer();
     public static String OUTPUT = "file";
@@ -15,14 +15,9 @@ public class DefaultSerializer implements Serializer<byte[]> {
     @Override
     public byte[] serialize(Object obj) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        serialize(obj, out);
-        return out.toByteArray();
-    }
-
-    @Override
-    public void serialize(Object obj, OutputStream out) throws Exception {
         ObjectOutputStream objOut = new ObjectOutputStream(out);
         objOut.writeObject(obj);
+        return out.toByteArray();
     }
 
     @Override
@@ -36,4 +31,6 @@ public class DefaultSerializer implements Serializer<byte[]> {
     public String getOutputType() {
         return DefaultSerializer.OUTPUT;
     }
+
+
 }

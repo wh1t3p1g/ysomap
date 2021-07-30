@@ -46,13 +46,14 @@ public class SerializerFactory {
                 Logger.success("generate " + current + " success, plz see obj.ser");
             }else if(serializer.getOutputType().equals("console")){
                 out = System.out;
+                Logger.normal("\n");
             }
             if(out != null){
-                if(obj instanceof String){
-                    out.write(((String) obj).getBytes());
-                }else{
-                    // 非String类型的需要进行序列化操作
-                    serializer.serialize(obj, out);
+
+                serializer.serialize(obj, out);
+
+                if(serializer.getOutputType().equals("console")){
+                    Logger.normal("\n");
                 }
                 if(needClose){
                     out.close();
@@ -61,5 +62,9 @@ public class SerializerFactory {
         }else {
             Logger.success(current + " not serializable, so do nothing");
         }
+    }
+
+    public static Object test(Serializer serializer, Object obj) throws Exception {
+        return serializer.deserialize(serializer.serialize(obj));
     }
 }

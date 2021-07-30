@@ -9,7 +9,7 @@ import ysomap.common.annotation.*;
  * @since 2020/4/18
  */
 @Bullets
-@Dependencies({"org.codehaus.groovy:groovy:${version}"})
+@Dependencies({"org.codehaus.groovy:groovy:2.4.3"})
 @Details("执行任意系统命令")
 @Authors({Authors.WH1T3P1G})
 public class ClosureWithRuntimeBullet implements Bullet<Object> {

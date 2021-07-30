@@ -1,9 +1,6 @@
 package ysomap.core.serializer.hessian;
 
-import com.caucho.hessian.io.HessianProtocolException;
-import com.caucho.hessian.io.SerializerFactory;
-import com.caucho.hessian.io.UnsafeSerializer;
-import com.caucho.hessian.io.WriteReplaceSerializer;
+import com.caucho.hessian.io.*;
 
 public class NoWriteReplaceSerializerFactory extends SerializerFactory {
     /**
@@ -29,6 +26,7 @@ public class NoWriteReplaceSerializerFactory extends SerializerFactory {
         if ( serializer instanceof WriteReplaceSerializer) {
             return UnsafeSerializer.create(cl);
         }
+
         return serializer;
     }
 

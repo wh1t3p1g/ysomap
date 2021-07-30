@@ -1,15 +1,14 @@
 package ysomap.core.serializer.xml;
 
 import com.thoughtworks.xstream.XStream;
+import ysomap.core.serializer.BaseSerializer;
 import ysomap.core.serializer.Serializer;
-
-import java.io.OutputStream;
 
 /**
  * @author wh1t3P1g
  * @since 2020/4/15
  */
-public class XStreamSerializer implements Serializer<String> {
+public class XStreamSerializer extends BaseSerializer<String> {
 
     public static Serializer serializer = new XStreamSerializer();
     public static String OUTPUT = "console";
@@ -28,14 +27,6 @@ public class XStreamSerializer implements Serializer<String> {
     }
 
     @Override
-    public void serialize(Object obj, OutputStream out) throws Exception {
-        String result = serialize(obj);
-        out.write("\n".getBytes());
-        out.write(result.getBytes());
-        out.write("\n".getBytes());
-    }
-
-    @Override
     public Object deserialize(String obj) throws Exception {
         return xStream.fromXML(obj);
     }
@@ -44,4 +35,5 @@ public class XStreamSerializer implements Serializer<String> {
     public String getOutputType() {
         return OUTPUT;
     }
+
 }

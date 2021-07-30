@@ -221,6 +221,7 @@ public class Console {
         );
 
         Set<String> params = getAllParams();
+        params.add("encoder");
         Completer setCompleter = new Completers.TreeCompleter(
                 node("set",
                         node(params.toArray()))

@@ -7,6 +7,7 @@ import ysomap.common.annotation.Require;
 import ysomap.common.exception.ArgumentsMissMatchException;
 import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
+import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
 import ysomap.exploits.Exploit;
 import ysomap.payloads.Payload;
@@ -122,6 +123,12 @@ public class Session {
     }
 
     public void setValue(String key, String value) throws ArgumentsMissMatchException {
+        if("encoder".equals(key) && payload != null){
+            Serializer serializer = payload.getSerializer();
+            serializer.setEncoder(value);
+            return;
+        }
+
         if(exploit != null && exploit.has(key)){
             try {
                 exploit.set(key, value);
@@ -182,6 +189,8 @@ public class Session {
         if(payload != null){
             Class<?> clazz = payload.getClass();
             Logger.normal("Current Payload: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
+            Serializer serializer = payload.getSerializer();
+            Logger.normal("Current Serializer Encoder: "+ColorStyle.makeWordRed(serializer.getEncoder()));
             if(bullet == null){
                 Printer.printCandidates("bullets", clazz, false, null);
             }
