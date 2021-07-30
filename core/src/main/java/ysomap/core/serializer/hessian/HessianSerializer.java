@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream;
 public class HessianSerializer extends BaseSerializer<byte[]> {
 
     public static Serializer serializer = new HessianSerializer();
-    public static String OUTPUT = "file";
+    public String OUTPUT = "file";
 
     @Override
     public byte[] serialize(Object obj) throws Exception {
@@ -37,4 +37,8 @@ public class HessianSerializer extends BaseSerializer<byte[]> {
         return OUTPUT;
     }
 
+    @Override
+    public void setOutputType(String output) {
+        OUTPUT = output;
+    }
 }

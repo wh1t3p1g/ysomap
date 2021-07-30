@@ -15,9 +15,7 @@ import ysomap.core.serializer.Serializer;
 public class FastJsonSerializer extends BaseSerializer<String> {
 
     public static Serializer serializer = new FastJsonSerializer();
-    public static String OUTPUT = "console";
-    public static String encoder = null;
-
+    public String OUTPUT = "console";
 
     @Override
     public String serialize(Object obj) throws Exception {
@@ -39,4 +37,8 @@ public class FastJsonSerializer extends BaseSerializer<String> {
         return OUTPUT;
     }
 
+    @Override
+    public void setOutputType(String output) {
+        OUTPUT = output;
+    }
 }

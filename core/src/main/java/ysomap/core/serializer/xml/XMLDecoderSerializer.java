@@ -17,7 +17,7 @@ import java.io.InputStream;
 public class XMLDecoderSerializer extends BaseSerializer<String> {
 
     public static Serializer serializer = new XMLDecoderSerializer();
-    public static String OUTPUT = "console";
+    public String OUTPUT = "console";
 
     @Override
     public String serialize(Object obj) throws Exception {
@@ -40,4 +40,8 @@ public class XMLDecoderSerializer extends BaseSerializer<String> {
         return OUTPUT;
     }
 
+    @Override
+    public void setOutputType(String output) {
+        OUTPUT = output;
+    }
 }

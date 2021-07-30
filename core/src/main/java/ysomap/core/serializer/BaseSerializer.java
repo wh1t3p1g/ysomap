@@ -6,7 +6,7 @@ package ysomap.core.serializer;
  */
 public abstract class BaseSerializer<T> implements Serializer<T> {
 
-    public static String ENCODER = null;
+    public String ENCODER = null;
 
     @Override
     public String getEncoder() {

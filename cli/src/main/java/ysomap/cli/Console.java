@@ -221,10 +221,17 @@ public class Console {
         );
 
         Set<String> params = getAllParams();
-        params.add("encoder");
+        List<String> encoders = new ArrayList<>();
+        encoders.add("base64");
+        List<String> output = new ArrayList<>();
+        output.add("file");
+        output.add("console");
         Completer setCompleter = new Completers.TreeCompleter(
                 node("set",
-                        node(params.toArray()))
+                        node("encoder", node(new StringsCompleter(encoders))),
+                        node("output", node(new StringsCompleter(output))),
+                        node(params.toArray())
+                )
         );
 
         Completer commonCompleter = new Completers.TreeCompleter(

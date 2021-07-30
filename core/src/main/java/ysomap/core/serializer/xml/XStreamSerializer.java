@@ -11,7 +11,7 @@ import ysomap.core.serializer.Serializer;
 public class XStreamSerializer extends BaseSerializer<String> {
 
     public static Serializer serializer = new XStreamSerializer();
-    public static String OUTPUT = "console";
+    public String OUTPUT = "console";
     public static XStream xStream = new XStream();
 
     static {
@@ -34,6 +34,11 @@ public class XStreamSerializer extends BaseSerializer<String> {
     @Override
     public String getOutputType() {
         return OUTPUT;
+    }
+
+    @Override
+    public void setOutputType(String output) {
+        OUTPUT = output;
     }
 
 }

@@ -11,7 +11,7 @@ import ysomap.core.serializer.Serializer;
 public class JacksonJsonSerializer extends BaseSerializer<String> {
 
     public static Serializer serializer = new JacksonJsonSerializer();
-    public static String OUTPUT = "console";
+    public String OUTPUT = "console";
 
     @Override
     public String serialize(Object obj) throws Exception {
@@ -35,4 +35,9 @@ public class JacksonJsonSerializer extends BaseSerializer<String> {
         return OUTPUT;
     }
 
+
+    @Override
+    public void setOutputType(String output) {
+        OUTPUT = output;
+    }
 }

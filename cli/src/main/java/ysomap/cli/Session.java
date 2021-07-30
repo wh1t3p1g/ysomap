@@ -127,6 +127,10 @@ public class Session {
             Serializer serializer = payload.getSerializer();
             serializer.setEncoder(value);
             return;
+        }else if("output".equals(key) && payload != null){
+            Serializer serializer = payload.getSerializer();
+            serializer.setOutputType(value);
+            return;
         }
 
         if(exploit != null && exploit.has(key)){
@@ -191,6 +195,7 @@ public class Session {
             Logger.normal("Current Payload: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
             Serializer serializer = payload.getSerializer();
             Logger.normal("Current Serializer Encoder: "+ColorStyle.makeWordRed(serializer.getEncoder()));
+            Logger.normal("Current Serializer Output Type: "+ColorStyle.makeWordRed(serializer.getOutputType()));
             if(bullet == null){
                 Printer.printCandidates("bullets", clazz, false, null);
             }

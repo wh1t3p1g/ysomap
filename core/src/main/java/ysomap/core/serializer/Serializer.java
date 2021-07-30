@@ -39,4 +39,6 @@ public interface Serializer<T> {
     String getEncoder();
 
     void setEncoder(String encoder);
+
+    void setOutputType(String output);
 }
