@@ -8,6 +8,7 @@ import com.sun.xml.internal.ws.api.message.Message;
 import com.sun.xml.internal.ws.api.message.Packet;
 import com.sun.xml.internal.ws.message.saaj.SAAJMessage;
 import ysomap.bullets.Bullet;
+import ysomap.bullets.jdk.LazySearchEnumerationImplBullet;
 import ysomap.common.annotation.Authors;
 import ysomap.common.annotation.Dependencies;
 import ysomap.common.annotation.Require;
