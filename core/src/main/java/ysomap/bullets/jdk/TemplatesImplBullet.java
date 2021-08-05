@@ -152,4 +152,13 @@ public class TemplatesImplBullet implements Bullet<Object> {
         public void transform (DOM document, DTMAxisIterator iterator, SerializationHandler handler ) throws TransletException {}
     }
 
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TemplatesImplBullet();
+        bullet.set("type", args[0]);
+        bullet.set("body", args[1]);
+        bullet.set("effect", args[2]);
+        bullet.set("exception", args[3]);
+        return bullet;
+    }
 }

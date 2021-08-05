@@ -61,9 +61,7 @@ public class CommonsCollections4 extends AbstractPayload<BadAttributeValueExpExc
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TransformerBullet()
-                .set("args", args[0])
-                .set("version", "3");
+        return TransformerBullet.newInstance(args);
     }
 
     @Override

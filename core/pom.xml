@@ -140,6 +140,18 @@
 <!--            <artifactId>tomcat-embed-el</artifactId>-->
 <!--            <version>9.0.37</version>-->
 <!--        </dependency>-->
+        <!-- for rome -->
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.11.1</version>
+        </dependency>
+        <!-- for xbean -->
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-naming</artifactId>
+            <version>4.20</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.xbean</groupId>

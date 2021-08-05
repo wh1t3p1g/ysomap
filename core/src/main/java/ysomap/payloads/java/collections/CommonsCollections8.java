@@ -38,10 +38,7 @@ public class CommonsCollections8 extends AbstractPayload<Hashtable> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new TransformerBullet();
-        bullet.set("args", args[0]);
-        bullet.set("version", "3");
-        return bullet;
+        return TransformerBullet.newInstance(args);
     }
 
     @Override

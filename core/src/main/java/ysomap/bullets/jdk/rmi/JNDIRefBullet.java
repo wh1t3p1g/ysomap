@@ -15,8 +15,11 @@ import javax.naming.Reference;
 @Authors({Authors.WH1T3P1G})
 public class JNDIRefBullet implements Bullet<Reference> {
 
+    @NotNull
     @Require(name = "factoryName", detail = "filename mounted by remote http server")
     private String factoryName;
+
+    @NotNull
     @Require(name = "factoryURL", detail = "remote http server URL")
     private String factoryURL;
 
@@ -27,5 +30,12 @@ public class JNDIRefBullet implements Bullet<Reference> {
             factoryURL = factoryURL + "/";
         }
         return new Reference(factoryName, factoryName, factoryURL);
+    }
+
+    public static JNDIRefBullet newInstance(Object... args) throws Exception {
+        JNDIRefBullet bullet = new JNDIRefBullet();
+        bullet.set("factoryName",args[0]);
+        bullet.set("factoryURL", args[1]);
+        return bullet;
     }
 }

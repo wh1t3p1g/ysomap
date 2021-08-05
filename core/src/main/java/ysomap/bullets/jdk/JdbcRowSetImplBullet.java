@@ -26,4 +26,10 @@ public class JdbcRowSetImplBullet implements Bullet<JdbcRowSetImpl> {
         jdbcRowSet.setDataSourceName(jndiURL);
         return jdbcRowSet;
     }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new JdbcRowSetImplBullet();
+        bullet.set("jndiURL", args[0]);
+        return bullet;
+    }
 }

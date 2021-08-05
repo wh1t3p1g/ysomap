@@ -31,12 +31,7 @@ public class CommonsCollections2 extends AbstractPayload<Queue<Object>> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new TemplatesImplBullet();
-        bullet.set("type", args[0]);
-        bullet.set("body", args[1]);
-        bullet.set("effect", args[2]);
-        bullet.set("exception", args[3]);
-        return bullet;
+        return TemplatesImplBullet.newInstance(args);
     }
 
     @Override

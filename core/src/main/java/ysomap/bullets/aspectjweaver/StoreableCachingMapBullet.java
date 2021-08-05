@@ -35,4 +35,12 @@ public class StoreableCachingMapBullet implements Bullet<Object> {
                         new Class[]{String.class, int.class},
                         new Object[]{remoteFolder, 12});
     }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new StoreableCachingMapBullet();
+        bullet.set("remoteFolder", args[0]);
+        bullet.set("filename", args[1]);
+        bullet.set("localFilepath", args[2]);
+        return bullet;
+    }
 }

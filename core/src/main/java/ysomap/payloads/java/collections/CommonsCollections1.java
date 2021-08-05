@@ -39,7 +39,7 @@ public class CommonsCollections1 extends AbstractPayload<InvocationHandler> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TransformerBullet().set("args",args[0]);
+        return TransformerBullet.newInstance(args);
     }
 
     @Override

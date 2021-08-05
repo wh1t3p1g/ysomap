@@ -1,5 +1,6 @@
 package ysomap.bullets.collections;
 
+import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 
 import java.util.LinkedList;
@@ -39,4 +40,10 @@ public class TransformerBullet extends AbstractTransformerBullet {
         return createTransformerArray(transformers);
     }
 
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TransformerBullet();
+        bullet.set("args", args[0]);
+        bullet.set("version", args[1]);
+        return bullet;
+    }
 }

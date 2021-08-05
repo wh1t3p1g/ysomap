@@ -17,6 +17,7 @@ import javax.naming.StringRefAddr;
 @Authors({Authors.WH1T3P1G, Authors.KINGX})
 public class TomcatRefBullet implements Bullet<Reference> {
 
+    @NotNull
     @Require(name = "command", detail = "system command to execute")
     private String command;
 

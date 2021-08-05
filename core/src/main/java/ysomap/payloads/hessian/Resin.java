@@ -16,7 +16,7 @@ import java.util.Hashtable;
 @Payloads
 @Authors({ Authors.MBECHLER })
 @Targets({Targets.HESSIAN})
-@Require(bullets = {"JNDIRefBullet"},param = false)
+@Require(bullets = {"JNDIRefBullet", "TomcatRefBullet"},param = false)
 @Dependencies({"com.caucho:quercus:4.0.45"})
 public class Resin extends HessianPayload{
 

@@ -42,11 +42,7 @@ public class AspectJWeaver extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new StoreableCachingMapBullet();
-        bullet.set("remoteFolder", args[0]);
-        bullet.set("filename", args[1]);
-        bullet.set("localFilepath", args[2]);
-        return bullet;
+        return StoreableCachingMapBullet.newInstance(args);
     }
 
     @Override
