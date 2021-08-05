@@ -16,6 +16,7 @@ import java.util.Base64;
 @SuppressWarnings({"rawtypes"})
 @Authors({Authors.WH1T3P1G})
 @Details("适用Fastjson，执行恶意代码")
+@Targets({Targets.FASTJSON})
 @Dependencies({"fastjson"})
 public class TemplatesImplJsonBullet implements Bullet<Object> {
 

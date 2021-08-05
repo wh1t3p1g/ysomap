@@ -14,6 +14,7 @@ import ysomap.core.util.ReflectionHelper;
 @Bullets
 @Dependencies({"jdk"})
 @Details("执行任意系统命令")
+@Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
 public class ServerTableEntryBullet implements Bullet<ServerTableEntry> {
 

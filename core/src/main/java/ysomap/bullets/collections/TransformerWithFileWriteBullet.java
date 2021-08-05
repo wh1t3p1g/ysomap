@@ -15,6 +15,7 @@ import java.util.LinkedList;
 @Bullets
 @Dependencies({"<=commons-collections 3.2.1", "<=commons-collections 4.0"})
 @Details("朝指定目录写入指定文件内容")
+@Targets({Targets.JDK})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithFileWriteBullet extends AbstractTransformerBullet{
 

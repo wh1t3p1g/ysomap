@@ -10,6 +10,7 @@ import ysomap.common.annotation.*;
 @Bullets
 @Authors({Authors.WH1T3P1G})
 @Details("适用Fastjson，向外部发起jndi连接")
+@Targets({Targets.FASTJSON})
 @Dependencies({"fastjson"})
 public class JdbcRowSetImplJsonBullet implements Bullet<String> {
 

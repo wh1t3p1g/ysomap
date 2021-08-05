@@ -16,6 +16,7 @@ import java.util.Random;
 @Bullets
 @Dependencies({"jdk"})
 @Details("向外部发起RMI连接")
+@Targets({Targets.JDK})
 @Authors({Authors.WH1T3P1G})
 public class RMIConnectBullet implements Bullet<Object> {
 

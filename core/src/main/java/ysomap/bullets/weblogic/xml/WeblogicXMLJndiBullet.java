@@ -15,6 +15,7 @@ import ysomap.common.annotation.*;
 @Authors({Authors.WH1T3P1G})
 @Details("使用Weblogic的XML反序列化漏洞，当前为适用于CVE-2019-2725的新利用链。\n" +
         "执行后，可向外部发起JNDI连接")
+@Targets({Targets.XMLDECODER})
 @Dependencies({"JDK7","weblogic 10.3.6 12.x"})
 public class WeblogicXMLJndiBullet implements Bullet<String> {
 

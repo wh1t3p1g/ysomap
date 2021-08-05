@@ -131,20 +131,17 @@ public class Printer {
         Logger.success("List all bullets!");
         AsciiTable at = new AsciiTable();
         at.addRule();
-        at.addRow("Bullet", "Dependencies","Details");
+        at.addRow("Bullet", "Targets", "Dependencies", "Details");
         at.addRule();
         for(MetaData metaData:data){
             at.addRow(metaData.getSimpleName(),
+                    metaData.getTarget(),
                     metaData.getDependencies(),
                     metaData.getDetail()
                     );
             at.addRule();
         }
-        CWC_FixedWidth cwc = new CWC_FixedWidth();
-        cwc.add(45);
-        cwc.add(40);
-        cwc.add(50);
-        printTable(at, cwc);
+        printTable(at, new CWC_LongestLine());
     }
 
     public static void printTable(AsciiTable at, AT_ColumnWidthCalculator cwc){

@@ -14,6 +14,7 @@ import javax.naming.StringRefAddr;
 @Bullets
 @Dependencies({"org.apache.tomcat:tomcat-catalina:xxx"})
 @Details("JNDI Reference的一种，适用于攻击tomcat环境下的JNDI")
+@Targets({Targets.JDK, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G, Authors.KINGX})
 public class TomcatRefBullet implements Bullet<Reference> {
 

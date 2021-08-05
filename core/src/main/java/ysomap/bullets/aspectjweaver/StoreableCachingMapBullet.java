@@ -11,6 +11,7 @@ import ysomap.core.util.ReflectionHelper;
 @Bullets
 @Dependencies({"org.aspectj:aspectjweaver:1.9.2"})
 @Details("指定目录文件写入")
+@Targets({Targets.JDK})
 @Authors({ Authors.JANG })
 public class StoreableCachingMapBullet implements Bullet<Object> {
 

@@ -16,6 +16,7 @@ import java.net.URLStreamHandler;
 @Bullets
 @Authors({Authors.WH1T3P1G})
 @Details("向外部发起DNS查询，配合DNSLOG使用")
+@Targets({Targets.JDK})
 @Dependencies({"jdk"})
 public class URLBullet implements Bullet<URL> {
 

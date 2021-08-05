@@ -12,6 +12,7 @@ import java.util.LinkedList;
 @Bullets
 @Dependencies({"<=commons-collections 3.2.1", "<=commons-collections 4.0"})
 @Details("执行后，向外部HTTP服务上挂载的jar文件进行载入")
+@Targets({Targets.JDK})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithURLClassLoaderBullet extends AbstractTransformerBullet {
 

@@ -29,6 +29,7 @@ import java.util.UUID;
 @Bullets
 @Dependencies({"jdk"})
 @Authors({ Authors.WH1T3P1G })
+@Targets({Targets.JDK})
 @Details("载入恶意class字节码，并执行任意代码，依赖TemplatesImpl")
 public class TemplatesImplBullet implements Bullet<Object> {
 

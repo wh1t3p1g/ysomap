@@ -11,6 +11,7 @@ import ysomap.common.annotation.*;
 @Bullets
 @Dependencies({"jdk"})
 @Details("向外部发起JNDI连接")
+@Targets({Targets.JDK})
 @Authors({Authors.WH1T3P1G})
 public class JdbcRowSetImplBullet implements Bullet<JdbcRowSetImpl> {
 

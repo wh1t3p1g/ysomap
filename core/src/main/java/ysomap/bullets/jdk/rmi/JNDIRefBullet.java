@@ -12,6 +12,7 @@ import javax.naming.Reference;
 @Bullets
 @Dependencies({"<=jdk8u113"})
 @Details("适用于JNDI，向外部挂载了恶意class文件的HTTP服务发起请求")
+@Targets({Targets.JDK, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
 public class JNDIRefBullet implements Bullet<Reference> {
 

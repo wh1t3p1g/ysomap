@@ -18,6 +18,7 @@ import java.util.LinkedList;
 //@Bullets
 @Dependencies({"<=commons-collections 3.2.1", "<=commons-collections 4.0"})
 @Details("执行后，执行任意代码，依赖TemplatesImpl")
+@Targets({Targets.JDK})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithTemplatesImplBullet extends AbstractTransformerBullet {
 

@@ -11,6 +11,7 @@ import ysomap.core.util.ClassFiles;
 @Bullets
 @Authors({Authors.WH1T3P1G})
 @Details("用于生成恶意字节码（可对外发起Socket连接，小型shell），配合SimpleHTTPServer使用")
+@Targets({Targets.CODE})
 @Dependencies({"*"})
 public class ClassWithReverseShell implements Bullet<byte[]> {
 

@@ -12,6 +12,7 @@ import ysomap.common.annotation.*;
 @Authors({Authors.WH1T3P1G})
 @Details("使用Weblogic的XML反序列化漏洞，当前为适用于CVE-2017-10271或其他未受限制的XMLDecoder反序列化漏洞。\n" +
         "执行后，可执行任意代码")
+@Targets({Targets.XMLDECODER})
 @Dependencies({"*"})
 public class WeblogicXMLRCEBullet implements Bullet<String> {
 

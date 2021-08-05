@@ -11,6 +11,7 @@ import ysomap.common.annotation.*;
 @Bullets
 @Dependencies({"jdk"})
 @Details("向外部发起JNDI连接")
+@Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
 public class SwingLazyValueBullet implements Bullet<SwingLazyValue> {
 

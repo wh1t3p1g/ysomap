@@ -16,6 +16,7 @@ import ysomap.core.util.ReflectionHelper;
 @Bullets
 @Dependencies({"jdk"})
 @Details("向外部发起RMI连接")
+@Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
 public class LazySearchEnumerationImplBullet implements Bullet<LazySearchEnumerationImpl> {
 

@@ -13,6 +13,7 @@ import java.util.List;
 @Bullets
 @Dependencies({"jdk"})
 @Details("执行任意系统命令")
+@Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
 public class ProcessBuilderBullet implements Bullet<ProcessBuilder> {
 

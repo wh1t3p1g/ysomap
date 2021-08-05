@@ -11,6 +11,7 @@ import java.util.LinkedList;
 @Bullets
 @Dependencies({"<=commons-collections 3.2.1", "<=commons-collections 4.0"})
 @Details("执行后，延迟指定时间")
+@Targets({Targets.JDK})
 @Authors({ Authors.WH1T3P1G })
 public class TransformerWithSleepBullet extends AbstractTransformerBullet{
 
