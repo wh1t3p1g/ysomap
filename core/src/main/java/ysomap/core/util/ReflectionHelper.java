@@ -60,6 +60,12 @@ public class ReflectionHelper {
 		return getConstructor(classname, paramTypes).newInstance(args);
 	}
 
+	public static <T> T newInstance(Class<T> cls, Class<?>[] paramTypes, Object... args) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+		Constructor<?> ctor = cls.getDeclaredConstructor(paramTypes);
+		setAccessible(ctor);
+		return (T) ctor.newInstance(args);
+	}
+
 	public static void checkClassFieldsNotNull(Object obj) throws ArgumentsNotCompleteException {
     	if(obj == null){
     		throw new ArgumentsNotCompleteException("null");

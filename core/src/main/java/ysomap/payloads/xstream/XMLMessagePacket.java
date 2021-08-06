@@ -17,6 +17,7 @@ import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
 /**
+ * CVE-2021-29505
  * @author wh1t3P1g
  * @since 2021/6/1
  */

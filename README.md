@@ -27,6 +27,7 @@ Ysomap是一款适配于各类实际复杂环境的Java反序列化利用框架�
 2. script模式
 执行`java -jar ysomap.jar script /path/to/script.yso`，脚本模式
 
+ps: 后续版本为了适配XStream的相关gadget加入了很多jdk的对象，所以如果要使用xstream的gadget，ysomap最好运行在jdk8的环境下。
 ### 基础使用方法
 
 参见[YSOMAP食用指北](https://github.com/wh1t3p1g/ysomap/wiki/YSOMAP%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8C%97)

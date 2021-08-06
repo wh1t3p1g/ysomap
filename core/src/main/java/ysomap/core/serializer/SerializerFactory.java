@@ -1,11 +1,13 @@
 package ysomap.core.serializer;
 
+import ysomap.bullets.Bullet;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.hessian.HessianSerializer;
 import ysomap.core.serializer.json.FastJsonSerializer;
 import ysomap.core.serializer.json.JacksonJsonSerializer;
 import ysomap.core.serializer.xml.XMLDecoderSerializer;
 import ysomap.core.serializer.xml.XStreamSerializer;
+import ysomap.payloads.Payload;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -64,7 +66,9 @@ public class SerializerFactory {
         }
     }
 
-    public static Object test(Serializer serializer, Object obj) throws Exception {
-        return serializer.deserialize(serializer.serialize(obj));
+    public static Object test(Payload payload, Bullet bullet) throws Exception {
+        Serializer serializer = payload.getSerializer();
+        payload.setBullet(bullet);
+        return serializer.deserialize(serializer.serialize(payload.getObject()));
     }
 }

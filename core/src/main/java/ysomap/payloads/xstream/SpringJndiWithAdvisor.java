@@ -17,7 +17,7 @@ import ysomap.core.util.PayloadHelper;
 @Targets({ Targets.XSTREAM })
 @Dependencies({"spring-aop && spring-context"})
 @Require(bullets = {"SpringJndiBullet1"}, param = false)
-public class SpringJndi extends XStreamPayload<Object> {
+public class SpringJndiWithAdvisor extends XStreamPayload<Object> {
 
     @Override
     public boolean checkObject(Object obj) {
