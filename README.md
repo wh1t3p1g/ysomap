@@ -9,7 +9,9 @@ Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
 Ysomap是一款适配于各类实际复杂环境的Java反序列化利用框架，可动态配置具备不同执行效果的Java反序列化利用链payload，以应对不同场景下的反序列化利用。
 
 此外，ysomap支持多种exploits，用于生成或配置一些evil server，或者是常见漏洞的exp。
-
+```
+[+] exploits(11) payloads(31) bullets(28)
+```
 ## #1 如何使用
 
 ### 生成
