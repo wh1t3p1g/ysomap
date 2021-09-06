@@ -73,14 +73,6 @@
                     <artifactId>common</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.jetbrains.kotlin</groupId>
-                    <artifactId>kotlin-stdlib-common</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.jetbrains.kotlin</groupId>
-                    <artifactId>kotlin-stdlib</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>org.apache.tomcat</groupId>
                     <artifactId>tomcat-servlet-api</artifactId>
                 </exclusion>
