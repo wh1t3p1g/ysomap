@@ -124,18 +124,24 @@ public class Console {
                 script();
                 break;
             case "run":
-                curSession.run();
+                if(curSession != null){
+                    curSession.run();
+                }
                 break;
             case "stop":
                 Logger.success("Stop current session!");
-                curSession.close();
+                if(curSession != null){
+                    curSession.close();
+                }
                 break;
             case "":
                 //do nothing
                 break;
             case "clear":
                 Logger.success("Clear all settings on current session.");
-                curSession.clear();
+                if(curSession != null){
+                    curSession.clear();
+                }
                 break;
             case "help":
                 help();
