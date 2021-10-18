@@ -12,14 +12,7 @@ public class FileHelper {
     public static byte[] getFileContent(String filepath) throws IOException {
         File file = new File(filepath);
         if(file.exists() && file.isFile()){
-            FileReader reader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            String content = "";
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content += line;
-            }
-            return content.getBytes(StandardCharsets.UTF_8);
+            return Files.readAllBytes(file.toPath());
         }
         throw new FileNotFoundException(filepath);
     }
