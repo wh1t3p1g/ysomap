@@ -35,11 +35,11 @@ public class SocketEchoPayload extends AbstractTranslet implements Serializable,
                     File[] files = file.listFiles();
                     for(File tmp:files){
                         if(tmp.isDirectory()){
-                            stringBuilder.append("d:"+tmp.getAbsolutePath()).append("\n");
+                            stringBuilder.append("directory: "+tmp.getAbsolutePath()).append("\n");
                         }else if(tmp.isFile()){
-                            stringBuilder.append("f:"+tmp.getAbsolutePath()).append("\n");
+                            stringBuilder.append("file: "+tmp.getAbsolutePath()).append("\n");
                         }else{
-                            stringBuilder.append("o:"+tmp.getAbsolutePath()).append("\n"); // other
+                            stringBuilder.append("other: "+tmp.getAbsolutePath()).append("\n"); // other
                         }
                     }
                     return stringBuilder.toString();

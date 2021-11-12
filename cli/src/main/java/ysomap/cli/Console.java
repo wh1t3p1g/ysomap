@@ -279,7 +279,7 @@ public class Console {
             if("exploit".equals(type)){
                 Logger.success("Create a new session.");
                 curSession = newSession(true);
-            }else if("payload".equals(type) && !curSession.isExploit()){
+            }else if("payload".equals(type) && (curSession == null || !curSession.isExploit())){
                 Logger.success("Create a new session.");
                 curSession = newSession(true);
             }
