@@ -87,3 +87,9 @@ CommonsCollection1和3，在分析时我们可以看到实际1和3的区别在�
 
 @ysoserial: https://github.com/frohoff/ysoserial
 @marshalsec: https://github.com/mbechler/marshalsec
+
+## #7 404星链计划
+
+<img src="https://github.com/knownsec/404StarLink-Project/raw/master/logo.png" width="30%">
+
+ysomap现已加入 [404星链计划](https://github.com/knownsec/404StarLink)
