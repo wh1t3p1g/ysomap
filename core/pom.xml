@@ -18,13 +18,13 @@
         <dependency>
             <groupId>ysomap</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>ysomap</groupId>
             <artifactId>thirdparty</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.1.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <!-- serializer start -->
