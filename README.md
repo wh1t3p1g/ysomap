@@ -1,35 +1,50 @@
 
 # YSOMAP 
 ![Platforms](https://img.shields.io/badge/Platforms-OSX-green.svg)
-![Java version](https://img.shields.io/badge/Java-8%2b-blue.svg)
+![Java version](https://img.shields.io/badge/Java-8-blue.svg)
 ![License](https://img.shields.io/badge/License-apache%202-green.svg)
 
-Ysomap is A helpful Java Deserialization exploit framework based on ysoserial
+Ysomap is A helpful Java Deserialization exploit framework.
 
-Ysomap是一款适配于各类实际复杂环境的Java反序列化利用框架，可动态配置具备不同执行效果的Java反序列化利用链payload，以应对不同场景下的反序列化利用。
+Ysomap是一款适配于各类实际复杂环境的Java反序列化利用框架，可动态配置具备不同执行效果的Java反序列化利用链payload。
 
-此外，ysomap支持多种exploits，用于生成或配置一些evil server，或者是常见漏洞的exp。
-```
-[+] exploits(11) payloads(31) bullets(28)
-```
+随着利用链的补充，ysomap同样可作为一款Java反序列化利用链教学库。目前，ysomap支持Java原生反序列化利用链、fastjson利用链、hessian利用链、xmldecoder、xstream等等。
+
+另外，ysomap具备exploit模块，用于充分调动反序列化利用链。目前，ysomap已支持RMI、JNDI、JMX、shiro、xmlrpc等exploits。
+
 ## #1 如何使用
 
-### 生成
-由于最新版XStream的payload需要JDK8的环境进行编译，所以后续运行需在JDK8的环境下运行
+在谈如何使用ysomap之前，假设使用者有一定的Java反序列化利用的前置知识，以及一些常见利用的原理，如rmi、ldap等。
 
-使用`mvn clean package -DskipTests`
+### Jar编译
 
-生成的jar位于`cli/target/ysomap.jar`
+由于XStream的几个payload依赖JDK8的环境，所以后续的使用均在JDK8的环境下编译并运行
 
-版本>=v0.0.1支持两种运行模式
+```bash
+mvn clean package -DskipTests
+```
 
-1. cli模式
-执行`java -jar ysomap.jar cli`,终端模式
-   
-2. script模式
-执行`java -jar ysomap.jar script /path/to/script.yso`，脚本模式
+正常编译不出错，可在`cli/target`目录找到ysomap.jar
 
-ps: 后续版本为了适配XStream的相关gadget加入了很多jdk的对象，所以如果要使用xstream的gadget，ysomap最好运行在jdk8的环境下。
+当然，你也可以直接下载[release](https://github.com/wh1t3p1g/ysomap/releases)，但还是推荐自行clone后编译，因为大版本的更新将积攒一批利用链后才会发布release。
+
+### Jar运行
+> Note: 为了解决反制的问题，目前采用的是jdk8的ObjectInputFilter。在jdk11中，该对象改了package，所以最新版本是无法运行在jdk11上的
+>       所以ysomap的后续版本编译及运行都将在jdk8的版本，不支持jdk11及以上
+>       预计jdk8环境在国内仍能坚持一段时间，等未来再扩展jdk11及以上
+
+经过几次迭代，目前ysomap支持两种运行模式：终端cli模式和脚本模式
+
+终端模式
+```bash
+java -jar ysomap.jar cli
+```
+脚本模式
+```bash
+java -jar ysomap.jar script path/to/script.yso
+```
+终端模式更易于选择和配置exploit、payload、bullet，但对于重复性的配置，终端模式显的格外繁琐。所以后续又增加了脚本模式。通过编写特定配置的yso脚本，使用ysomap进行载入调用。脚本模式在正确配置的前提下将极大的节省使用者输入重复配置的工作量，提高使用效率。同时，yso脚本也可以被分享给其他使用者进行快捷使用。
+
 ### 基础使用方法
 
 参见[YSOMAP食用指北](https://github.com/wh1t3p1g/ysomap/wiki/YSOMAP%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8C%97)

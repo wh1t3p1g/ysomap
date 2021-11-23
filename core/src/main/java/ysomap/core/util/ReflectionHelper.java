@@ -32,7 +32,16 @@ public class ReflectionHelper {
 
 	public static void setFieldValue(final Object obj, final String fieldName, final Object value) throws Exception {
 		final Field field = getField(obj.getClass(), fieldName);
-		field.set(obj, value);
+		if(field != null) {
+			field.set(obj, value);
+		}
+	}
+
+	public static void setStaticFieldValue(final Class<?> clazz, final String fieldName, final Object value) throws Exception {
+		final Field field = getField(clazz, fieldName);
+		if(field != null){
+			field.set(clazz, value);
+		}
 	}
 
 	public static Object getFieldValue(final Object obj, final String fieldName) throws Exception {
