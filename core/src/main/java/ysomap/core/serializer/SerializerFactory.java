@@ -33,6 +33,8 @@ public class SerializerFactory {
                 return XMLDecoderSerializer.serializer;
             case "hessian":
                 return HessianSerializer.serializer;
+            case "empty":
+                return EmptySerializer.serializer;
             default:
                 return DefaultSerializer.serializer;
         }
