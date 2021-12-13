@@ -2,6 +2,7 @@ package ysomap.bullets.jdk;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.DetailHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ProcessBuilderBullet implements Bullet<ProcessBuilder> {
 
     @NotNull
-    @Require(name = "command", detail = "system commands")
+    @Require(name = "command", detail = DetailHelper.COMMAND)
     public String command;
 
     public String action = "start"; // for xstream eventhandler gadgets

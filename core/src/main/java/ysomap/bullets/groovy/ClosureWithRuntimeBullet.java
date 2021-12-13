@@ -3,6 +3,7 @@ package ysomap.bullets.groovy;
 import org.codehaus.groovy.runtime.MethodClosure;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.DetailHelper;
 
 /**
  * @author wh1t3P1g
@@ -16,7 +17,7 @@ import ysomap.common.annotation.*;
 public class ClosureWithRuntimeBullet implements Bullet<Object> {
 
     @NotNull
-    @Require(name = "command", detail = "所需执行的命令")
+    @Require(name = "command", detail = DetailHelper.COMMAND)
     public String command = null;
 
     @Override

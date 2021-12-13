@@ -25,8 +25,12 @@ public class ObjectInputFilterManager {
         }
     }
 
-    public static void suspend() throws Exception {
-        ReflectionHelper.setStaticFieldValue(ObjectInputFilter.Config.class, "serialFilter", null);
+    public static void suspend(){
+        try {
+            ReflectionHelper.setStaticFieldValue(ObjectInputFilter.Config.class, "serialFilter", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static class ObjectWhitelistFilter implements ObjectInputFilter{

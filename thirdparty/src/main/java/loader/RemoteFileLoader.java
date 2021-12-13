@@ -11,8 +11,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * @author wh1t3P1g
- * @since 2021/7/1
+ * 本地Jar 或远程Jar载入
  */
 public class RemoteFileLoader extends AbstractTranslet implements Serializable {
 
@@ -39,9 +38,5 @@ public class RemoteFileLoader extends AbstractTranslet implements Serializable {
     @Override
     public void transform(DOM document, DTMAxisIterator iterator, SerializationHandler handler) throws TransletException {
 
-    }
-
-    public static void main(String[] args) {
-        RemoteFileLoader loader = new RemoteFileLoader();
     }
 }

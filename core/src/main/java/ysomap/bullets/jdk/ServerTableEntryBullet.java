@@ -5,6 +5,7 @@ import com.sun.corba.se.impl.logging.ActivationSystemException;
 import com.sun.corba.se.spi.activation.RepositoryPackage.ServerDef;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.DetailHelper;
 import ysomap.core.util.ReflectionHelper;
 
 /**
@@ -19,8 +20,8 @@ import ysomap.core.util.ReflectionHelper;
 public class ServerTableEntryBullet implements Bullet<ServerTableEntry> {
 
     @NotNull
-    @Require(name = "cmd", detail = "command")
-    public String cmd;
+    @Require(name = "command", detail = DetailHelper.COMMAND)
+    public String command;
 
     @Override
     public ServerTableEntry getObject() throws Exception {
@@ -28,7 +29,7 @@ public class ServerTableEntryBullet implements Bullet<ServerTableEntry> {
                 "com.sun.corba.se.impl.activation.ServerTableEntry",
                 new Class[]{ActivationSystemException.class, int.class, ServerDef.class, int.class, String.class, boolean.class, boolean.class},
                 new Object[]{null,1,new ServerDef("","","","",""),1,"",true,false});
-        ReflectionHelper.setFieldValue(entry, "activationCmd", cmd);
+        ReflectionHelper.setFieldValue(entry, "activationCmd", command);
         return (ServerTableEntry) entry;
     }
 }

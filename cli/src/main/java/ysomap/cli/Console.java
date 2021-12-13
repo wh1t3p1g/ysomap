@@ -19,7 +19,6 @@ import ysomap.common.exception.BaseException;
 import ysomap.common.exception.YsoClassNotFoundException;
 import ysomap.common.exception.YsoFileNotFoundException;
 import ysomap.common.util.Logger;
-import ysomap.core.ObjectInputFilterManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +51,6 @@ public class Console {
         exploits = loadMetaData("ysomap.exploits", Exploits.class);
         payloads = loadMetaData("ysomap.payloads", Payloads.class);
         bullets = loadMetaData("ysomap.bullets", Bullets.class);
-        ObjectInputFilterManager.setup();
         Logger.success("exploits("+exploits.values().size()+") payloads("+payloads.values().size()+") bullets("+bullets.values().size()+")");
     }
 

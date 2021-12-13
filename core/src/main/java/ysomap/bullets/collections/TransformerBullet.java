@@ -2,6 +2,7 @@ package ysomap.bullets.collections;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.DetailHelper;
 
 import java.util.LinkedList;
 
@@ -18,7 +19,7 @@ import java.util.LinkedList;
 public class TransformerBullet extends AbstractTransformerBullet {
 
     @NotNull
-    @Require(name="command",detail="evil system command")
+    @Require(name="command",detail= DetailHelper.COMMAND)
     public String command;
 
     @NotNull
