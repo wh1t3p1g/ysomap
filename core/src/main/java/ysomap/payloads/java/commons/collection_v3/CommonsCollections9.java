@@ -1,4 +1,4 @@
-package ysomap.payloads.java.collections;
+package ysomap.payloads.java.commons.collection_v3;
 
 import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections.functors.InvokerTransformer;

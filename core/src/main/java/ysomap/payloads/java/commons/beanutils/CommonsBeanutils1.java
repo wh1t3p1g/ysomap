@@ -1,4 +1,4 @@
-package ysomap.payloads.java.collections;
+package ysomap.payloads.java.commons.beanutils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import ysomap.bullets.Bullet;

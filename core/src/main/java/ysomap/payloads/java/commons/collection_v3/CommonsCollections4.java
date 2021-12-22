@@ -1,4 +1,4 @@
-package ysomap.payloads.java.collections;
+package ysomap.payloads.java.commons.collection_v3;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ChainedTransformer;
@@ -38,12 +38,14 @@ import java.util.Map;
 		commons-collections
  */
 /*
+仅供学习，实战不建议
 This only works in JDK 8u76 and WITHOUT a security manager
 
 https://github.com/JetBrains/jdk8u_jdk/commit/af2361ee2878302012214299036b3a8b4ed36974#diff-f89b1641c408b60efe29ee513b3d22ffR70
  */
 @SuppressWarnings({"rawtypes"})
 //@Payloads
+@Deprecated
 @Targets({Targets.JDK})
 @Authors({ Authors.MATTHIASKAISER, Authors.JASINNER })
 @Require(bullets = {"TransformerBullet",

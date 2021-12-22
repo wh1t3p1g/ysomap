@@ -1,4 +1,4 @@
-package ysomap.payloads.java.collections;
+package ysomap.payloads.java.commons.collection_v4;
 
 import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import org.apache.commons.collections4.comparators.TransformingComparator;
@@ -13,6 +13,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
+ * 仅供学习，实战不建议
  * @author wh1t3P1g
  * @since 2020/2/17
  */
@@ -22,6 +23,7 @@ import java.util.Queue;
 @Authors({ Authors.FROHOFF })
 @Require(bullets = {"TemplatesImplBullet"}, param = false)
 @Dependencies({ "org.apache.commons:commons-collections4:4.0" })
+@Deprecated
 public class CommonsCollections2 extends AbstractPayload<Queue<Object>> {
 
     @Override

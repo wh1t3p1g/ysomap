@@ -64,17 +64,17 @@ public class HTTPHelper {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            System.err.println("Have request from "+exchange.getRemoteAddress());
-            System.err.println("Get request <"+exchange.getRequestMethod()+"> "+exchange.getRequestURI());
+            Logger.normal("    Have request from "+exchange.getRemoteAddress());
+            Logger.normal("    Get request <"+exchange.getRequestMethod()+"> "+exchange.getRequestURI());
             exchange.sendResponseHeaders(200, obj.length);
             OutputStream os = exchange.getResponseBody();
             os.write(obj);
             os.close();
-            System.err.println("return payload and close");
+            Logger.normal("    return payload and close\n");
         }
     }
 
-    public static Response post(String url, RequestBody body, Headers headers){
+    public static Response post(String url, RequestBody body, Headers headers, boolean vv){
         Request request = new Request.Builder()
                 .url(url)
                 .headers(headers)
@@ -87,14 +87,16 @@ public class HTTPHelper {
 //                .proxy(proxy)
 //                .build();
         try(Response response = client.newCall(request).execute()){
-            Logger.success("Status Code: "+response.code());
-            Logger.success("Response Headers:");
+            Logger.normal("Status Code: "+response.code());
+            Logger.normal("Response Headers:");
             Map<String, List<String>> responseHeaders = response.headers().toMultimap();
             for(Map.Entry entry:responseHeaders.entrySet()){
                 Logger.normal(entry.getKey()+":"+entry.getValue());
             }
-            Logger.success("Response Body:");
-            Logger.normal(response.body().string());
+            if(vv){
+                Logger.normal("Response Body:");
+                Logger.normal(response.body().string());
+            }
             return response;
         } catch (IOException e) {
             e.printStackTrace();
