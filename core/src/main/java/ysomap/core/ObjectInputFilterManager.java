@@ -66,8 +66,8 @@ public class ObjectInputFilterManager {
             Class<?> clazz = getSerialClass(filterInfo);
             if(clazz != null){
                 if(clazz.isPrimitive() ||
-                        (Arrays.stream(whitelist).anyMatch(pre -> clazz.getName().startsWith(pre))
-                                && Arrays.stream(blacklist).noneMatch(cl -> cl.equals(clazz.getName())))){
+                        (inWhitelist(clazz.getName())
+                                && !inBlacklist(clazz.getName()))){
                     return Status.ALLOWED;
                 }
                 return Status.REJECTED;
