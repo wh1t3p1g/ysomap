@@ -4,6 +4,7 @@ import org.codehaus.groovy.runtime.MethodClosure;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.JdbcRowSetImplBullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3p1g
@@ -27,7 +28,7 @@ public class ClosureWithJNDIBullet implements Bullet<Object> {
 
     public static ClosureWithJNDIBullet newInstance(Object... args) throws Exception {
         ClosureWithJNDIBullet bullet = new ClosureWithJNDIBullet();
-        bullet.set("jndiURL", args[0]);
+        ReflectionHelper.set(bullet, "jndiURL", args[0]);
         return bullet;
     }
 }

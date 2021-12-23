@@ -38,9 +38,7 @@ public class LazyValueForXStream extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet =  new SwingLazyValueWithJNDIBullet();
-        bullet.set("jndiURL",args[0]);
-        return bullet;
+        return SwingLazyValueWithJNDIBullet.newInstance(args);
     }
 
     @Override

@@ -2,6 +2,7 @@ package ysomap.bullets.jdk.rmi;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 import javax.naming.Reference;
 
@@ -35,8 +36,8 @@ public class JNDIRefBullet implements Bullet<Reference> {
 
     public static JNDIRefBullet newInstance(Object... args) throws Exception {
         JNDIRefBullet bullet = new JNDIRefBullet();
-        bullet.set("factoryName",args[0]);
-        bullet.set("factoryURL", args[1]);
+        ReflectionHelper.set(bullet, "factoryName", args[0]);
+        ReflectionHelper.set(bullet, "factoryURL", args[1]);
         return bullet;
     }
 }

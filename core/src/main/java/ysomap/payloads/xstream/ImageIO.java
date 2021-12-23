@@ -32,12 +32,12 @@ public class ImageIO extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new ProcessBuilderBullet().set("command",args[0]);
+        return ProcessBuilderBullet.newInstance(args);
     }
 
     @Override
     public Object pack(Object obj) throws Exception {
-        String action = bullet.get("action");
+        String action = ReflectionHelper.get(bullet, "action");
         if(action == null){
             action = "start";// 默认为ProcessBuilder的start函数
         }

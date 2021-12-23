@@ -22,10 +22,7 @@ public class Resin extends HessianPayload{
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new JNDIRefBullet();
-        bullet.set("factoryName", args[0]);
-        bullet.set("factoryURL",  args[1]);
-        return bullet;
+        return JNDIRefBullet.newInstance(args);
     }
 
     @Override

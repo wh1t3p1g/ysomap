@@ -3,8 +3,6 @@ package ysomap.core;
 import sun.misc.ObjectInputFilter;
 import ysomap.core.util.ReflectionHelper;
 
-import java.util.Arrays;
-
 /**
  * @author wh1t3p1g
  * @since 2021/11/23
@@ -75,6 +73,24 @@ public class ObjectInputFilterManager {
                 return Status.REJECTED;
             }
             return Status.UNDECIDED;
+        }
+
+        public boolean inWhitelist(String clazz){
+            for(String white:whitelist){
+                if(clazz.startsWith(white)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean inBlacklist(String clazz){
+            for(String black:blacklist){
+                if(clazz.equals(black)){
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Class<?> getSerialClass(FilterInfo filterInfo){

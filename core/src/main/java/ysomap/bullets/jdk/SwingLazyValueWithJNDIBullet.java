@@ -3,6 +3,7 @@ package ysomap.bullets.jdk;
 import sun.swing.SwingLazyValue;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -29,7 +30,7 @@ public class SwingLazyValueWithJNDIBullet implements Bullet<SwingLazyValue> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new SwingLazyValueWithJNDIBullet();
-        bullet.set("jndiURL", args[0]);
+        ReflectionHelper.set(bullet, "jndiURL", args[0]);
         return bullet;
     }
 }

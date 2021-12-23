@@ -48,8 +48,8 @@ public class AspectJWeaver extends AbstractPayload<Object> {
     @Override
     public Object pack(Object obj) throws Exception {
         try {
-            byte[] content = FileHelper.getFileContent(bullet.get("localFilepath"));
-            String filename = bullet.get("filename");
+            byte[] content = FileHelper.getFileContent(ReflectionHelper.get(bullet,"localFilepath"));
+            String filename = ReflectionHelper.get(bullet,"filename");
             Map map = new HashMap();
             map.put(filename, content);
             Transformer transformer = (Transformer)ReflectionHelper

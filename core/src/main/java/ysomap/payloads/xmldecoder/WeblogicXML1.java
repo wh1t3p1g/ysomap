@@ -3,6 +3,7 @@ package ysomap.payloads.xmldecoder;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.bullets.weblogic.xml.WeblogicXMLRCEBullet;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -18,7 +19,7 @@ public class WeblogicXML1 extends XMLDecoderPayload<Object> {
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
         Bullet bullet = new WeblogicXMLRCEBullet();
-        bullet.set("cmd", args[0]);
+        ReflectionHelper.set(bullet, "cmd", args[0]);
         return bullet;
     }
 

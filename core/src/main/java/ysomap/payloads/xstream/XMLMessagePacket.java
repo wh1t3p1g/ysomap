@@ -34,10 +34,7 @@ public class XMLMessagePacket extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new LazySearchEnumerationImplBullet();
-        bullet.set("rhost", args[0]);
-        bullet.set("rport", args[1]);
-        return bullet;
+        return LazySearchEnumerationImplBullet.newInstance(args);
     }
 
     @Override

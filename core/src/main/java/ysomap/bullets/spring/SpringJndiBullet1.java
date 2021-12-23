@@ -32,7 +32,7 @@ public class SpringJndiBullet1 implements Bullet<Object> {
 
     public static SpringJndiBullet1 newInstance(Object... args) throws Exception {
         SpringJndiBullet1 bullet = new SpringJndiBullet1();
-        bullet.set("jndiURL", args[0]);
+        ReflectionHelper.set(bullet, "jndiURL", args[0]);
         return bullet;
     }
 }

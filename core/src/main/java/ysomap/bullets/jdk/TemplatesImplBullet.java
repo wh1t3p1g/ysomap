@@ -182,10 +182,10 @@ public class TemplatesImplBullet implements Bullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TemplatesImplBullet();
-        bullet.set("type", args[0]);
-        bullet.set("body", args[1]);
-        bullet.set("effect", args[2]);
-        bullet.set("exception", args[3]);
+        ReflectionHelper.set(bullet, "type", args[0]);
+        ReflectionHelper.set(bullet, "body", args[1]);
+        ReflectionHelper.set(bullet, "effect", args[2]);
+        ReflectionHelper.set(bullet, "exception", args[3]);
         return bullet;
     }
 }

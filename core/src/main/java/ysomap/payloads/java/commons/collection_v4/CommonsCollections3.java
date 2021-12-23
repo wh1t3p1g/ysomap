@@ -5,7 +5,7 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
 import org.apache.commons.collections4.functors.ChainedTransformer;
 import org.apache.commons.collections4.functors.ConstantTransformer;
 import ysomap.bullets.Bullet;
-import ysomap.bullets.collections.TransformerWithTemplatesImplBullet;
+import ysomap.bullets.collections.TransformerBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ReflectionHelper;
 
@@ -47,9 +47,6 @@ public class CommonsCollections3 extends CommonsCollections2 {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new TransformerWithTemplatesImplBullet();
-        bullet.set("args", args[0]);
-        bullet.set("version","4");
-        return bullet;
+        return TransformerBullet.newInstance(args);
     }
 }

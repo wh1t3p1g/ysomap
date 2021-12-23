@@ -5,6 +5,7 @@ import sun.rmi.transport.LiveRef;
 import sun.rmi.transport.tcp.TCPEndpoint;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 import java.rmi.server.ObjID;
 import java.util.Random;
@@ -33,5 +34,12 @@ public class RMIConnectBullet implements Bullet<Object> {
         ObjID id = new ObjID(new Random().nextInt()); // RMI registry
         TCPEndpoint te = new TCPEndpoint(rhost, Integer.parseInt(rport));
         return new UnicastRef(new LiveRef(id, te, false));
+    }
+
+    public static RMIConnectBullet newInstance(Object... args) throws Exception {
+        RMIConnectBullet bullet = new RMIConnectBullet();
+        ReflectionHelper.set(bullet, "rhost", args[0]);
+        ReflectionHelper.set(bullet, "rport", args[1]);
+        return bullet;
     }
 }

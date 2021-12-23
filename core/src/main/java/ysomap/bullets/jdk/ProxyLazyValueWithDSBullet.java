@@ -2,6 +2,7 @@ package ysomap.bullets.jdk;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 import javax.swing.*;
 
@@ -30,7 +31,7 @@ public class ProxyLazyValueWithDSBullet implements Bullet<UIDefaults.ProxyLazyVa
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new ProxyLazyValueWithDSBullet();
-        bullet.set("serialized", args[0]);
+        ReflectionHelper.set(bullet, "serialized", args[0]);
         return bullet;
     }
 }

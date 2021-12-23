@@ -39,9 +39,9 @@ public class StoreableCachingMapBullet implements Bullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new StoreableCachingMapBullet();
-        bullet.set("remoteFolder", args[0]);
-        bullet.set("filename", args[1]);
-        bullet.set("localFilepath", args[2]);
+        ReflectionHelper.set(bullet,"remoteFolder", args[0]);
+        ReflectionHelper.set(bullet,"filename", args[1]);
+        ReflectionHelper.set(bullet,"localFilepath", args[2]);
         return bullet;
     }
 }

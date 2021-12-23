@@ -44,9 +44,7 @@ public class XercesValue extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet =  new JdbcRowSetImplBullet();
-        bullet.set("jndiURL",args[0]);
-        return bullet;
+        return JdbcRowSetImplBullet.newInstance(args);
     }
 
     @Override

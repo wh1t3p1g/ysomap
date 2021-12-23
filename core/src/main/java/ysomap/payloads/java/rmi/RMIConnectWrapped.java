@@ -36,10 +36,7 @@ public class RMIConnectWrapped extends AbstractPayload<Remote> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new RMIConnectBullet();
-        bullet.set("rhost", args[0]);
-        bullet.set("rport", args[1]);
-        return bullet;
+        return RMIConnectBullet.newInstance(args);
     }
 
     @Override

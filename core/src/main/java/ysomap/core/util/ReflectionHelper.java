@@ -4,6 +4,7 @@ import com.nqzero.permit.Permit;
 import sun.reflect.ReflectionFactory;
 import ysomap.common.annotation.NotNull;
 import ysomap.common.exception.ArgumentsNotCompleteException;
+import ysomap.common.util.Logger;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
@@ -123,4 +124,26 @@ public class ReflectionHelper {
     	return createWithConstructor(classToInstantiate, Object.class, new Class[0], new Object[0]);
 	}
 
+
+	public static <T> T set(T obj, String key, Object value) throws Exception {
+		ReflectionHelper.setFieldValue(obj, key, value);
+		return obj;
+	}
+
+	public static String get(Object thisObj, String key) {
+		try {
+			Object obj = ReflectionHelper.getFieldValue(thisObj, key);
+			if(obj != null){
+				return obj.toString();
+			}
+			return null;
+		} catch (Exception e) {
+			Logger.error("Key "+key+" not found");
+			return null;
+		}
+	}
+
+	public static boolean has(Object thisObj, String key) {
+		return ReflectionHelper.getField(thisObj.getClass(), key) != null;
+	}
 }

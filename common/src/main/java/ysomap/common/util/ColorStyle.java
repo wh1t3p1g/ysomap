@@ -18,14 +18,14 @@ public class ColorStyle {
     }
 
     public static String makeWordRedAndBoldAndUnderline(String word){
-        return new AttributedStringBuilder()
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED))
-                .style(AttributedStyle::bold)
-                .style(AttributedStyle::underline)
-                .append(word)
-                .style(AttributedStyle::underlineOff)
-                .style(AttributedStyle::boldOff)
-                .toAnsi();
+        AttributedStringBuilder asb = new AttributedStringBuilder();
+        asb.style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
+        asb.style(asb.style().bold());
+        asb.style(asb.style().underline());
+        asb.append(word);
+        asb.style(asb.style().underlineOff());
+        asb.style(asb.style().boldOff());
+        return asb.toAnsi();
     }
 
     public static String makeWordGreen(String word){
@@ -37,19 +37,19 @@ public class ColorStyle {
     }
 
     public static String makeWordBold(String word){
-        return new AttributedStringBuilder()
-                .style(AttributedStyle::bold)
-                .append(word)
-                .style(AttributedStyle::boldOff)
-                .toAnsi();
+        AttributedStringBuilder asb = new AttributedStringBuilder();
+        asb.style(asb.style().bold());
+        asb.append(word);
+        asb.style(asb.style().boldOff());
+        return asb.toAnsi();
     }
     public static String makeWordBoldAndUnderline(String word){
-        return new AttributedStringBuilder()
-                .style(AttributedStyle::bold)
-                .style(AttributedStyle::underline)
-                .append(word)
-                .style(AttributedStyle::underlineOff)
-                .style(AttributedStyle::boldOff)
-                .toAnsi();
+        AttributedStringBuilder asb = new AttributedStringBuilder();
+        asb.style(asb.style().bold());
+        asb.style(asb.style().underline());
+        asb.append(word);
+        asb.style(asb.style().underlineOff());
+        asb.style(asb.style().boldOff());
+        return asb.toAnsi();
     }
 }

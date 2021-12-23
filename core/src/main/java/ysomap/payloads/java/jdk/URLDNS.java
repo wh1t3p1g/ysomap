@@ -30,7 +30,7 @@ public class URLDNS extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new URLBullet().set("dnslog",args[0]);
+        return URLBullet.newInstance(args);
     }
 
     @Override

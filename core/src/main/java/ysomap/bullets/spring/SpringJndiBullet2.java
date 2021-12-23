@@ -3,6 +3,7 @@ package ysomap.bullets.spring;
 import org.springframework.transaction.jta.JtaTransactionManager;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3p1g
@@ -29,7 +30,7 @@ public class SpringJndiBullet2 implements Bullet<Object> {
 
     public static SpringJndiBullet2 newInstance(Object... args) throws Exception {
         SpringJndiBullet2 bullet = new SpringJndiBullet2();
-        bullet.set("jndiURL", args[0]);
+        ReflectionHelper.set(bullet, "jndiURL", args[0]);
         return bullet;
     }
 }

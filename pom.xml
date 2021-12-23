@@ -28,8 +28,8 @@
                     <version>3.8.1</version>
                     <configuration>
                         <!-- maximize compatibility -->
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>1.7</source>
+                        <target>1.7</target>
                         <!-- ignore noisy internal api warnings -->
                         <compilerArgument>-XDignore.symbol.file</compilerArgument>
                         <fork>true</fork>

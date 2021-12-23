@@ -4,6 +4,7 @@ import org.codehaus.groovy.runtime.MethodClosure;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -24,5 +25,11 @@ public class ClosureWithRuntimeBullet implements Bullet<Object> {
     public Object getObject() throws Exception {
         Runtime runtime = Runtime.getRuntime();
         return new MethodClosure(runtime, "exec");
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        ClosureWithRuntimeBullet bullet = new ClosureWithRuntimeBullet();
+        ReflectionHelper.set(bullet, "command", args[0]);
+        return bullet;
     }
 }

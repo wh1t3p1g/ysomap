@@ -5,7 +5,7 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.keyvalue.TiedMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import ysomap.bullets.Bullet;
-import ysomap.bullets.collections.TransformerWithTemplatesImplBullet;
+import ysomap.bullets.collections.TransformerBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
@@ -39,9 +39,7 @@ public class CommonsCollections5 extends AbstractPayload<HashSet> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new TransformerWithTemplatesImplBullet()
-                .set("args", args[0])
-                .set("version", "3");
+        return TransformerBullet.newInstance(args);
     }
 
     @Override

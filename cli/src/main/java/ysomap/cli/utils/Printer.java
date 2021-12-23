@@ -13,7 +13,6 @@ import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author wh1t3P1g
@@ -29,14 +28,16 @@ public class Printer {
         at.addRule();
         at.addRow("UUID", "Status", "Details");
         at.addRule();
-        sessions.forEach((uuid, session)->{
+        for(Map.Entry<String, Session> entry:sessions.entrySet()){
+            String uuid = entry.getKey();
+            Session session = entry.getValue();
             if(uuid.equals(curSession)) {
                 at.addRow("*current*", session.isRunning()?"running":"stopped", session.toString());
             }else{
                 at.addRow(uuid, session.isRunning()?"running":"stopped", session.toString());
             }
             at.addRule();
-        });
+        }
         CWC_FixedWidth cwc = new CWC_FixedWidth();
         cwc.add(40);
         cwc.add(15);
@@ -47,10 +48,10 @@ public class Printer {
     public static void printCandidates(String type, Class<?> clazz, boolean detail, Map<String, MetaData> dataMap){
         List<String> candidates = Arrays.asList(Require.Utils.getRequiresFromClass(clazz));
         if(candidates.size() > 0){
-            String c = candidates.stream().map(ColorStyle::makeWordRedAndBoldAndUnderline).collect(Collectors.joining(", "));
+            String c = collect(candidates);
             Logger.normal("You can choose "+type+": "+c);
             if(detail){
-                List<MetaData> candidatesMetaData = candidates.stream().map(dataMap::get).collect(Collectors.toList());
+                List<MetaData> candidatesMetaData = getTargetMetaData(candidates, dataMap);
                 if("payloads".equals(type)){
                     printPayloadsInfo(candidatesMetaData);
                 }else if("bullets".equals(type)){
@@ -62,6 +63,22 @@ public class Printer {
         }
     }
 
+    public static List<MetaData> getTargetMetaData(List<String> candidates, Map<String, MetaData> dataMap){
+        List<MetaData> ret = new ArrayList<>();
+        for(String candidate:candidates){
+            ret.add(dataMap.get(candidate));
+        }
+        return ret;
+    }
+
+    public static String collect(List<String> candidates){
+        List<String> ret = new ArrayList<>();
+        for(String candidate:candidates){
+            ret.add(ColorStyle.makeWordRedAndBoldAndUnderline(candidate));
+        }
+        return Arrays.toString(ret.toArray());
+    }
+
     public static void printSettings(Class<?> clazz, HashMap<String, Object> settings){
         AsciiTable at = new AsciiTable();
         at.addRule();
@@ -71,7 +88,7 @@ public class Printer {
         for(Map.Entry<String,String[]> item: bullets.entrySet()){
             String key = item.getKey();
             String[] detail = item.getValue();
-            String value = (String)settings.getOrDefault(key, "");
+            String value = (String)settings.get(key);
             at.addRow(
                     key,
                     detail[0],

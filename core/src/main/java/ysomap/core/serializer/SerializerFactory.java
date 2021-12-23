@@ -2,6 +2,7 @@ package ysomap.core.serializer;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.util.Logger;
+import ysomap.common.util.Strings;
 import ysomap.core.ObjectInputFilterManager;
 import ysomap.core.serializer.hessian.HessianSerializer;
 import ysomap.core.serializer.json.FastJsonSerializer;
@@ -55,7 +56,7 @@ public class SerializerFactory {
             }
             if(out != null){
 
-                serializer.serialize(obj, out);
+                serialize(serializer, obj, out);
 
                 if(serializer.getOutputType().equals("console")){
                     Logger.normal("\n");
@@ -67,6 +68,25 @@ public class SerializerFactory {
         }else {
             Logger.success(current + " not serializable, so do nothing");
         }
+    }
+
+    private static void serialize(Serializer serializer, Object obj, OutputStream out) throws Exception{
+        Object serialized = serializer.serialize(obj);
+        byte[] serializedBytes;
+        String encoder = serializer.getEncoder();
+        if(serialized instanceof String){
+            serializedBytes = ((String) serialized).getBytes();
+        }else if(serialized instanceof byte[]){
+            serializedBytes = (byte[]) serialized;
+        }else{
+            serializedBytes = new byte[0];
+            Logger.error("no serialize type found!");
+        }
+        if("base64".equals(encoder)){
+            serializedBytes = Strings.base64(serializedBytes);
+        }
+
+        out.write(serializedBytes);
     }
 
     public static Object test(Payload payload, Bullet bullet) throws Exception {

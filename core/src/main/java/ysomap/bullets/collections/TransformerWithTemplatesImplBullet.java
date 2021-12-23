@@ -4,6 +4,7 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TrAXFilter;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.bullets.jdk.TemplatesImplBullet;
+import ysomap.core.util.ReflectionHelper;
 
 import javax.xml.transform.Templates;
 import java.util.LinkedList;
@@ -34,7 +35,7 @@ public class TransformerWithTemplatesImplBullet extends AbstractTransformerBulle
     public Object getObject() throws Exception {
         initClazz(version);
         Bullet tplBullet = new TemplatesImplBullet();
-        tplBullet.set("body", args);
+        ReflectionHelper.set(tplBullet, "body", args);
         Object obj = tplBullet.getObject();
         LinkedList<Object> transformers = new LinkedList<>();
         transformers.add(createConstantTransformer(TrAXFilter.class));

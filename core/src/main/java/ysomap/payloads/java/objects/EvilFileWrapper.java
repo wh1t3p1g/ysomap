@@ -6,6 +6,7 @@ import ysomap.common.annotation.*;
 import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.ClassFiles;
+import ysomap.core.util.ReflectionHelper;
 import ysomap.payloads.AbstractPayload;
 
 import java.util.HashMap;
@@ -30,9 +31,9 @@ public class EvilFileWrapper extends AbstractPayload<byte[]> {
 
     @Override
     public byte[] pack(Object obj) throws Exception {
-        String type = bullet.get("type");
+        String type = ReflectionHelper.get(bullet,"type");
         if(type.equals("jar")){
-            String classname = bullet.get("classname");
+            String classname = ReflectionHelper.get(bullet,"classname");
             Map<String, byte[]> classes = new HashMap<>();
             classes.put(classname, (byte[]) obj);
             return ClassFiles.makeJarWithMultiClazz(classname + ".jar", classes);

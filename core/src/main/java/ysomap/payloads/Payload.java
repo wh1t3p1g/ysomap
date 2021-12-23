@@ -2,8 +2,6 @@ package ysomap.payloads;
 
 import ysomap.bullets.Bullet;
 import ysomap.core.serializer.Serializer;
-import ysomap.core.serializer.SerializerFactory;
-import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -11,26 +9,23 @@ import ysomap.core.util.ReflectionHelper;
  */
 public interface Payload<T> {
 
-    default Payload<T> set(String key, Object value) throws Exception {
-        ReflectionHelper.setFieldValue(this, key, value);
-        return this;
-    }
-
-    default boolean has(String key) {
-        return ReflectionHelper.getField(this.getClass(), key) != null;
-    }
+//    default Payload<T> set(String key, Object value) throws Exception {
+//        ReflectionHelper.setFieldValue(this, key, value);
+//        return this;
+//    }
+//
+//    default boolean has(String key) {
+//        return ReflectionHelper.getField(this.getClass(), key) != null;
+//    }
 
     T getObject() throws Exception;
 
     void setBullet(Bullet bullet);
 
-    default boolean checkObject(Object obj) {
-        return true;// 默认不检查也可以，如需检查重载该函数
-    }
+    boolean checkObject(Object obj);
 
-    default Serializer<?> getSerializer(){
-        return SerializerFactory.createSerializer("default");
-    }
+    Serializer<?> getSerializer();
+
 
     Bullet getDefaultBullet(Object... args) throws Exception;
 

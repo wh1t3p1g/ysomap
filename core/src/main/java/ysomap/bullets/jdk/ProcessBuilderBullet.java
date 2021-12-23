@@ -3,6 +3,7 @@ package ysomap.bullets.jdk;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
+import ysomap.core.util.ReflectionHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,5 +29,11 @@ public class ProcessBuilderBullet implements Bullet<ProcessBuilder> {
     public ProcessBuilder getObject() throws Exception {
         List<String> cmd = Arrays.asList(command.split(" "));
         return new ProcessBuilder(cmd);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        ProcessBuilderBullet bullet = new ProcessBuilderBullet();
+        ReflectionHelper.set(bullet, "command", args[0]);
+        return bullet;
     }
 }

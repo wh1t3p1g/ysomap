@@ -24,12 +24,12 @@ public class GroovyExpando extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return new ProcessBuilderBullet().set("command",args[0]);
+        return ProcessBuilderBullet.newInstance(args);
     }
 
     @Override
     public Object pack(Object obj) throws Exception {
-        String action = bullet.get("action");
+        String action = ReflectionHelper.get(bullet, "action");
         MethodClosure methodClosure = new MethodClosure(obj, action);
         Expando expando = new Expando();
         HashMap map = new HashMap<>();

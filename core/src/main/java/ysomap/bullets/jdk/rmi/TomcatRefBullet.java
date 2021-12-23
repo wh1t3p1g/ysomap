@@ -5,6 +5,7 @@ import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
 import ysomap.core.util.PayloadHelper;
+import ysomap.core.util.ReflectionHelper;
 
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
@@ -41,7 +42,7 @@ public class TomcatRefBullet implements Bullet<Reference> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TomcatRefBullet();
-        bullet.set("command", args[0]);
+        ReflectionHelper.set(bullet, "command", args[0]);
         return bullet;
     }
 }

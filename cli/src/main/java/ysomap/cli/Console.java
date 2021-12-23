@@ -1,5 +1,6 @@
 package ysomap.cli;
 
+import org.apache.commons.io.FileUtils;
 import org.jline.builtins.Completers;
 import org.jline.reader.*;
 import org.jline.reader.impl.DefaultParser;
@@ -164,7 +165,7 @@ public class Console {
         }else if(size > 1){
             command = words.get(0);
             args = new LinkedList<>(words.subList(1, size));
-            args.removeIf(String::isEmpty);
+            args.removeAll(Arrays.asList("", null));
         }
     }
 
@@ -383,7 +384,7 @@ public class Console {
                 throw new YsoFileNotFoundException(filepath);
             }
             Logger.success("Start to parse script file{"+filepath+"}");
-            List<String> contents = Files.readAllLines(file.toPath());
+            List<String> contents = FileUtils.readLines(file);
             Parser parser = new DefaultParser();
             ParsedLine parsedLine = null;
             List<String> words;
