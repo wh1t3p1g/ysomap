@@ -15,4 +15,4 @@ target/
 
 *.ser
 *Test.java
-core/src/main/java/exploits/secret/
+core/src/main/java/exploits/secret/*.java
