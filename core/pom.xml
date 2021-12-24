@@ -38,16 +38,16 @@
             <artifactId>commons-codec</artifactId>
             <version>1.15</version>
         </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>com.caucho</groupId>-->
-<!--            <artifactId>hessian</artifactId>-->
-<!--            <version>4.0.38</version>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>com.alipay.sofa</groupId>
+            <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
-            <version>4.0.4</version>
+            <version>4.0.38</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alipay.sofa</groupId>-->
+<!--            <artifactId>hessian</artifactId>-->
+<!--            <version>4.0.4</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -87,8 +87,9 @@
         <!--            <artifactId>commons-dbcp</artifactId>-->
         <!--            <version>1.4</version>-->
         <!--        </dependency>-->
+
+        <!-- for Resin -->
         <dependency>
-            <!-- for Resin -->
             <groupId>com.caucho</groupId>
             <artifactId>quercus</artifactId>
             <version>4.0.45</version>
@@ -185,7 +186,42 @@
             <artifactId>groovy</artifactId>
             <version>2.4.3</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-core</artifactId>-->
+<!--            <version>4.3.11.Final</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/castor/castor -->
+<!--        <dependency>-->
+<!--            <groupId>castor</groupId>-->
+<!--            <artifactId>castor</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.codehaus.castor/castor-xml -->
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.castor</groupId>-->
+<!--            <artifactId>castor-xml</artifactId>-->
+<!--            <version>1.4.1</version>-->
+<!--        </dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/xerces/xercesImpl -->
+<!--        <dependency>-->
+<!--            <groupId>xerces</groupId>-->
+<!--            <artifactId>xercesImpl</artifactId>-->
+<!--            <version>2.9.1</version>-->
+<!--        </dependency>-->
+        <!-- jndi tomcat reference test -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.tomcat</groupId>-->
+<!--            <artifactId>tomcat-jasper-el</artifactId>-->
+<!--            <version>9.0.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.tomcat</groupId>-->
+<!--            <artifactId>tomcat-el-api</artifactId>-->
+<!--            <version>9.0.1</version>-->
+<!--        </dependency>-->
+        <!-- jndi tomcat reference test end -->
     </dependencies>
 
 </project>
