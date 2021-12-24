@@ -3,6 +3,8 @@ package ysomap.payloads.java.objects;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.objects.ClassWithEvilConstructor;
 import ysomap.common.annotation.*;
+import ysomap.common.util.ColorStyle;
+import ysomap.common.util.Logger;
 import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.ClassFiles;
@@ -35,7 +37,11 @@ public class EvilFileWrapper extends AbstractPayload<byte[]> {
             String classname = bullet.get("classname");
             Map<String, byte[]> classes = new HashMap<>();
             classes.put(classname, (byte[]) obj);
-            return ClassFiles.makeJarWithMultiClazz(classname + ".jar", classes);
+            if(bullet.getClass().getSimpleName().equals("ClassWithTomcatConcealedMemShell")){
+                return ClassFiles.makeJarWithCopyClazz((byte[]) obj,bullet.get("classname"));
+            }else {
+                return ClassFiles.makeJarWithMultiClazz(classname + ".jar", classes);
+            }
         }else {
             return (byte[]) obj;
         }
