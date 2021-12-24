@@ -1,8 +1,7 @@
 package ysomap.bullets.jdk;
 
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -19,7 +18,7 @@ import java.net.URLStreamHandler;
 @Details("向外部发起DNS查询，配合DNSLOG使用")
 @Targets({Targets.JDK})
 @Dependencies({"jdk"})
-public class URLBullet implements Bullet<URL> {
+public class URLBullet extends AbstractBullet<URL> {
 
     @NotNull
     @Require(name = "dnslog", detail = "set a dnslog url")
@@ -35,7 +34,7 @@ public class URLBullet implements Bullet<URL> {
 
     public static URLBullet newInstance(Object... args) throws Exception {
         URLBullet bullet = new URLBullet();
-        ReflectionHelper.set(bullet, "dnslog", args[0]);
+        bullet.set("dnslog", args[0]);
         return bullet;
     }
 

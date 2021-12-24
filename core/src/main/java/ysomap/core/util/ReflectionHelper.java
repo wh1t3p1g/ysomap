@@ -125,9 +125,9 @@ public class ReflectionHelper {
 	}
 
 
-	public static <T> T set(T obj, String key, Object value) throws Exception {
-		ReflectionHelper.setFieldValue(obj, key, value);
-		return obj;
+	public static <T> T set(T thisObj, String key, Object value) throws Exception {
+		ReflectionHelper.setFieldValue(thisObj, key, value);
+		return thisObj;
 	}
 
 	public static String get(Object thisObj, String key) {

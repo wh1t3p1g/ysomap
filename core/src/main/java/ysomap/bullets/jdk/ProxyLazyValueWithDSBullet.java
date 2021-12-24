@@ -1,8 +1,8 @@
 package ysomap.bullets.jdk;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 import javax.swing.*;
 
@@ -15,7 +15,7 @@ import javax.swing.*;
 @Details("依赖spring框架触发二次反序列化")
 @Targets({Targets.XSTREAM, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
-public class ProxyLazyValueWithDSBullet implements Bullet<UIDefaults.ProxyLazyValue> {
+public class ProxyLazyValueWithDSBullet extends AbstractBullet<UIDefaults.ProxyLazyValue> {
 
     @NotNull
     @Require(name = "serialized", detail = "序列化后的byte数组，非console配置，请勿用")
@@ -31,7 +31,7 @@ public class ProxyLazyValueWithDSBullet implements Bullet<UIDefaults.ProxyLazyVa
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new ProxyLazyValueWithDSBullet();
-        ReflectionHelper.set(bullet, "serialized", args[0]);
+        bullet.set("serialized", args[0]);
         return bullet;
     }
 }

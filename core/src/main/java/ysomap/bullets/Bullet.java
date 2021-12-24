@@ -8,25 +8,9 @@ public interface Bullet<T> {
 
     T getObject() throws Exception;
 
-//    default Bullet<T> set(String key, Object value) throws Exception {
-//        ReflectionHelper.setFieldValue(this, key, value);
-//        return this;
-//    }
-//
-//    default boolean has(String key) {
-//        return ReflectionHelper.getField(this.getClass(), key) != null;
-//    }
-//
-//    default String get(String key) {
-//        try {
-//            Object obj = ReflectionHelper.getFieldValue(this, key);
-//            if(obj != null){
-//                return obj.toString();
-//            }
-//            return null;
-//        } catch (Exception e) {
-//            Logger.error("Key "+key+" not found");
-//            return null;
-//        }
-//    }
+    Bullet<T> set(String key, Object value) throws Exception;
+
+    String get(String key);
+
+    boolean has(String key);
 }

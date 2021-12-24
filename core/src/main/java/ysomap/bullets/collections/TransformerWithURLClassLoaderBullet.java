@@ -1,5 +1,6 @@
 package ysomap.bullets.collections;
 
+import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 
 import java.net.URLClassLoader;
@@ -59,5 +60,13 @@ public class TransformerWithURLClassLoaderBullet extends AbstractTransformerBull
         );
 
         return createTransformerArray(transformers);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TransformerWithURLClassLoaderBullet();
+        bullet.set("jarUrl", args[0]);
+        bullet.set("remoteObj", args[1]);
+        bullet.set("version", args[2]);
+        return bullet;
     }
 }

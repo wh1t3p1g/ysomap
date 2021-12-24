@@ -9,7 +9,6 @@ import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
-import ysomap.core.util.ReflectionHelper;
 import ysomap.exploits.Exploit;
 import ysomap.payloads.Payload;
 
@@ -68,20 +67,20 @@ public class Session {
             settings.put("exploit", update(clazz));
 
             for(String field:settings.get("exploit").keySet()){
-                String defaultValue = ReflectionHelper.get(exploit, field);
+                String defaultValue = exploit.get(field);
                 settings.get("exploit").put(field, defaultValue);
             }
         }else if("payload".equals(type)){
             payload = (Payload) clazz.newInstance();
-            if(isExploit && ReflectionHelper.has(exploit,"payloadName")){
-                ReflectionHelper.set(exploit, "payloadName", clazz.getSimpleName());
+            if(isExploit && exploit.has("payloadName")){
+                exploit.set("payloadName", clazz.getSimpleName());
             }
             settings.put("payload", update(clazz));
         }else if("bullet".equals(type)){
             bullet = (Bullet) clazz.newInstance();
             settings.put("bullet", update(clazz));
             for(String field:settings.get("bullet").keySet()){
-                String defaultValue = ReflectionHelper.get(bullet, field);
+                String defaultValue = bullet.get(field);
                 settings.get("bullet").put(field, defaultValue);
             }
         }
@@ -134,9 +133,9 @@ public class Session {
             return;
         }
 
-        if(exploit != null && ReflectionHelper.has(exploit, key)){
+        if(exploit != null && exploit.has(key)){
             try {
-                ReflectionHelper.set(exploit ,key, value);
+                exploit.set(key, value);
                 settings.get("exploit").put(key, value);
                 return;
             } catch (Exception e) {
@@ -144,9 +143,9 @@ public class Session {
             }
         }
 
-        if(bullet != null && ReflectionHelper.has(bullet, key)){
+        if(bullet != null && bullet.has(key)){
             try {
-                ReflectionHelper.set(bullet ,key, value);
+                bullet.set(key, value);
                 settings.get("bullet").put(key, value);
                 return;
             } catch (Exception e) {
@@ -221,8 +220,8 @@ public class Session {
                 Logger.success("Pre exploit is running now, plz wait to exploit!");
                 return;
             }
-            if(ReflectionHelper.has(exploit,"payload")){
-                ReflectionHelper.set(exploit, "payload", obj);
+            if(exploit.has("payload")){
+                exploit.set("payload", obj);
             }
             exploit.setStatus(ysomap.common.util.Status.RUNNING);
             new Thread(exploit).start();

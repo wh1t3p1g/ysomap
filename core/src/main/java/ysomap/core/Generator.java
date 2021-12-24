@@ -2,7 +2,6 @@ package ysomap.core;
 
 import ysomap.bullets.Bullet;
 import ysomap.common.exception.GenerateErrorException;
-import ysomap.core.util.ReflectionHelper;
 import ysomap.exploits.Exploit;
 import ysomap.payloads.Payload;
 
@@ -27,10 +26,10 @@ public class Generator {
     public static Object setValue(Object obj, String key, Object value) throws Exception {
         if(obj instanceof Exploit){
             Exploit exploit = (Exploit) obj;
-            ReflectionHelper.set(exploit, key, value);
+            exploit.set(key, value);
         }else if(obj instanceof Payload){
             Payload payload = (Payload) obj;
-            ReflectionHelper.set(payload, key, value);
+            payload.set(key, value);
         }
         throw new GenerateErrorException("SET key "+key);
     }

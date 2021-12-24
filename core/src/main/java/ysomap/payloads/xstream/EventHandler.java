@@ -25,7 +25,7 @@ public class EventHandler extends XStreamPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        String action = ReflectionHelper.get(bullet, "action");
+        String action = bullet.get("action");
         if(action == null){
             action = "start";
         }

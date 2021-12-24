@@ -172,6 +172,13 @@ public class PayloadHelper {
         Hashtable classes = (Hashtable) ReflectionHelper.getFieldValue(classLoader, "classes");
         classes.put("java.lang.Object", Object.class);
         classes.put("java.lang.Runtime", Runtime.class);
+//        classes.put("java.lang.Runnable", Runnable.class);
+//        classes.put("java.lang.Throwable", Throwable.class);
+//        classes.put("java.io.IOException", IOException.class);
+//        classes.put("java.lang.Thread", Thread.class);
+//        classes.put("java.lang.String", String.class);
+//        classes.put("java.lang.System", System.class);
+//        classes.put("java.io.PrintStream", PrintStream.class);
         return classLoader;
     }
 

@@ -1,11 +1,11 @@
 package ysomap.bullets.jdk.rmi;
 
 import org.apache.naming.ResourceRef;
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
 import ysomap.core.util.PayloadHelper;
-import ysomap.core.util.ReflectionHelper;
 
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
@@ -19,7 +19,7 @@ import javax.naming.StringRefAddr;
 @Details("JNDI Reference的一种，适用于攻击tomcat环境下的JNDI")
 @Targets({Targets.JDK, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G, Authors.KINGX})
-public class TomcatRefBullet implements Bullet<Reference> {
+public class TomcatRefBullet extends AbstractBullet<Reference> {
 
     @NotNull
     @Require(name = "command", detail = DetailHelper.COMMAND)
@@ -42,7 +42,7 @@ public class TomcatRefBullet implements Bullet<Reference> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TomcatRefBullet();
-        ReflectionHelper.set(bullet, "command", args[0]);
+        bullet.set("command", args[0]);
         return bullet;
     }
 }

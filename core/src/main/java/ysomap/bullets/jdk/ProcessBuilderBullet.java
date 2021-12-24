@@ -1,9 +1,9 @@
 package ysomap.bullets.jdk;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.DetailHelper;
-import ysomap.core.util.ReflectionHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 @Details("执行任意系统命令")
 @Targets({Targets.XSTREAM})
 @Authors({Authors.WH1T3P1G})
-public class ProcessBuilderBullet implements Bullet<ProcessBuilder> {
+public class ProcessBuilderBullet extends AbstractBullet<ProcessBuilder> {
 
     @NotNull
     @Require(name = "command", detail = DetailHelper.COMMAND)
@@ -33,7 +33,7 @@ public class ProcessBuilderBullet implements Bullet<ProcessBuilder> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         ProcessBuilderBullet bullet = new ProcessBuilderBullet();
-        ReflectionHelper.set(bullet, "command", args[0]);
+        bullet.set("command", args[0]);
         return bullet;
     }
 }

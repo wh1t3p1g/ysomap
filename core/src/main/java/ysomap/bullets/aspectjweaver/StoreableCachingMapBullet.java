@@ -1,5 +1,6 @@
 package ysomap.bullets.aspectjweaver;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ReflectionHelper;
@@ -13,7 +14,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("指定目录文件写入")
 @Targets({Targets.JDK})
 @Authors({ Authors.JANG })
-public class StoreableCachingMapBullet implements Bullet<Object> {
+public class StoreableCachingMapBullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name="remoteFolder",detail="远程目标写入的目录")
@@ -34,14 +35,14 @@ public class StoreableCachingMapBullet implements Bullet<Object> {
         return ReflectionHelper
                 .newInstance("org.aspectj.weaver.tools.cache.SimpleCache$StoreableCachingMap",
                         new Class[]{String.class, int.class},
-                        new Object[]{remoteFolder, 12});
+                        remoteFolder, 12);
     }
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new StoreableCachingMapBullet();
-        ReflectionHelper.set(bullet,"remoteFolder", args[0]);
-        ReflectionHelper.set(bullet,"filename", args[1]);
-        ReflectionHelper.set(bullet,"localFilepath", args[2]);
+        bullet.set("remoteFolder", args[0]);
+        bullet.set("filename", args[1]);
+        bullet.set("localFilepath", args[2]);
         return bullet;
     }
 }

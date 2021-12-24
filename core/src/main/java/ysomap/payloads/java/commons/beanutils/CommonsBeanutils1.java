@@ -36,7 +36,7 @@ public class CommonsBeanutils1 extends AbstractPayload<Object> {
         // case from https://www.leavesongs.com/PENETRATION/commons-beanutils-without-commons-collections.html
         // remove beanutils' cc dependency
         final BeanComparator comparator = new BeanComparator(null, String.CASE_INSENSITIVE_ORDER);
-        String action = ReflectionHelper.get(bullet,"action");
+        String action = bullet.get("action");
         // create queue with numbers and basic comparator
         final PriorityQueue<Object> queue = new PriorityQueue<Object>(2, comparator);
         // stub data for replacement later

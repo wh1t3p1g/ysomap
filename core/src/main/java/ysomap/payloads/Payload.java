@@ -36,4 +36,10 @@ public interface Payload<T> {
      * @return
      */
     T pack(Object obj) throws Exception;
+
+    Payload<T> set(String key, Object value) throws Exception;
+
+    String get(String key);
+
+    boolean has(String key);
 }

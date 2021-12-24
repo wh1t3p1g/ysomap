@@ -1,6 +1,6 @@
 package ysomap.bullets.weblogic.xml;
 
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
 
 /**
@@ -17,7 +17,7 @@ import ysomap.common.annotation.*;
         "执行后，可向外部发起JNDI连接")
 @Targets({Targets.XMLDECODER})
 @Dependencies({"JDK7","weblogic 10.3.6 12.x"})
-public class WeblogicXMLJndiBullet implements Bullet<String> {
+public class WeblogicXMLJndiBullet extends AbstractBullet<String> {
 
     @NotNull
     @Require(name = "jndiURL", detail = "jndi lookup url, like rmi://xxxx:1099/xxx")

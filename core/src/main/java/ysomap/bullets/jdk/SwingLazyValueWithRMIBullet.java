@@ -1,5 +1,6 @@
 package ysomap.bullets.jdk;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.common.util.Logger;
@@ -14,7 +15,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("向外部发起RMI连接")
 @Targets({Targets.XSTREAM, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
-public class SwingLazyValueWithRMIBullet implements Bullet<Object> {
+public class SwingLazyValueWithRMIBullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "rmiURL", detail = "like rmi://xxx/xx")
@@ -38,7 +39,7 @@ public class SwingLazyValueWithRMIBullet implements Bullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new SwingLazyValueWithRMIBullet();
-        ReflectionHelper.set(bullet, "rmiURL", args[0]);
+        bullet.set("rmiURL", args[0]);
         return bullet;
     }
 }

@@ -1,10 +1,10 @@
 package ysomap.bullets.groovy;
 
 import org.codehaus.groovy.runtime.MethodClosure;
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.JdbcRowSetImplBullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3p1g
@@ -15,7 +15,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("向外发起JNDI连接")
 @Targets({Targets.JDK})
 @Authors({Authors.WH1T3P1G})
-public class ClosureWithJNDIBullet implements Bullet<Object> {
+public class ClosureWithJNDIBullet extends AbstractBullet<Object> {
     @NotNull
     @Require(name = "jndiURL", detail = "jndiURL")
     public String jndiURL = null;
@@ -28,7 +28,7 @@ public class ClosureWithJNDIBullet implements Bullet<Object> {
 
     public static ClosureWithJNDIBullet newInstance(Object... args) throws Exception {
         ClosureWithJNDIBullet bullet = new ClosureWithJNDIBullet();
-        ReflectionHelper.set(bullet, "jndiURL", args[0]);
+        bullet.set("jndiURL", args[0]);
         return bullet;
     }
 }

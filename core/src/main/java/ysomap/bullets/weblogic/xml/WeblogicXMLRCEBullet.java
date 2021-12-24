@@ -1,6 +1,6 @@
 package ysomap.bullets.weblogic.xml;
 
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
 
 /**
@@ -14,7 +14,7 @@ import ysomap.common.annotation.*;
         "执行后，可执行任意代码")
 @Targets({Targets.XMLDECODER})
 @Dependencies({"*"})
-public class WeblogicXMLRCEBullet implements Bullet<String> {
+public class WeblogicXMLRCEBullet extends AbstractBullet<String> {
 
     @NotNull
     @Require(name = "cmd", detail = "需要执行的系统命令")

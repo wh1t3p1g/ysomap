@@ -1,9 +1,8 @@
 package ysomap.bullets.spring;
 
 import org.springframework.transaction.jta.JtaTransactionManager;
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3p1g
@@ -14,7 +13,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("向外发起JNDI连接")
 @Targets({Targets.JDK})
 @Dependencies({"javax.transaction:jta:1.1","spring-tx"})
-public class SpringJndiBullet2 implements Bullet<Object> {
+public class SpringJndiBullet2 extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "jndiURL", detail = "向外发起JNDI连接")
@@ -30,7 +29,7 @@ public class SpringJndiBullet2 implements Bullet<Object> {
 
     public static SpringJndiBullet2 newInstance(Object... args) throws Exception {
         SpringJndiBullet2 bullet = new SpringJndiBullet2();
-        ReflectionHelper.set(bullet, "jndiURL", args[0]);
+        bullet.set("jndiURL", args[0]);
         return bullet;
     }
 }

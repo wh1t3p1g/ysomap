@@ -43,4 +43,19 @@ public abstract class AbstractPayload<T> implements Payload<T>{
     public Serializer<?> getSerializer(){
         return SerializerFactory.createSerializer("default");
     }
+
+    @Override
+    public Payload<T> set(String key, Object value) throws Exception {
+        return ReflectionHelper.set(this, key, value);
+    }
+
+    @Override
+    public String get(String key) {
+        return ReflectionHelper.get(this, key);
+    }
+
+    @Override
+    public boolean has(String key) {
+        return ReflectionHelper.has(this, key);
+    }
 }

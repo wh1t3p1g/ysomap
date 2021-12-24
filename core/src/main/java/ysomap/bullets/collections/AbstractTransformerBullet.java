@@ -1,7 +1,7 @@
 package ysomap.bullets.collections;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.core.util.ReflectionHelper;
-import ysomap.bullets.Bullet;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * @since 2020/3/2
  */
 @SuppressWarnings({"rawtypes"})
-public abstract class AbstractTransformerBullet implements Bullet<Object> {
+public abstract class AbstractTransformerBullet extends AbstractBullet<Object> {
 
     public Class transformerClazz;
     public Class constantTransformerClazz;

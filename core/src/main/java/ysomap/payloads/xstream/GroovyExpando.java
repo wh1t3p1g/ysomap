@@ -29,7 +29,7 @@ public class GroovyExpando extends XStreamPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        String action = ReflectionHelper.get(bullet, "action");
+        String action = bullet.get("action");
         MethodClosure methodClosure = new MethodClosure(obj, action);
         Expando expando = new Expando();
         HashMap map = new HashMap<>();

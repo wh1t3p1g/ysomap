@@ -1,5 +1,6 @@
 package ysomap.bullets.collections;
 
+import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 
 import java.io.File;
@@ -51,5 +52,13 @@ public class TransformerWithFileWriteBullet extends AbstractTransformerBullet{
                 new Object[] { bytes }));
 
         return createTransformerArray(transformers);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TransformerWithFileWriteBullet();
+        bullet.set("localFilepath", args[0]);
+        bullet.set("remoteFilepath", args[1]);
+        bullet.set("version", args[2]);
+        return bullet;
     }
 }

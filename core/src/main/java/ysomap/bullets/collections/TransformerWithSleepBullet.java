@@ -1,5 +1,6 @@
 package ysomap.bullets.collections;
 
+import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 
 import java.util.LinkedList;
@@ -35,6 +36,13 @@ public class TransformerWithSleepBullet extends AbstractTransformerBullet{
         transformers.add(createInvokerTransformer("sleep",
                 new Class<?>[]{long.class}, new Object[]{ Integer.parseInt(sleep)*1000 }));
         return createTransformerArray(transformers);
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new TransformerWithSleepBullet();
+        bullet.set("sleep", args[0]);
+        bullet.set("version", args[1]);
+        return bullet;
     }
 
 }

