@@ -1,6 +1,6 @@
 package ysomap.bullets.objects;
 
-import ysomap.bullets.Bullet;
+import ysomap.bullets.AbstractBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
 
@@ -13,7 +13,7 @@ import ysomap.core.util.ClassFiles;
 @Details("动态注入Tomcat隐蔽内存Shell的jar类型Agent，配合SimpleHTTPServer发布地址，同时使用TransformerWithURLClassLoaderBullet序列化加载远程jar")
 @Targets({Targets.CODE})
 @Dependencies({"*"})
-public class ClassWithTomcatConcealedMemShell implements Bullet<byte[]> {
+public class ClassWithTomcatConcealedMemShell extends AbstractBullet<byte[]> {
     @NotNull
     @Require(name = "classname", detail = "所需生成的类名,如org/test/evil/RunApp")
     public String classname;
