@@ -211,16 +211,16 @@
 <!--        </dependency>-->
         <!-- jndi tomcat reference test end -->
         <!-- castor test start -->
-        <dependency>
-            <groupId>castor</groupId>
-            <artifactId>castor</artifactId>
-            <version>0.9.7</version>
-        </dependency>
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>castor</groupId>-->
+<!--            <artifactId>castor</artifactId>-->
+<!--            <version>0.9.7</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>xerces</groupId>-->
+<!--            <artifactId>xercesImpl</artifactId>-->
+<!--            <version>2.9.1</version>-->
+<!--        </dependency>-->
         <!-- castor test end -->
     </dependencies>
 
