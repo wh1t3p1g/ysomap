@@ -50,6 +50,12 @@
             <groupId>de.vandermeer</groupId>
             <artifactId>ascii-utf-themes</artifactId>
             <version>0.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -103,6 +109,10 @@
                 <exclusion>
                     <groupId>org.apache.tomcat</groupId>
                     <artifactId>tomcat-jni</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

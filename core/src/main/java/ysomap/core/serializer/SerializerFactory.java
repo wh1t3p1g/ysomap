@@ -3,7 +3,6 @@ package ysomap.core.serializer;
 import ysomap.bullets.Bullet;
 import ysomap.common.util.Logger;
 import ysomap.common.util.Strings;
-import ysomap.core.ObjectInputFilterManager;
 import ysomap.core.serializer.hessian.HessianSerializer;
 import ysomap.core.serializer.json.FastJsonSerializer;
 import ysomap.core.serializer.json.JacksonJsonSerializer;
@@ -90,11 +89,9 @@ public class SerializerFactory {
     }
 
     public static Object test(Payload payload, Bullet bullet) throws Exception {
-        ObjectInputFilterManager.suspend();
         Serializer serializer = payload.getSerializer();
         payload.setBullet(bullet);
         Object obj = serializer.deserialize(serializer.serialize(payload.getObject()));
-        ObjectInputFilterManager.setup();
         return obj;
     }
 }

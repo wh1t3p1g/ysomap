@@ -122,11 +122,11 @@
             <version>1.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ch.qos.logback</groupId>-->
+<!--            <artifactId>logback-core</artifactId>-->
+<!--            <version>1.2.3</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -164,6 +164,12 @@
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
             <version>1.11.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <!-- for xbean -->
@@ -191,25 +197,7 @@
 <!--            <artifactId>hibernate-core</artifactId>-->
 <!--            <version>4.3.11.Final</version>-->
 <!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/castor/castor -->
-<!--        <dependency>-->
-<!--            <groupId>castor</groupId>-->
-<!--            <artifactId>castor</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.codehaus.castor/castor-xml -->
-<!--        <dependency>-->
-<!--            <groupId>org.codehaus.castor</groupId>-->
-<!--            <artifactId>castor-xml</artifactId>-->
-<!--            <version>1.4.1</version>-->
-<!--        </dependency>-->
 
-        <!-- https://mvnrepository.com/artifact/xerces/xercesImpl -->
-<!--        <dependency>-->
-<!--            <groupId>xerces</groupId>-->
-<!--            <artifactId>xercesImpl</artifactId>-->
-<!--            <version>2.9.1</version>-->
-<!--        </dependency>-->
         <!-- jndi tomcat reference test -->
 <!--        <dependency>-->
 <!--            <groupId>org.apache.tomcat</groupId>-->
@@ -222,6 +210,18 @@
 <!--            <version>9.0.1</version>-->
 <!--        </dependency>-->
         <!-- jndi tomcat reference test end -->
+        <!-- castor test start -->
+        <dependency>
+            <groupId>castor</groupId>
+            <artifactId>castor</artifactId>
+            <version>0.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+        <!-- castor test end -->
     </dependencies>
 
 </project>
