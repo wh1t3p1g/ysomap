@@ -15,17 +15,23 @@
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
                     <finalName>ysomap</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
                             <mainClass>ysomap.cli.App</mainClass>
+<!--                            <addClasspath>true</addClasspath>-->
+<!--                            <classpathPrefix>./libs/</classpathPrefix>-->
                         </manifest>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+<!--                    <descriptors>-->
+<!--                        <descriptor>assembly.xml</descriptor>-->
+<!--                    </descriptors>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -61,10 +67,6 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jline</groupId>
-            <artifactId>jline</artifactId>
         </dependency>
 
 

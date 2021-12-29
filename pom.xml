@@ -44,6 +44,7 @@
                         <systemPropertyVariables>
                             <java.rmi.server.useCodebaseOnly>false</java.rmi.server.useCodebaseOnly>
                         </systemPropertyVariables>
+                        <skipTests>true</skipTests>
                     </configuration>
                 </plugin>
             </plugins>
@@ -56,6 +57,16 @@
                 <groupId>org.jline</groupId>
                 <artifactId>jline</artifactId>
                 <version>3.20.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.15</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
