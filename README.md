@@ -29,9 +29,6 @@ mvn clean package -DskipTests
 当然，你也可以直接下载[release](https://github.com/wh1t3p1g/ysomap/releases)，但还是推荐自行clone后编译，因为大版本的更新将积攒一批利用链后才会发布release。
 
 ### Jar运行
-> Note: 为了解决反制的问题，目前采用的是jdk8的ObjectInputFilter。在jdk11中，该对象改了package，所以最新版本是无法运行在jdk11上的
->       所以ysomap的后续版本编译及运行都将在jdk8的版本，不支持jdk11及以上
->       预计jdk8环境在国内仍能坚持一段时间，等未来再扩展jdk11及以上
 
 经过几次迭代，目前ysomap支持两种运行模式：终端cli模式和脚本模式
 
