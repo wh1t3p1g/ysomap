@@ -1,5 +1,6 @@
 package ysomap.core.serializer;
 
+import org.apache.commons.codec.binary.Hex;
 import ysomap.bullets.Bullet;
 import ysomap.common.util.Logger;
 import ysomap.common.util.Strings;
@@ -12,6 +13,7 @@ import ysomap.payloads.Payload;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 /**
  * Serializer 工厂类
@@ -69,10 +71,10 @@ public class SerializerFactory {
         }
     }
 
-    private static void serialize(Serializer serializer, Object obj, OutputStream out) throws Exception{
-        Object serialized = serializer.serialize(obj);
+    public static void serialize(Serializer serializer, Object obj, OutputStream out) throws Exception{
         byte[] serializedBytes;
-        String encoder = serializer.getEncoder();
+        // generate serialized bytes
+        Object serialized = serializer.serialize(obj);
         if(serialized instanceof String){
             serializedBytes = ((String) serialized).getBytes();
         }else if(serialized instanceof byte[]){
@@ -81,6 +83,19 @@ public class SerializerFactory {
             serializedBytes = new byte[0];
             Logger.error("no serialize type found!");
         }
+        // change serialVersionUID
+        if(serializer.getSerialVersionUID().size() > 0 && serializedBytes.length > 4){
+            Map<String, String> uidMap = serializer.getSerialVersionUID();
+            String hexed = Hex.encodeHexString(serializedBytes);
+            for(Map.Entry<String, String> entry: uidMap.entrySet()){
+                if(hexed.contains(entry.getKey())){
+                    hexed = hexed.replace(entry.getKey(), entry.getValue());
+                }
+            }
+            serializedBytes = Hex.decodeHex(hexed);
+        }
+        // encode serialized bytes
+        String encoder = serializer.getEncoder();
         if("base64".equals(encoder)){
             serializedBytes = Strings.base64(serializedBytes);
         }

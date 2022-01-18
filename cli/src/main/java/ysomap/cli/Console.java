@@ -237,6 +237,7 @@ public class Console {
                 node("set",
                         node("encoder", node(new StringsCompleter(encoders))),
                         node("output", node(new StringsCompleter(output))),
+                        node("serialVersionUID"), // set serialVersionUID oldUID1:newUID1;oldUID2:newUID2
                         node(params.toArray())
                 )
         );

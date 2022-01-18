@@ -9,7 +9,6 @@ public class EmptySerializer extends BaseSerializer<byte[]>{
     public static Serializer serializer = new EmptySerializer();
     public String OUTPUT = "file";
 
-
     @Override
     public byte[] serialize(Object obj) throws Exception {
         return (byte[]) obj;
