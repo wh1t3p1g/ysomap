@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.security.ProtectionDomain;
 
 /**
- * win shelcode 加载器， 参考 https://xz.aliyun.com/t/10075#toc-4, 自定义类调用系统Native库函数
+ * Win shelcode 加载器， 参考 https://xz.aliyun.com/t/10075#toc-4, 自定义类调用系统Native库函数
  */
 public class WinC2Loader extends AbstractTranslet implements Serializable, Runnable {
 
