@@ -81,6 +81,16 @@ public class Shell implements Runnable {
         return stringBuilder.toString();
     }
 
+    public String find(String filename, String filenameKey, String keyword) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        if(filenameKey.length()<3 || keyword.length() < 3){
+            stringBuilder.append("suffix or keyword is too shortly!");
+        }else{
+            stringBuilder = getSearchResult(stringBuilder, filename, filenameKey, keyword);
+        }
+        return stringBuilder.toString();
+    }
+
     public String exec(String command){
         StringBuilder result = new StringBuilder();
 
@@ -164,6 +174,9 @@ public class Shell implements Runnable {
                         result.append(exec(command));
                     }else if(line.startsWith("info")){
                         result.append(info());
+                    }else if(line.startsWith("find")){
+                        String[] strArr = line.substring(5).split(";");
+                        result.append(find(strArr[0], strArr[1], strArr[2]));
                     }
                     result.append(sepE);
                     bufferedWriter.write(result.toString());
@@ -178,6 +191,41 @@ public class Shell implements Runnable {
         } catch (IOException e) {
             // do nothing
         }
+    }
+
+    public StringBuilder getSearchResult(StringBuilder stringBuilder, String strPath, String suffix, String keyword) {
+        File dir = new File(strPath);
+        File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                String fileName = files[i].getName();
+                if (files[i].isDirectory()) {
+                    stringBuilder = getSearchResult(stringBuilder, files[i].getAbsolutePath(), suffix, keyword);
+                } else if (fileName.endsWith(suffix)) {
+                    // 匹配文件内容
+                    File file = files[i];
+                    if (file.exists()) {
+                        String s = file.getAbsolutePath();
+                        try {
+                            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(s)), "UTF-8"));
+                            String lineTxt = null;
+                            while ((lineTxt = br.readLine()) != null) {
+                                // 忽略大小写
+                                if (lineTxt.toLowerCase().contains(keyword.toLowerCase())) {
+                                    stringBuilder.append("find: " + s + ": " + lineTxt).append("\n");;
+                                    break;
+                                }
+                            }
+                            br.close();
+                        } catch (Exception e) {
+                        }
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+        return stringBuilder;
     }
 
     public static Shell newInstance(){
