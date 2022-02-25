@@ -44,6 +44,10 @@ public abstract class AbstractPayload<T> implements Payload<T>{
         return SerializerFactory.createSerializer("default");
     }
 
+    public Serializer<?> setSerializer(String type){
+        return SerializerFactory.createSerializer("default");
+    }
+
     @Override
     public Payload<T> set(String key, Object value) throws Exception {
         return ReflectionHelper.set(this, key, value);

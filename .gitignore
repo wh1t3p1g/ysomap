@@ -2,7 +2,7 @@
 *.class
 
 # mvn
-target/
+**/target/**
 
 # eclipse
 .classpath

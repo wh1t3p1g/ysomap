@@ -2,6 +2,7 @@ package ysomap.core.serializer.hessian;
 
 import com.caucho.hessian.io.HessianInput;
 import com.caucho.hessian.io.HessianOutput;
+import ysomap.common.util.Logger;
 import ysomap.core.serializer.BaseSerializer;
 import ysomap.core.serializer.Serializer;
 
@@ -22,6 +23,7 @@ public class HessianSerializer extends BaseSerializer<byte[]> {
         output.setSerializerFactory(sf);
         output.writeObject(obj);
         output.close();
+        Logger.success("HessianSerializer running.");
         return bos.toByteArray();
     }
 
