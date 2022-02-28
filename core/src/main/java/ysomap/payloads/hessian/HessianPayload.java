@@ -5,10 +5,20 @@ import ysomap.core.serializer.SerializerFactory;
 import ysomap.payloads.AbstractPayload;
 
 public abstract class HessianPayload extends AbstractPayload<Object> {
+    public String serializeType;
 
     @Override
     public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("hessian");
+        if(serializeType == null){
+            return SerializerFactory.createSerializer("hessian");
+        }else{
+            return SerializerFactory.createSerializer(serializeType);
+        }
     }
 
+    @Override
+    public Serializer<?> setSerializer(String type) {
+        serializeType = type;
+        return SerializerFactory.createSerializer(serializeType);
+    }
 }

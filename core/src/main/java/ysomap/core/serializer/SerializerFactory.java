@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Hex;
 import ysomap.bullets.Bullet;
 import ysomap.common.util.Logger;
 import ysomap.common.util.Strings;
+import ysomap.core.serializer.hessian.Hessian2Serializer;
 import ysomap.core.serializer.hessian.HessianSerializer;
 import ysomap.core.serializer.json.FastJsonSerializer;
 import ysomap.core.serializer.json.JacksonJsonSerializer;
@@ -37,6 +38,8 @@ public class SerializerFactory {
                 return HessianSerializer.serializer;
             case "empty":
                 return EmptySerializer.serializer;
+            case "hessian2":
+                return Hessian2Serializer.serializer;
             default:
                 return DefaultSerializer.serializer;
         }

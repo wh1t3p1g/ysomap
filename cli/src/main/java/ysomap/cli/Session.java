@@ -123,7 +123,11 @@ public class Session {
     }
 
     public void setValue(String key, String value) throws ArgumentsMissMatchException {
-        if("encoder".equals(key) && payload != null){
+        if("serializeType".equals(key) && payload != null){
+            Serializer serializer = payload.setSerializer(value);
+//            serializer.setEncoder(value);
+            return;
+        }else if("encoder".equals(key) && payload != null){
             Serializer serializer = payload.getSerializer();
             serializer.setEncoder(value);
             return;
@@ -197,7 +201,9 @@ public class Session {
         if(payload != null){
             Class<?> clazz = payload.getClass();
             Logger.normal("Current Payload: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
+//            Serializer serializer = payload.getSerializer();
             Serializer serializer = payload.getSerializer();
+            Logger.normal("Current SerializeType: "+ColorStyle.makeWordRed(serializer.getClass().getSimpleName()));
             Logger.normal("Current Serializer Encoder: "+ColorStyle.makeWordRed(serializer.getEncoder()));
             Logger.normal("Current Serializer Output Type: "+ColorStyle.makeWordRed(serializer.getOutputType()));
             Logger.normal("Current Serializer serialVersionUID: "+ColorStyle.makeWordRed(serializer.getSerialVersionUID().toString()));

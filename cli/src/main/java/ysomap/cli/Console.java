@@ -228,6 +228,9 @@ public class Console {
         );
 
         Set<String> params = getAllParams();
+        List<String> serializeTypes = new ArrayList<>();
+        serializeTypes.add("hessian");
+        serializeTypes.add("hessian2");
         List<String> encoders = new ArrayList<>();
         encoders.add("base64");
         List<String> output = new ArrayList<>();
@@ -235,6 +238,7 @@ public class Console {
         output.add("console");
         Completer setCompleter = new Completers.TreeCompleter(
                 node("set",
+                        node("serializeType", node(new StringsCompleter(serializeTypes))),
                         node("encoder", node(new StringsCompleter(encoders))),
                         node("output", node(new StringsCompleter(output))),
                         node("serialVersionUID"), // set serialVersionUID oldUID1:newUID1;oldUID2:newUID2

@@ -1,7 +1,7 @@
 package ysomap.core.serializer.hessian;
 
-import com.caucho.hessian.io.HessianInput;
-import com.caucho.hessian.io.HessianOutput;
+import com.caucho.hessian.io.Hessian2Input;
+import com.caucho.hessian.io.Hessian2Output;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.BaseSerializer;
 import ysomap.core.serializer.Serializer;
@@ -9,28 +9,28 @@ import ysomap.core.serializer.Serializer;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-public class HessianSerializer extends BaseSerializer<byte[]> {
+public class Hessian2Serializer extends BaseSerializer<byte[]> {
 
-    public static Serializer serializer = new HessianSerializer();
+    public static Serializer serializer = new Hessian2Serializer();
     public String OUTPUT = "file";
 
     @Override
     public byte[] serialize(Object obj) throws Exception {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        HessianOutput output = new HessianOutput(bos);
+        Hessian2Output output = new Hessian2Output(bos);
         NoWriteReplaceSerializerFactory sf = new NoWriteReplaceSerializerFactory();
         sf.setAllowNonSerializable(true);
         output.setSerializerFactory(sf);
         output.writeObject(obj);
         output.close();
-        Logger.success("HessianSerializer running.");
+        Logger.success("Hessian2Serializer running.");
         return bos.toByteArray();
     }
 
     @Override
     public Object deserialize(byte[] obj) throws Exception {
         ByteArrayInputStream is = new ByteArrayInputStream(obj);
-        HessianInput input = new HessianInput(is);
+        Hessian2Input input = new Hessian2Input(is);
         return input.readObject();
     }
 
