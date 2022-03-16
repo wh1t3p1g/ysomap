@@ -3,6 +3,7 @@ package ysomap.core.serializer;
 import ysomap.bullets.Bullet;
 import ysomap.common.util.Logger;
 import ysomap.common.util.Strings;
+import ysomap.core.serializer.hessian.Hessian2Serializer;
 import ysomap.core.serializer.hessian.HessianSerializer;
 import ysomap.core.serializer.json.FastJsonSerializer;
 import ysomap.core.serializer.json.JacksonJsonSerializer;
@@ -24,21 +25,23 @@ public class SerializerFactory {
     public static Serializer<?> createSerializer(String type){
         switch( type ){
             case "fastjson":
-                return FastJsonSerializer.serializer;
+                return new FastJsonSerializer();
             case "jackson":
-                return JacksonJsonSerializer.serializer;
+                return new JacksonJsonSerializer();
             case "xstream":
-                return XStreamSerializer.serializer;
+                return new XStreamSerializer();
             case "xmldecoder":
-                return XMLDecoderSerializer.serializer;
+                return new XMLDecoderSerializer();
             case "hessian":
-                return HessianSerializer.serializer;
+                return new HessianSerializer();
+            case "hessian2":
+                return new Hessian2Serializer();
             case "empty":
-                return EmptySerializer.serializer;
+                return new EmptySerializer();
             case "kyro":
-                return KryoSerializer.serializer;
+                return new KryoSerializer();
             default:
-                return DefaultSerializer.serializer;
+                return new DefaultSerializer();
         }
     }
 

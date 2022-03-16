@@ -2,7 +2,6 @@ package ysomap.core.serializer.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ysomap.core.serializer.BaseSerializer;
-import ysomap.core.serializer.Serializer;
 
 /**
  * @author wh1t3P1g
@@ -10,7 +9,6 @@ import ysomap.core.serializer.Serializer;
  */
 public class JacksonJsonSerializer extends BaseSerializer<String> {
 
-    public static Serializer serializer = new JacksonJsonSerializer();
     public String OUTPUT = "console";
 
     @Override

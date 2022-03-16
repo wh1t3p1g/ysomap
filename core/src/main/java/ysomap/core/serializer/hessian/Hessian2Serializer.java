@@ -2,16 +2,13 @@ package ysomap.core.serializer.hessian;
 
 import com.caucho.hessian.io.Hessian2Input;
 import com.caucho.hessian.io.Hessian2Output;
-import ysomap.common.util.Logger;
 import ysomap.core.serializer.BaseSerializer;
-import ysomap.core.serializer.Serializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class Hessian2Serializer extends BaseSerializer<byte[]> {
 
-    public static Serializer serializer = new Hessian2Serializer();
     public String OUTPUT = "file";
 
     @Override
@@ -23,7 +20,6 @@ public class Hessian2Serializer extends BaseSerializer<byte[]> {
         output.setSerializerFactory(sf);
         output.writeObject(obj);
         output.close();
-        Logger.success("Hessian2Serializer running.");
         return bos.toByteArray();
     }
 

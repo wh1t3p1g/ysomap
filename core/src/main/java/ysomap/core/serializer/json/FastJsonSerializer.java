@@ -5,7 +5,6 @@ import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import ysomap.core.serializer.BaseSerializer;
-import ysomap.core.serializer.Serializer;
 
 /**
  * fastjson 序列化器
@@ -14,7 +13,6 @@ import ysomap.core.serializer.Serializer;
  */
 public class FastJsonSerializer extends BaseSerializer<String> {
 
-    public static Serializer serializer = new FastJsonSerializer();
     public String OUTPUT = "console";
 
     @Override

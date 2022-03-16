@@ -2,7 +2,6 @@ package ysomap.core.serializer.xml;
 
 import com.thoughtworks.xstream.XStream;
 import ysomap.core.serializer.BaseSerializer;
-import ysomap.core.serializer.Serializer;
 
 /**
  * @author wh1t3P1g
@@ -10,7 +9,6 @@ import ysomap.core.serializer.Serializer;
  */
 public class XStreamSerializer extends BaseSerializer<String> {
 
-    public static Serializer serializer = new XStreamSerializer();
     public String OUTPUT = "console";
     public static XStream xStream = new XStream();
 

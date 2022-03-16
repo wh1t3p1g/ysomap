@@ -9,7 +9,6 @@ import java.io.*;
  */
 public class DefaultSerializer extends BaseSerializer<byte[]> {
 
-    public static Serializer serializer = new DefaultSerializer();
     public String OUTPUT = "file";
 
     @Override

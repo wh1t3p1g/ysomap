@@ -1,7 +1,5 @@
 package ysomap.payloads.xstream;
 
-import ysomap.core.serializer.Serializer;
-import ysomap.core.serializer.SerializerFactory;
 import ysomap.payloads.AbstractPayload;
 
 /**
@@ -9,10 +7,8 @@ import ysomap.payloads.AbstractPayload;
  * @since 2021/6/13
  */
 public abstract class XStreamPayload<T> extends AbstractPayload<T> {
-    @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("xstream");
+    public XStreamPayload() {
+        serializeType = "xstream";
+        serializerOutputType = "console";
     }
-
-
 }

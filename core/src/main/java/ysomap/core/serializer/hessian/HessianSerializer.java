@@ -3,14 +3,12 @@ package ysomap.core.serializer.hessian;
 import com.caucho.hessian.io.HessianInput;
 import com.caucho.hessian.io.HessianOutput;
 import ysomap.core.serializer.BaseSerializer;
-import ysomap.core.serializer.Serializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class HessianSerializer extends BaseSerializer<byte[]> {
 
-    public static Serializer serializer = new HessianSerializer();
     public String OUTPUT = "file";
 
     @Override

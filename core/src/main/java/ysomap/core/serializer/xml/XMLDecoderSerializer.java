@@ -1,7 +1,6 @@
 package ysomap.core.serializer.xml;
 
 import ysomap.core.serializer.BaseSerializer;
-import ysomap.core.serializer.Serializer;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -16,7 +15,6 @@ import java.io.InputStream;
  */
 public class XMLDecoderSerializer extends BaseSerializer<String> {
 
-    public static Serializer serializer = new XMLDecoderSerializer();
     public String OUTPUT = "console";
 
     @Override

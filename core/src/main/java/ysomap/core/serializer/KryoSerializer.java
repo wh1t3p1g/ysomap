@@ -13,7 +13,6 @@ import java.io.ByteArrayOutputStream;
  */
 public class KryoSerializer extends BaseSerializer<byte[]>{
 
-    public static Serializer serializer = new KryoSerializer();
     public String OUTPUT = "file";
     public static Kryo kryo = null;
 

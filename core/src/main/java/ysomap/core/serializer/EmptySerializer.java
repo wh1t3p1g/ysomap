@@ -6,7 +6,6 @@ package ysomap.core.serializer;
  */
 public class EmptySerializer extends BaseSerializer<byte[]>{
 
-    public static Serializer serializer = new EmptySerializer();
     public String OUTPUT = "file";
 
     @Override

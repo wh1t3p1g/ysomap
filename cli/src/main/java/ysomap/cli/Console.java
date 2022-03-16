@@ -230,6 +230,13 @@ public class Console {
         List<String> serializeTypes = new ArrayList<>();
         serializeTypes.add("hessian");
         serializeTypes.add("hessian2");
+        serializeTypes.add("default");
+        serializeTypes.add("xstream");
+        serializeTypes.add("fastjson");
+        serializeTypes.add("jackson");
+        serializeTypes.add("xmldecoder");
+        serializeTypes.add("empty");
+        serializeTypes.add("kyro");
         List<String> encoders = new ArrayList<>();
         encoders.add("base64");
         List<String> output = new ArrayList<>();

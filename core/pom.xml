@@ -33,16 +33,16 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.12.2</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.caucho</groupId>-->
-<!--            <artifactId>hessian</artifactId>-->
-<!--            <version>4.0.38</version>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>com.alipay.sofa</groupId>
+            <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.38</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alipay.sofa</groupId>-->
+<!--            <artifactId>hessian</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -164,12 +164,6 @@
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
             <version>1.11.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 <!--        <dependency>-->
 <!--            &lt;!&ndash; for rome &ndash;&gt;-->

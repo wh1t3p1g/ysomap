@@ -1,7 +1,5 @@
 package ysomap.payloads.json;
 
-import ysomap.core.serializer.Serializer;
-import ysomap.core.serializer.SerializerFactory;
 import ysomap.payloads.AbstractPayload;
 
 /**
@@ -10,8 +8,8 @@ import ysomap.payloads.AbstractPayload;
  */
 public abstract class FastJsonPayload extends AbstractPayload<Object> {
 
-    @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("fastjson");
+    public FastJsonPayload() {
+        serializeType = "fastjson";
+        serializerOutputType = "console";
     }
 }

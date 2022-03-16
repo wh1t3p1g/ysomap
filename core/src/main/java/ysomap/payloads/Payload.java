@@ -9,15 +9,6 @@ import ysomap.core.serializer.Serializer;
  */
 public interface Payload<T> {
 
-//    default Payload<T> set(String key, Object value) throws Exception {
-//        ReflectionHelper.setFieldValue(this, key, value);
-//        return this;
-//    }
-//
-//    default boolean has(String key) {
-//        return ReflectionHelper.getField(this.getClass(), key) != null;
-//    }
-
     T getObject() throws Exception;
 
     void setBullet(Bullet bullet);
@@ -26,10 +17,23 @@ public interface Payload<T> {
 
     Serializer<?> getSerializer();
 
-    Serializer<?> setSerializer(String type);
-
     Bullet getDefaultBullet(Object... args) throws Exception;
 
+    void setSerializeType(String serializeType);
+
+    void setEncoder(String encoder);
+
+    void setOutputType(String outputType);
+
+    void setSerialVersionUID(String uid);
+
+    String getSerializeType();
+
+    String getEncoder();
+
+    String getOutputType();
+
+    String getSerialVersionUID();
     /**
      * 装弹，将最终达成的利用效果拼接反序列化利用链
      * 反序列化利用链的实现也在这部分实现

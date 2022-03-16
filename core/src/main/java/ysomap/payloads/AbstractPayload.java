@@ -2,6 +2,7 @@ package ysomap.payloads;
 
 
 import ysomap.bullets.Bullet;
+import ysomap.common.exception.ArgumentsMissMatchException;
 import ysomap.common.exception.ObjectTypeErrorException;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.Serializer;
@@ -14,10 +15,40 @@ import ysomap.core.util.ReflectionHelper;
  */
 public abstract class AbstractPayload<T> implements Payload<T>{
 
+    public Serializer<?> serializer;
+    public String serializeType;
+    public String serializerOutputType;
+    // 自由定义
+    public String serializerEncoder;
+    public String serializerSerialVersionUID;
     public Bullet bullet;
+
+    public AbstractPayload(){
+        serializeType = "default";
+        serializerOutputType = "file";
+    }
 
     public void setBullet(Bullet bullet) {
         this.bullet = bullet;
+    }
+
+    public void setSerializeType(String serializeType){
+        this.serializeType = serializeType;
+    }
+
+    @Override
+    public void setEncoder(String encoder) {
+        this.serializerEncoder = encoder;
+    }
+
+    @Override
+    public void setOutputType(String outputType) {
+        this.serializerOutputType = outputType;
+    }
+
+    @Override
+    public void setSerialVersionUID(String uid) {
+        this.serializerSerialVersionUID = uid;
     }
 
     @Override
@@ -41,11 +72,48 @@ public abstract class AbstractPayload<T> implements Payload<T>{
     }
 
     public Serializer<?> getSerializer(){
-        return SerializerFactory.createSerializer("default");
+        if(serializeType != null){
+            serializer = SerializerFactory.createSerializer(serializeType);
+        }else{
+            serializer = SerializerFactory.createSerializer("default");
+        }
+
+        if(serializerEncoder != null){
+            serializer.setEncoder(serializerEncoder);
+        }
+
+        if(serializerOutputType != null){
+            serializer.setOutputType(serializerOutputType);
+        }
+
+        if(serializerSerialVersionUID != null){
+            try {
+                serializer.setSerialVersionUID(serializerSerialVersionUID);
+            } catch (ArgumentsMissMatchException e) {
+                Logger.error("SerialVersion UID set error. Do not change!");
+            }
+        }
+        return serializer;
     }
 
-    public Serializer<?> setSerializer(String type){
-        return SerializerFactory.createSerializer("default");
+    @Override
+    public String getEncoder() {
+        return serializerEncoder;
+    }
+
+    @Override
+    public String getOutputType() {
+        return serializerOutputType;
+    }
+
+    @Override
+    public String getSerialVersionUID() {
+        return serializerSerialVersionUID;
+    }
+
+    @Override
+    public String getSerializeType() {
+        return serializeType;
     }
 
     @Override

@@ -7,7 +7,6 @@ import ysomap.common.annotation.Require;
 import ysomap.common.exception.ArgumentsMissMatchException;
 import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
-import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
 import ysomap.exploits.Exploit;
 import ysomap.payloads.Payload;
@@ -124,20 +123,16 @@ public class Session {
 
     public void setValue(String key, String value) throws ArgumentsMissMatchException {
         if("serializeType".equals(key) && payload != null){
-            Serializer serializer = payload.setSerializer(value);
-//            serializer.setEncoder(value);
+            payload.setSerializeType(value);
             return;
         }else if("encoder".equals(key) && payload != null){
-            Serializer serializer = payload.getSerializer();
-            serializer.setEncoder(value);
+            payload.setEncoder(value);
             return;
         }else if("output".equals(key) && payload != null){
-            Serializer serializer = payload.getSerializer();
-            serializer.setOutputType(value);
+            payload.setOutputType(value);
             return;
         }else if("serialVersionUID".equals(key) && payload != null){
-            Serializer serializer = payload.getSerializer();
-            serializer.setSerialVersionUID(value);
+            payload.setSerialVersionUID(value);
             return;
         }
 
@@ -201,11 +196,10 @@ public class Session {
         if(payload != null){
             Class<?> clazz = payload.getClass();
             Logger.normal("Current Payload: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
-            Serializer serializer = payload.getSerializer();
-            Logger.normal("Current SerializeType: "+ColorStyle.makeWordRed(serializer.getClass().getSimpleName()));
-            Logger.normal("Current Serializer Encoder: "+ColorStyle.makeWordRed(serializer.getEncoder()));
-            Logger.normal("Current Serializer Output Type: "+ColorStyle.makeWordRed(serializer.getOutputType()));
-            Logger.normal("Current Serializer serialVersionUID: "+ColorStyle.makeWordRed(serializer.getSerialVersionUID().toString()));
+            Logger.normal("Current SerializeType: "+ColorStyle.makeWordRed(payload.getSerializeType()));
+            Logger.normal("Current Serializer Encoder: "+ColorStyle.makeWordRed(payload.getEncoder()));
+            Logger.normal("Current Serializer Output Type: "+ColorStyle.makeWordRed(payload.getOutputType()));
+            Logger.normal("Current Serializer serialVersionUID: "+ColorStyle.makeWordRed(payload.getSerialVersionUID()));
             if(bullet == null){
                 Printer.printCandidates("bullets", clazz, false, null);
             }
