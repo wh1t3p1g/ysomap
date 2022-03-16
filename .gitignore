@@ -3,6 +3,7 @@
 
 # mvn
 **/target/**
+**/secret/**
 
 # eclipse
 .classpath

