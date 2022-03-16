@@ -20,18 +20,6 @@ import ysomap.core.util.ReflectionHelper;
 import java.lang.reflect.Method;
 
 /**
- * gadget chain
- * TreeSet.put
- * javax.naming.ldap.Rdn$RdnEntry.compareTo
- *     com.sun.org.apache.xpath.internal.objects.XString.equal
- *         javax.swing.MultiUIDefaults.toString
- *             UIDefaults.get
- *                 UIDefaults.getFromHashTable
- *                     UIDefaults$LazyValue.createValue
- *                     SwingLazyValue.createValue
- *                         javax.naming.InitialContext.doLookup()
- *
- * setup a LDAPRefListener & SimpleHTTPServer
  * @author wh1t3P1g
  * @since 2021/1/5
  */

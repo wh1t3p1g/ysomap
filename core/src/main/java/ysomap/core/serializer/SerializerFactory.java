@@ -33,6 +33,8 @@ public class SerializerFactory {
                 return XMLDecoderSerializer.serializer;
             case "hessian":
                 return HessianSerializer.serializer;
+            case "kryo":
+                return KryoSerializer.serializer;
             case "empty":
                 return EmptySerializer.serializer;
             default:
@@ -69,7 +71,7 @@ public class SerializerFactory {
         }
     }
 
-    private static void serialize(Serializer serializer, Object obj, OutputStream out) throws Exception{
+    public static void serialize(Serializer serializer, Object obj, OutputStream out) throws Exception{
         Object serialized = serializer.serialize(obj);
         byte[] serializedBytes;
         String encoder = serializer.getEncoder();
@@ -90,8 +92,11 @@ public class SerializerFactory {
 
     public static Object test(Payload payload, Bullet bullet) throws Exception {
         Serializer serializer = payload.getSerializer();
+        return test(payload, bullet, serializer);
+    }
+
+    public static Object test(Payload payload, Bullet bullet, Serializer serializer) throws Exception {
         payload.setBullet(bullet);
-        Object obj = serializer.deserialize(serializer.serialize(payload.getObject()));
-        return obj;
+        return serializer.deserialize(serializer.serialize(payload.getObject()));
     }
 }

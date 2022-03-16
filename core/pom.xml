@@ -33,16 +33,16 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.12.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>hessian</artifactId>
-            <version>4.0.38</version>
-        </dependency>
 <!--        <dependency>-->
-<!--            <groupId>com.alipay.sofa</groupId>-->
+<!--            <groupId>com.caucho</groupId>-->
 <!--            <artifactId>hessian</artifactId>-->
-<!--            <version>4.0.4</version>-->
+<!--            <version>4.0.38</version>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>hessian</artifactId>
+            <version>4.0.0</version>
+        </dependency>
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -54,6 +54,11 @@
             <version>1.2.58</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo-shaded</artifactId>
+            <version>3.0.3</version>
+        </dependency>
         <!-- ysomap utils dependencies -->
         <dependency>
             <groupId>org.javassist</groupId>
@@ -166,6 +171,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+<!--        <dependency>-->
+<!--            &lt;!&ndash; for rome &ndash;&gt;-->
+<!--            <groupId>rome</groupId>-->
+<!--            <artifactId>rome</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <!-- for xbean -->
             <groupId>org.apache.xbean</groupId>
@@ -187,6 +198,17 @@
             <artifactId>groovy</artifactId>
             <version>2.4.3</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.groovy</groupId>-->
+<!--            <artifactId>groovy-all</artifactId>-->
+<!--            <version>2.1.9</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.groovy</groupId>-->
+<!--            <artifactId>groovy-all-soureces</artifactId>-->
+<!--            <version>2.1.9</version>-->
+<!--        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>org.hibernate</groupId>-->
 <!--            <artifactId>hibernate-core</artifactId>-->
@@ -206,17 +228,25 @@
 <!--        </dependency>-->
         <!-- jndi tomcat reference test end -->
         <!-- castor test start -->
-<!--        <dependency>-->
-<!--            <groupId>castor</groupId>-->
-<!--            <artifactId>castor</artifactId>-->
-<!--            <version>0.9.7</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>xerces</groupId>-->
-<!--            <artifactId>xercesImpl</artifactId>-->
-<!--            <version>2.9.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>castor</groupId>
+            <artifactId>castor</artifactId>
+            <version>0.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+        </dependency>
         <!-- castor test end -->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-webmvc &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-webmvc</artifactId>-->
+<!--            <version>5.2.4.RELEASE</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
 </project>

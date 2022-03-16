@@ -24,6 +24,7 @@ public @interface Targets {
     String JACKSON = "Jackson";
     String XMLDECODER = "XMLDecoder";
     String HESSIAN = "Hessian";
+    String KRYO = "kryo";
 
     String[] value() default {};
 

