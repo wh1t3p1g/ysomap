@@ -26,6 +26,7 @@ public interface Payload<T> {
 
     Serializer<?> getSerializer();
 
+    Serializer<?> setSerializer(String type);
 
     Bullet getDefaultBullet(Object... args) throws Exception;
 

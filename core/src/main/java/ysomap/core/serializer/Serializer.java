@@ -1,5 +1,9 @@
 package ysomap.core.serializer;
 
+import ysomap.common.exception.ArgumentsMissMatchException;
+
+import java.util.Map;
+
 /**
  * @author wh1t3P1g
  * @since 2020/2/15
@@ -17,4 +21,8 @@ public interface Serializer<T> {
     void setEncoder(String encoder);
 
     void setOutputType(String output);
+
+    void setSerialVersionUID(String UIDMap) throws ArgumentsMissMatchException;
+
+    Map<String, String> getSerialVersionUID();
 }

