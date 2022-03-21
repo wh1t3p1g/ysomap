@@ -20,6 +20,7 @@ public class RunClassLoader  extends AbstractTranslet implements Serializable {
 
     public RunClassLoader(){
         try {
+            transletVersion = 101;
             GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(base64Decode(classBae64Str.getBytes())));
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             byte[] buf = new byte[4096];
