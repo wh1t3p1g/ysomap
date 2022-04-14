@@ -1,8 +1,8 @@
 package ysomap.core.serializer;
 
-import com.taobao.tair.shade.com.esotericsoftware.kryo.Kryo;
-import com.taobao.tair.shade.com.esotericsoftware.kryo.io.Input;
-import com.taobao.tair.shade.com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 /**
  * @author wh1t3p1g
