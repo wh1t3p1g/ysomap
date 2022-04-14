@@ -213,10 +213,8 @@ public class Session {
     }
 
     public void run() throws Exception {
-        Object obj = null;
         if(payload != null && bullet != null){
             payload.setBullet(bullet);
-            obj = payload.getObject();
         }
 
         if(isExploit){
@@ -225,17 +223,17 @@ public class Session {
                 return;
             }
             if(exploit.has("payload")){
-                exploit.set("payload", obj);
+                exploit.set("payload", payload);
             }
             exploit.setStatus(ysomap.common.util.Status.RUNNING);
             new Thread(exploit).start();
-        }else if(obj != null){
+        }else if(payload != null && bullet != null){
             SerializerFactory.serialize(
                     payload.getClass().getSimpleName(),
                     payload.getSerializer(),
-                    obj);
+                    payload);
         }else{
-            Logger.error("Something is wrong, plz check options again!");
+            Logger.error("Something error! plz check options again!");
         }
     }
 

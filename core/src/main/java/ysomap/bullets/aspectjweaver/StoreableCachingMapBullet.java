@@ -28,6 +28,9 @@ public class StoreableCachingMapBullet extends AbstractBullet<Object> {
     @Require(name="localFilepath",detail="需要写入的本地文件路径")
     public String localFilepath;
 
+    @NotNull
+    @Require(name="ccVersion",detail="commons-collections 版本 3 或 4")
+    public String ccVersion = "3";
 
     @Override
     public Object getObject() throws Exception {

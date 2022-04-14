@@ -6,9 +6,12 @@ import com.sun.net.httpserver.HttpServer;
 import okhttp3.*;
 import ysomap.common.util.Logger;
 
+import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -19,9 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class HTTPHelper {
 
-    private static OkHttpClient client = new OkHttpClient.Builder()
-                                    .connectTimeout(3, TimeUnit.SECONDS)
-                                    .build();
+    private static OkHttpClient client = null;
 
 
     public static HttpServer makeSimpleHTTPServer(int port, Map<String, HttpHandler> paths) throws IOException {
@@ -76,10 +77,11 @@ public class HTTPHelper {
 
     public static Response post(String url, RequestBody body, Headers headers, boolean vv){
         Request request = new Request.Builder()
-                .url(url)
-                .headers(headers)
-                .post(body)
-                .build();
+                    .url(url)
+                    .headers(headers)
+                    .post(body)
+                    .build();
+
 //        Proxy proxy = new Proxy(Proxy.Type.HTTP,
 //                new InetSocketAddress("127.0.0.1", 7890));
 //
@@ -116,4 +118,47 @@ public class HTTPHelper {
         }
     }
 
+
+    static {
+        try {
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain,
+                                                       String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain,
+                                                       String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[0];
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            // Create an ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            client =  new OkHttpClient.Builder()
+                    .sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0])
+                    .hostnameVerifier(new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    })
+                    .connectTimeout(3, TimeUnit.SECONDS)
+                    .build();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

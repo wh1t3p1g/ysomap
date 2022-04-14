@@ -1,6 +1,8 @@
 package ysomap.core.serializer;
 
 import ysomap.common.exception.ArgumentsMissMatchException;
+import ysomap.core.util.ByteHelper;
+import ysomap.payloads.Payload;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +28,8 @@ public abstract class BaseSerializer<T> implements Serializer<T> {
 
     @Override
     public void setSerialVersionUID(String UIDMap) throws ArgumentsMissMatchException {
+        this.UIDMap.clear();
         if(UIDMap != null){
-            this.UIDMap.clear();
             String[] UIDs = new String[0];
             if(UIDMap.contains(";")){
                 UIDs = UIDMap.split(";");
@@ -54,5 +56,25 @@ public abstract class BaseSerializer<T> implements Serializer<T> {
     @Override
     public Map<String, String> getSerialVersionUID() {
         return UIDMap;
+    }
+
+    @Override
+    public T serialize(Payload payload) throws Exception {
+        setSerialVersionUID(payload.getSerialVersionUID());
+        Object obj = serialize(payload.getObject());
+        if(obj instanceof byte[] && !getSerialVersionUID().isEmpty()){
+            Map<String, String> uidMap = getSerialVersionUID();
+            String oldByteHexString = ByteHelper.bytesToHexString((byte[]) obj);
+
+            for(String oldUid: uidMap.keySet()){
+                if(oldByteHexString.contains(oldUid)){
+                    String newUid = uidMap.get(oldUid);
+                    oldByteHexString = oldByteHexString.replace(oldUid, newUid);
+                }
+            }
+
+            obj = ByteHelper.hexStringToBytes(oldByteHexString);
+        }
+        return (T) obj;
     }
 }

@@ -1,6 +1,7 @@
 package ysomap.core.serializer;
 
 import ysomap.common.exception.ArgumentsMissMatchException;
+import ysomap.payloads.Payload;
 
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 public interface Serializer<T> {
 
     T serialize(Object obj) throws Exception;
+    T serialize(Payload payload) throws Exception;
 
     Object deserialize(T obj) throws Exception;
 

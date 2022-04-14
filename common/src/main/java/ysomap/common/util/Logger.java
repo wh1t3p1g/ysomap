@@ -25,26 +25,26 @@ public class Logger {
         System.out.println(ColorStyle.makeWordBoldAndUnderline(" *  "+message));
     }
 
-    public static void normal(String message){
+    public static void normal(String message, String classname){
         if("\n".equals(message)){
             System.out.println("");
         }else{
-            System.out.printf("    [%s] %s%n", getTime(), message);
+            if(classname == null){
+                classname = "";
+            }else{
+                classname = " "+classname;
+            }
+            System.out.printf("    [%s%s] %s%n", getTime(), classname, message);
         }
+    }
+
+    public static void normal(String message){
+        normal(message, null);
     }
 
     public static String getTime(){
         Date dNow = new Date( );
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return ft.format(dNow);
-    }
-
-
-    public static void main(String[] args) {
-        Logger.success("test");
-        Logger.error("test");
-        Logger.normal("test");
-        Logger.normal("\n");
-        Logger.warn("test");
     }
 }

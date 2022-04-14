@@ -163,7 +163,13 @@
             <!-- for rome -->
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
-            <version>1.11.1</version>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <!-- for rome -->
+            <groupId>com.rometools</groupId>
+            <artifactId>rome-utils</artifactId>
+            <version>1.7.0</version>
         </dependency>
 <!--        <dependency>-->
 <!--            &lt;!&ndash; for rome &ndash;&gt;-->
@@ -240,7 +246,18 @@
 <!--            <artifactId>spring-webmvc</artifactId>-->
 <!--            <version>5.2.4.RELEASE</version>-->
 <!--        </dependency>-->
-
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.75.Final</version>
+        </dependency>
     </dependencies>
 
 </project>
