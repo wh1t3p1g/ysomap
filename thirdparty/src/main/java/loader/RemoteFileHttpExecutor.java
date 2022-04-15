@@ -9,10 +9,6 @@ import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 import java.io.*;
 import java.net.URL;
 
-/**
- * @author wh1t3p1g
- * @since 2021/12/12
- */
 public class RemoteFileHttpExecutor extends AbstractTranslet implements Serializable {
 
     private static String url;

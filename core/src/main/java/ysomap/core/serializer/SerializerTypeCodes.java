@@ -25,4 +25,11 @@ public enum SerializerTypeCodes {
     public String getName(){
         return name;
     }
+
+    public static String[] getAllSerializerType(){
+        return new String[]{
+                "default", "empty", "fastjson", "jackson", "xstream",
+                "xmldecoder", "hessian", "kryo", "kryo_alt_strategy"
+        };
+    }
 }

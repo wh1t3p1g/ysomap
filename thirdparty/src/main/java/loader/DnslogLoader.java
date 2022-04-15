@@ -11,10 +11,6 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 
-/**
- * @author wh1t3p1g
- * @since 2021/12/15
- */
 public class DnslogLoader extends AbstractTranslet implements Serializable {
 
     private static String dnslog;
@@ -50,9 +46,5 @@ public class DnslogLoader extends AbstractTranslet implements Serializable {
         } catch (UnknownHostException e) {
             return "unknown";
         }
-    }
-
-    public static void main(String[] args) throws UnknownHostException {
-        new DnslogLoader();
     }
 }

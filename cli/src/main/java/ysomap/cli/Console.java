@@ -20,6 +20,7 @@ import ysomap.common.exception.BaseException;
 import ysomap.common.exception.YsoClassNotFoundException;
 import ysomap.common.exception.YsoFileNotFoundException;
 import ysomap.common.util.Logger;
+import ysomap.core.serializer.SerializerTypeCodes;
 
 import java.io.File;
 import java.io.IOException;
@@ -227,21 +228,11 @@ public class Console {
         );
 
         Set<String> params = getAllParams();
-        List<String> serializeTypes = new ArrayList<>();
-        serializeTypes.add("hessian");
-        serializeTypes.add("hessian2");
-        serializeTypes.add("default");
-        serializeTypes.add("xstream");
-        serializeTypes.add("fastjson");
-        serializeTypes.add("jackson");
-        serializeTypes.add("xmldecoder");
-        serializeTypes.add("empty");
-        serializeTypes.add("kyro");
-        List<String> encoders = new ArrayList<>();
-        encoders.add("base64");
-        List<String> output = new ArrayList<>();
-        output.add("file");
-        output.add("console");
+        List<String> serializeTypes =
+                Arrays.asList(SerializerTypeCodes.getAllSerializerType());
+        List<String> encoders = Arrays.asList("base64");
+        List<String> output = Arrays.asList("file", "console");
+
         Completer setCompleter = new Completers.TreeCompleter(
                 node("set",
                         node("serializeType", node(new StringsCompleter(serializeTypes))),

