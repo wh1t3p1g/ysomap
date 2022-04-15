@@ -29,5 +29,4 @@ public class NoWriteReplaceSerializerFactory extends SerializerFactory {
 
         return serializer;
     }
-
 }

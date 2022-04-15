@@ -3,7 +3,7 @@ package ysomap.payloads.xstream;
 import groovy.lang.Closure;
 import org.codehaus.groovy.runtime.ConvertedClosure;
 import ysomap.bullets.Bullet;
-import ysomap.bullets.groovy.ClosureWithRuntimeBullet;
+import ysomap.bullets.groovy.ClosureWithRuntime1Bullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 
@@ -23,7 +23,7 @@ public class GroovyConvertedClosure extends XStreamPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return ClosureWithRuntimeBullet.newInstance(args);
+        return ClosureWithRuntime1Bullet.newInstance(args);
     }
 
     @Override

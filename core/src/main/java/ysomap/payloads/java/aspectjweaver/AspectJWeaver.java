@@ -34,7 +34,7 @@ import java.util.Map;
 @Authors({ Authors.JANG })
 @Targets({Targets.JDK})
 @Require(bullets = {"StoreableCachingMapBullet"},param = false)
-@Dependencies({"org.aspectj:aspectjweaver:1.9.2", "commons-collections:commons-collections:3.2.2"})
+@Dependencies({"org.aspectj:aspectjweaver:1.9.2", "commons-collections:commons-collections:all"})
 public class AspectJWeaver extends AbstractPayload<Object> {
 
     private Class transformerClazz;

