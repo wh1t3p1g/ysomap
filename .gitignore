@@ -17,4 +17,3 @@
 .DS_Store
 *.ser
 *Test.java
-core/src/main/java/exploits/secret/*.java
