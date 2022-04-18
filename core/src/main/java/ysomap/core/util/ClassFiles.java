@@ -80,7 +80,9 @@ public class ClassFiles {
     }
 
     public static CtClass makeClassFromExistClass(ClassPool pool, Class<?> existClassTpl, Class<?>[] classpath) throws NotFoundException {
-        insertClassPath(pool, classpath);
+        if(classpath != null){
+            insertClassPath(pool, classpath);
+        }
         pool.insertClassPath(new ClassClassPath(existClassTpl));
         return pool.get(existClassTpl.getName());
     }

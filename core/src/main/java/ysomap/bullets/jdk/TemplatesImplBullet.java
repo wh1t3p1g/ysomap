@@ -29,9 +29,6 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * 编译恶意类，并填充到TemplatesImpl
- * 共有以下选择
- * 1. 命令执行
- *    set type cmd
  *
  * @author wh1t3P1g
  * @since 2020/2/17

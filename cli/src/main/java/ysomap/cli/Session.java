@@ -33,6 +33,7 @@ public class Session {
     private Console console;
     private boolean isExploit = false;
     private boolean isEmpty = true;
+    private boolean isCheckRunning = false;
 
     public Session(Console console) {
         this.console = console;
@@ -134,6 +135,9 @@ public class Session {
         }else if("serialVersionUID".equals(key) && payload != null){
             payload.setSerialVersionUID(value);
             return;
+        }else if("checkRunning".equals(key)){
+            isCheckRunning = Boolean.parseBoolean(value);
+            return;
         }
 
         if(exploit != null && exploit.has(key)){
@@ -218,9 +222,13 @@ public class Session {
         }
 
         if(isExploit){
-            if(exploit.isRunning()){
+            while(exploit.isRunning()){
                 Logger.success("Pre exploit is running now, plz wait to exploit!");
-                return;
+                if(isCheckRunning){
+                    Thread.sleep(5000);
+                }else{
+                    return;
+                }
             }
             if(exploit.has("payload")){
                 exploit.set("payload", payload);

@@ -35,6 +35,7 @@ public class SwingLazyValueWithUrlClassLoaderBullet extends AbstractBullet<Swing
                 "-keystore",
                     "NONE",
                 "-protected",
+                "-debug",
                 "-providerpath",
                     filepath
         }};

@@ -235,6 +235,7 @@ public class Console {
 
         Completer setCompleter = new Completers.TreeCompleter(
                 node("set",
+                        node("checkRunning", node(new StringsCompleter("true", "false"))),
                         node("serializeType", node(new StringsCompleter(serializeTypes))),
                         node("encoder", node(new StringsCompleter(encoders))),
                         node("output", node(new StringsCompleter(output))),
