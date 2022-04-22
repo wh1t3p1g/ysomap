@@ -29,9 +29,6 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-<!--                    <descriptors>-->
-<!--                        <descriptor>assembly.xml</descriptor>-->
-<!--                    </descriptors>-->
                 </configuration>
                 <executions>
                     <execution>

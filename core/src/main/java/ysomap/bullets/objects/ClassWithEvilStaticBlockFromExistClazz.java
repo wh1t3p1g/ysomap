@@ -44,7 +44,7 @@ public class ClassWithEvilStaticBlockFromExistClazz extends AbstractBullet<byte[
             CtClass cc = ClassFiles.makeClassFromExistClass(pool, clazz, null);
             cc.setName(classname);
             ClassFiles.insertStaticBlock(cc, code);
-            return cc.toBytecode();
+            return ClassFiles.getClassBytecode(cc);
         }catch (ClassNotFoundException e){
             Logger.error("class "+existClazz+" not found! plz check options.");
             throw e;

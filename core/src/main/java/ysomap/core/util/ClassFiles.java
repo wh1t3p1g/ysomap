@@ -22,7 +22,7 @@ public class ClassFiles {
         ClassPool pool = new ClassPool(true);
         CtClass cc = makeEmptyClassFile(pool, classname, null);
         insertStaticBlock(cc, body);
-        return cc.toBytecode();
+        return getClassBytecode(cc);
     }
 
     public static byte[] makeClassWithReverseShell(String classname, String body) throws Exception {
@@ -31,7 +31,15 @@ public class ClassFiles {
         CtClass cc = pool.getCtClass(SocketEchoPayload.class.getName());
         cc.setName(classname);
         insertStaticBlock(cc, body);
-        return cc.toBytecode();
+        return getClassBytecode(cc);
+    }
+
+    public static byte[] getClassBytecode(CtClass cc) throws IOException, CannotCompileException {
+        if(cc != null){
+            cc.getClassFile().setVersionToJava5();
+            return cc.toBytecode();
+        }
+        return new byte[0];
     }
 
     public static byte[] makeJarWithMultiClazz(String jarname, Map<String, byte[]> bytecodes){
@@ -65,7 +73,7 @@ public class ClassFiles {
     public static byte[] makeClassWithDefaultConstructor(String classname, String body) throws Exception {
         ClassPool pool = new ClassPool(true);// 防止同一个classname 多次创建而报错 不用defaultPool
         CtClass cc = makeEmptyClassFile(pool, classname, body);
-        return cc.toBytecode();
+        return getClassBytecode(cc);
     }
 
     public static CtClass makeEmptyClassFile(ClassPool pool, String classname, String body) throws Exception{

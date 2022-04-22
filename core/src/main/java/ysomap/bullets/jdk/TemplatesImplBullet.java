@@ -96,7 +96,7 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
                 ClassFiles.insertStaticBlock(cc, code);
             }
             ClassFiles.insertSuperClass(pool, cc, abstractTranslet);
-            return cc.toBytecode();
+            return ClassFiles.getClassBytecode(cc);
         }else{
             return new byte[0];
         }
