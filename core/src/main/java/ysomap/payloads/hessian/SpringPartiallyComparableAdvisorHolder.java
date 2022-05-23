@@ -27,7 +27,7 @@ public class SpringPartiallyComparableAdvisorHolder extends HessianPayload {
     public Object pack(Object obj) throws Exception {
         AspectInstanceFactory aif = ReflectionHelper.createWithoutConstructor(BeanFactoryAspectInstanceFactory.class);
         ReflectionHelper.setFieldValue(aif, "beanFactory", obj);
-        ReflectionHelper.setFieldValue(aif, "name", bullet.get("jndiURL"));
+        ReflectionHelper.setFieldValue(aif, "name", bullet.get("beanName"));
         AbstractAspectJAdvice advice = ReflectionHelper.createWithoutConstructor(AspectJAroundAdvice.class);
         ReflectionHelper.setFieldValue(advice, "aspectInstanceFactory", aif);
 

