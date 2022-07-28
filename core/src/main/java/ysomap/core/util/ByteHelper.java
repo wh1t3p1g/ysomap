@@ -139,4 +139,26 @@ public class ByteHelper {
         bytes[offset + 3] = (byte) (0xFF & value);
     }
 
+    public static void short2bytes(short value, byte[] bytes, int off) {
+        bytes[off + 1] = (byte) value;
+        bytes[off] = (byte) (value >>> 8);
+    }
+
+    public static void long2bytes(long value, byte[] bytes, int off) {
+        bytes[off + 7] = (byte) value;
+        bytes[off + 6] = (byte) (value >>> 8);
+        bytes[off + 5] = (byte) (value >>> 16);
+        bytes[off + 4] = (byte) (value >>> 24);
+        bytes[off + 3] = (byte) (value >>> 32);
+        bytes[off + 2] = (byte) (value >>> 40);
+        bytes[off + 1] = (byte) (value >>> 48);
+        bytes[off] = (byte) (value >>> 56);
+    }
+
+    public static void int2bytes(int value, byte[] bytes, int off) {
+        bytes[off + 3] = (byte) value;
+        bytes[off + 2] = (byte) (value >>> 8);
+        bytes[off + 1] = (byte) (value >>> 16);
+        bytes[off] = (byte) (value >>> 24);
+    }
 }

@@ -1,6 +1,7 @@
 package ysomap.bullets.jdk;
 
 import ysomap.bullets.AbstractBullet;
+import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 import ysomap.common.util.Logger;
 import ysomap.core.util.FileHelper;
@@ -18,11 +19,11 @@ import ysomap.core.util.ReflectionHelper;
 public class SwingLazyValueWithFileWriteBullet extends AbstractBullet<Object> {
 
     @NotNull
-    @Require(name = "filepath", detail = "/tmp/test")
+    @Require(name = "filepath", detail = "/tmp/test, 远程目标路径")
     public String filepath;
 
     @NotNull
-    @Require(name = "localFile", detail = "/tmp/test")
+    @Require(name = "localFile", detail = "/tmp/test，本地路径")
     public String localFile;
 
     public byte[] data = new byte[0];
@@ -46,5 +47,12 @@ public class SwingLazyValueWithFileWriteBullet extends AbstractBullet<Object> {
             Logger.error("Create sun.swing.SwingLazyValue, plz check current jdk is <=8.");
             return null;
         }
+    }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        Bullet bullet = new SwingLazyValueWithFileWriteBullet();
+        bullet.set("filepath", args[0]);
+        bullet.set("localFile", args[1]);
+        return bullet;
     }
 }

@@ -14,7 +14,7 @@ import ysomap.core.util.ReflectionHelper;
 @Payloads
 @Authors({ Authors.MBECHLER })
 @Targets({Targets.HESSIAN})
-@Require(bullets = {"SpringJndiBullet1"},param = false)
+@Require(bullets = {"SpringJndiBullet1", "SpringExecBullet", "SpringLoadJarBullet", "SpringUploadBullet"},param = false)
 @Dependencies({"org.springframework:spring-context","org.springframework:spring-aop"})
 public class SpringPartiallyComparableAdvisorHolder extends HessianPayload {
 

