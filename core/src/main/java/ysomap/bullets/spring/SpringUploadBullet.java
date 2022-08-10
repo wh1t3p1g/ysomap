@@ -32,7 +32,7 @@ public class SpringUploadBullet extends SpringExecBullet {
 
     public Object makeBean() throws Exception {
         if(data == null){
-            data = FileHelper.getFileContent(localFile);
+            data = FileHelper.fileGetContent(localFile);
         }
         MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
         bean.setSingleton(false);

@@ -34,7 +34,7 @@ public class SwingLazyValueWithFileWriteBullet extends AbstractBullet<Object> {
         String methodName = "writeBytesToFilename";
 
         if(!"dynamic".equals(localFile)){
-            data = FileHelper.getFileContent(localFile);
+            data = FileHelper.fileGetContent(localFile);
         }
 
         Object[] evilargs = new Object[]{filepath, data};

@@ -127,7 +127,7 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
         if("split".equals(action) && data instanceof String){
             return ((String) data).split(";");
         }else if("read".equals(action) && data instanceof String){
-            return FileHelper.getFileContent((String) data);
+            return FileHelper.fileGetContent((String) data);
         }else if("base64".equals(action) && data instanceof byte[]){
             return Strings.base64ToString((byte[]) data);
         }else if("gzip".equals(action) && data instanceof byte[]){

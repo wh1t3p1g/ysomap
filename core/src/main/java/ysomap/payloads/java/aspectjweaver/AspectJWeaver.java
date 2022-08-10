@@ -51,7 +51,7 @@ public class AspectJWeaver extends AbstractPayload<Object> {
     public Object pack(Object obj) throws Exception {
         try {
             initClazz(bullet.get("ccVersion"));
-            byte[] content = FileHelper.getFileContent(bullet.get("localFilepath"));
+            byte[] content = FileHelper.fileGetContent(bullet.get("localFilepath"));
             String filename = bullet.get("filename");
             Map map = new HashMap();
             map.put(filename, content);
