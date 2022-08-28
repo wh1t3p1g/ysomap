@@ -76,7 +76,7 @@ public class SerializerFactory {
         }
     }
 
-    private static void serialize(Serializer serializer, Payload obj, OutputStream out) throws Exception{
+    public static void serialize(Serializer serializer, Payload obj, OutputStream out) throws Exception{
         Object serialized = serializer.serialize(obj);
         byte[] serializedBytes;
         String encoder = serializer.getEncoder();

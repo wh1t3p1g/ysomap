@@ -11,12 +11,14 @@
     <artifactId>core</artifactId>
     <properties>
         <spring.version>4.3.16.RELEASE</spring.version> <!-- 5.3.4  4.3.16.RELEASE -->
-        <hessian.group>com.alipay.sofa</hessian.group> <!-- com.caucho  com.alipay.sofa -->
-        <hessian.version>3.3.13</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
+        <hessian.group>com.caucho</hessian.group> <!-- com.caucho  com.alipay.sofa -->
+        <hessian.version>4.0.38</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
         <xstream.version>1.4.17</xstream.version>
         <jackson.version>2.9.5</jackson.version>
         <fastjson.version>1.2.58</fastjson.version>
         <kryo.version>3.0.3</kryo.version>
+        <cb.version>1.7.0</cb.version>
+        <cc.version>3.2.1</cc.version>
     </properties>
     <dependencies>
         <dependency>
@@ -147,12 +149,12 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
+            <version>${cc.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.2</version>
+            <version>${cb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -89,16 +89,7 @@ public class HTTPHelper {
 //                .proxy(proxy)
 //                .build();
         try(Response response = client.newCall(request).execute()){
-            Logger.normal("Status Code: "+response.code());
-            Logger.normal("Response Headers:");
-            Map<String, List<String>> responseHeaders = response.headers().toMultimap();
-            for(Map.Entry entry:responseHeaders.entrySet()){
-                Logger.normal(entry.getKey()+":"+entry.getValue());
-            }
-            if(vv){
-                Logger.normal("Response Body:");
-                Logger.normal(response.body().string());
-            }
+            log(response, vv);
             return response;
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,18 +97,34 @@ public class HTTPHelper {
         }
     }
 
-    public static Response get(String url, Headers headers){
+    public static Response get(String url, Headers headers, boolean vv){
+        if(headers == null){
+            headers =  new Headers.Builder().build();
+        }
         Request request = new Request.Builder()
                 .url(url)
                 .headers(headers)
                 .build();
         try(Response response = client.newCall(request).execute()){
+            log(response, vv);
             return response;
         } catch (IOException e) {
             return null;
         }
     }
 
+    public static void log(Response response, boolean vv) throws IOException {
+        Logger.normal("Status Code: "+response.code());
+        Logger.normal("Response Headers:");
+        Map<String, List<String>> responseHeaders = response.headers().toMultimap();
+        for(Map.Entry entry:responseHeaders.entrySet()){
+            Logger.normal(entry.getKey()+":"+entry.getValue());
+        }
+        if(vv){
+            Logger.normal("Response Body:");
+            Logger.normal(response.body().string());
+        }
+    }
 
     static {
         try {

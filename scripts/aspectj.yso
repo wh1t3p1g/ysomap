@@ -1,0 +1,7 @@
+use payload AspectJWeaver
+use bullet StoreableCachingMapBullet
+set ccVersion 4
+set remoteFolder ./webapps/nc_web/
+set filename ok.txt
+set localFilepath ./ok.txt
+run

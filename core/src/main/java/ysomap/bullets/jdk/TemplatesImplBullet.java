@@ -179,8 +179,8 @@ public class TemplatesImplBullet extends AbstractBullet<Object> {
 
     public static Bullet newInstance(Object... args) throws Exception {
         Bullet bullet = new TemplatesImplBullet();
-        bullet.set("body", args[0]);
-        bullet.set("effect", args[1]);
+        bullet.set("effect", args[0]);
+        bullet.set("body", args[1]);
         bullet.set("exception", args[2]);
         return bullet;
     }
