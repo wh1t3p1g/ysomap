@@ -14,7 +14,7 @@ import javax.naming.CompositeName;
 @Bullets
 @Dependencies({"jdk"})
 @Details("向外部发起LDAP连接")
-@Targets({Targets.XSTREAM})
+@Targets({Targets.XSTREAM, Targets.JDK})
 @Authors({Authors.WH1T3P1G})
 public class LdapAttributeBullet extends AbstractBullet<Object> {
 
