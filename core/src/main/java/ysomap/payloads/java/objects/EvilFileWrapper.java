@@ -20,7 +20,7 @@ import java.util.Map;
 @Targets({Targets.CODE})
 @Authors({ Authors.WH1T3P1G })
 @Dependencies({"*"})
-@Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock", "ClassWithReverseShell"}, param = false)
+@Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock", "ClassWithReverseShell","ClassWithEvilStaticBlockFromExistClazz"}, param = false)
 public class EvilFileWrapper extends AbstractPayload<byte[]> {
 
     @Override

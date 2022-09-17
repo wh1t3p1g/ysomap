@@ -2,6 +2,7 @@ package ysomap.bullets.objects;
 
 import org.apache.commons.io.FileUtils;
 import ysomap.bullets.AbstractBullet;
+import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
 
 import java.io.File;
@@ -61,4 +62,14 @@ public class ZipWithEvilFile extends AbstractBullet<byte[]> {
             e.printStackTrace();
         }
     }
+
+    public static Bullet newInstance(Object... args) throws Exception {
+        ZipWithEvilFile bullet = new ZipWithEvilFile();
+        bullet.set("localFilepath", args[0]);
+        bullet.set("depth", args[1]);
+        bullet.set("output", args[2]);
+        bullet.set("remoteFilepath", args[3]);
+        return bullet;
+    }
+
 }

@@ -47,4 +47,6 @@ public interface Payload<T> {
     String get(String key);
 
     boolean has(String key);
+
+    String getName();
 }

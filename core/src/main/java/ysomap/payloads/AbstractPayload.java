@@ -130,4 +130,13 @@ public abstract class AbstractPayload<T> implements Payload<T>{
     public boolean has(String key) {
         return ReflectionHelper.has(this, key);
     }
+
+    @Override
+    public String getName() {
+        String name = this.getClass().getSimpleName();
+        if(bullet != null){
+            name += "."+bullet.getClass().getSimpleName();
+        }
+        return name;
+    }
 }

