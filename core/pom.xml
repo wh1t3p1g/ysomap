@@ -11,6 +11,8 @@
     <artifactId>core</artifactId>
     <properties>
         <spring.version>4.3.16.RELEASE</spring.version> <!-- 5.3.4  4.3.16.RELEASE -->
+<!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
+<!--        <hessian.version>4.0.4</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
         <hessian.group>com.caucho</hessian.group> <!-- com.caucho  com.alipay.sofa -->
         <hessian.version>4.0.38</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
         <xstream.version>1.4.17</xstream.version>
@@ -24,6 +26,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
