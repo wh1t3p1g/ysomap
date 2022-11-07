@@ -1,0 +1,4 @@
+use payload CommonsBeanutils2
+use bullet TemplatesImplBullet
+set body calc
+run
