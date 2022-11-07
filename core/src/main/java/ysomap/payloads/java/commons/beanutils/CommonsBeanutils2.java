@@ -18,7 +18,7 @@ import java.util.PriorityQueue;
 @SuppressWarnings({"rawtypes"})
 @Targets({Targets.JDK})
 @Require(bullets = {"TemplatesImplBullet"},param = false)
-@Dependencies({"commons-beanutils:commons-beanutils:1.8.2", "commons-logging:commons-logging:1.2"})
+@Dependencies({"commons-beanutils:commons-beanutils:1.8.2", "*commons-logging:commons-logging:1.1.1"})    // 带*为默认内置，如果exclude该包则payload不生效
 public class CommonsBeanutils2 extends AbstractPayload<Object> {
 
     @Override

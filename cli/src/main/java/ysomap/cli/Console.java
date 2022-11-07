@@ -178,7 +178,7 @@ public class Console {
         } else if ("bullet".equals(type)) {
             metaData = bullets.get(name);
         } else {
-            throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
+            throw new ArgumentsMissMatchException("use [exploit/payload/bullet] [name]");
         }
         if(metaData != null){
             return metaData.getClazz();
@@ -291,7 +291,7 @@ public class Console {
             curSession.create(type, clazz);
             curSession.getStatus().addPrompt(type, args.get(1));
         }else{
-            throw new ArgumentsMissMatchException("use [payload/exploit] [name]");
+            throw new ArgumentsMissMatchException("use [payload/exploit/bullet] [name]");
         }
     }
 

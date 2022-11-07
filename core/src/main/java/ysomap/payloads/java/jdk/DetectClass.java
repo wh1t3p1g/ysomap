@@ -2,10 +2,7 @@ package ysomap.payloads.java.jdk;
 
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.DetectClassBullet;
-import ysomap.common.annotation.Dependencies;
-import ysomap.common.annotation.Payloads;
-import ysomap.common.annotation.Require;
-import ysomap.common.annotation.Targets;
+import ysomap.common.annotation.*;
 import ysomap.payloads.AbstractPayload;
 
 /**
