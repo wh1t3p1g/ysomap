@@ -145,7 +145,7 @@ public class Printer {
     }
 
     public static void printBulletsInfo(Collection<MetaData> data){
-        Logger.success("List all bullets!");
+//        Logger.success("List all bullets!");
         AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow("Bullet", "Targets", "Dependencies", "Details");
@@ -166,6 +166,6 @@ public class Printer {
         at.getRenderer().setCWC(cwc);
         at.getContext().setGrid(A8_Grids.lineDobuleTripple());
         System.out.println(at.render());
-        Logger.success("print current table done!");
+//        Logger.success("print current table done!");
     }
 }

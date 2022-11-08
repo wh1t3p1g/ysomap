@@ -15,6 +15,7 @@ import ysomap.cli.utils.Printer;
 import ysomap.common.annotation.Bullets;
 import ysomap.common.annotation.Exploits;
 import ysomap.common.annotation.Payloads;
+import ysomap.common.annotation.Require;
 import ysomap.common.exception.ArgumentsMissMatchException;
 import ysomap.common.exception.BaseException;
 import ysomap.common.exception.YsoClassNotFoundException;
@@ -290,6 +291,13 @@ public class Console {
 
             curSession.create(type, clazz);
             curSession.getStatus().addPrompt(type, args.get(1));
+            
+            if ("payload".equals(type)){    // use payload 后自动打印可用 bullets
+                Printer.printCandidates("bullets", clazz, false, null);
+                Logger.normal("Auto set bullet");
+                autoSetBullet(clazz);
+            }
+            
         }else{
             throw new ArgumentsMissMatchException("use [payload/exploit/bullet] [name]");
         }
@@ -418,7 +426,23 @@ public class Console {
                 "exit                exit ysomap\n";
         System.out.println(usage);
     }
-
+    
+    // 如果该paylaod只有一个bullet，那么就自动设置bullet
+    public void autoSetBullet(Class clazz) {
+        List<String> candidates = Arrays.asList(Require.Utils.getRequiresFromClass(clazz));
+        if (candidates.size() == 1 && (!candidates.get(0).equalsIgnoreCase("*")) && (!candidates.get(0).equalsIgnoreCase("all gadgets"))) {
+            List<String> list = new ArrayList<>();
+            list.add("bullet");
+            list.add(candidates.get(0));
+            args = list;
+            try {
+                use();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    
     public void setArgs(List<String> args) {
         this.args = args;
     }
