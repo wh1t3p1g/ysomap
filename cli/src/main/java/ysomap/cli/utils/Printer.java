@@ -105,7 +105,10 @@ public class Printer {
     }
 
     public static void printExploitsInfo(Collection<MetaData> data){
-        Logger.success("List all exploits!");
+        if (data.size() == 0){
+            Logger.warn("Not found exploit");
+            return;
+        }
         AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow("Exploit", "Author", "Require", "Details");
@@ -124,10 +127,14 @@ public class Printer {
         cwc.add(30);
         cwc.add(80);
         printTable(at, cwc);
+        Logger.success("List all exploits!");
     }
 
     public static void printPayloadsInfo(Collection<MetaData> data){
-        Logger.success("List all payloads!");
+        if (data.size() == 0){
+            Logger.warn("Not found payload");
+            return;
+        }
         AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow("Payloads", "Author", "Targets", "Dependencies");
@@ -142,10 +149,14 @@ public class Printer {
             at.addRule();
         }
         printTable(at, new CWC_LongestLine());
+        Logger.success("List all payloads!");
     }
 
     public static void printBulletsInfo(Collection<MetaData> data){
-//        Logger.success("List all bullets!");
+        if (data.size() == 0){
+            Logger.warn("Not Found Bullet");
+            return;
+        }
         AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow("Bullet", "Targets", "Dependencies", "Details");
@@ -159,6 +170,7 @@ public class Printer {
             at.addRule();
         }
         printTable(at, new CWC_LongestLine());
+        Logger.success("List all bullets!");
     }
 
     public static void printTable(AsciiTable at, AT_ColumnWidthCalculator cwc){

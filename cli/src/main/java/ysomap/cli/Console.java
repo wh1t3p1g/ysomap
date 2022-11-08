@@ -20,6 +20,7 @@ import ysomap.common.exception.ArgumentsMissMatchException;
 import ysomap.common.exception.BaseException;
 import ysomap.common.exception.YsoClassNotFoundException;
 import ysomap.common.exception.YsoFileNotFoundException;
+import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.SerializerTypeCodes;
 
@@ -27,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.jline.builtins.Completers.TreeCompleter.node;
 
@@ -110,6 +113,9 @@ public class Console {
             case "list":
                 list();
                 break;
+            case "search":
+                search();
+                break;
             case "show":
                 show();
                 break;
@@ -179,7 +185,7 @@ public class Console {
         } else if ("bullet".equals(type)) {
             metaData = bullets.get(name);
         } else {
-            throw new ArgumentsMissMatchException("use [exploit/payload/bullet] [name]");
+            throw new ArgumentsMissMatchException("use {exploit/payload/bullet} <name>");
         }
         if(metaData != null){
             return metaData.getClazz();
@@ -214,6 +220,12 @@ public class Console {
         Completer listCompleter = new Completers.TreeCompleter(
                 node("list",
                         node("exploits","payloads","bullets")
+                )
+        );
+        Completer searchCompleter = new Completers.TreeCompleter(
+                node("search",
+                        node("exploits", "payloads", "bullets")
+                        
                 )
         );
         Completer showCompleter = new Completers.TreeCompleter(
@@ -273,34 +285,56 @@ public class Console {
     //===============================================================
     // handle commands
     public void use() throws Exception {
-        if(args.size() == 2){
-            String type = args.get(0);
-            Class<?> clazz = getClassFromLoadedClasses(type, args.get(1));
-
-            if(clazz == null){
-                throw new YsoClassNotFoundException(type, args.get(1));
-            }
-
-            if("exploit".equals(type)){
-                Logger.success("Create a new session.");
-                curSession = newSession(true);
-            }else if("payload".equals(type) && (curSession == null || !curSession.isExploit())){
-                Logger.success("Create a new session.");
-                curSession = newSession(true);
-            }
-
-            curSession.create(type, clazz);
-            curSession.getStatus().addPrompt(type, args.get(1));
+        String type = null;
+        String clazzString = null;
+        Class<?> clazz = null;
+        if (args.size() == 1) {   // 可直接使用 use xxx 来调用所有的exploit、payload、bullet
+            clazzString = args.get(0);
+            type = "exploit";
+            clazz = getClassFromLoadedClasses(type, clazzString);
             
-            if ("payload".equals(type)){    // use payload 后自动打印可用 bullets
-                Printer.printCandidates("bullets", clazz, false, null);
-                Logger.normal("Auto set bullet");
-                autoSetBullet(clazz);
+            if (clazz == null) {
+                type = "payload";
+                clazz = getClassFromLoadedClasses(type, clazzString);
             }
             
-        }else{
-            throw new ArgumentsMissMatchException("use [payload/exploit/bullet] [name]");
+            if (clazz == null) {
+                type = "bullet";
+                clazz = getClassFromLoadedClasses(type, clazzString);
+            }
+            
+        } else if (args.size() == 2) { // 保留原来的方式，use {exploit/payload/bullet} xxx
+            type = args.get(0);
+            clazzString = args.get(1);
+            clazz = getClassFromLoadedClasses(type, clazzString);
+        } else {
+            throw new ArgumentsMissMatchException("use {payload/exploit/bullet} <name> or use <name>");
         }
+        
+        if (clazz == null) {
+            throw new YsoClassNotFoundException(type, clazzString);
+        }
+        
+        if ("exploit".equals(type)) {
+            Logger.success("Create a new session.");
+            curSession = newSession(true);
+        } else if ("payload".equals(type) && (curSession == null || !curSession.isExploit())) {
+            Logger.success("Create a new session.");
+            curSession = newSession(true);
+        }
+        
+        curSession.create(type, clazz);
+        curSession.getStatus().addPrompt(type, clazzString);
+        
+        if ("exploit".equals(type)){
+            Printer.printCandidates("payloads", clazz, false, null); // use exploit 后自动打印可用 payloads
+            autoSetPayloadOrBullet("payload", clazz);   // 自动调用 payload
+        } else if ("payload".equals(type)) {
+            Printer.printCandidates("bullets", clazz, false, null); // use payload 后自动打印可用 bullets
+            autoSetPayloadOrBullet("bullet", clazz);   // 自动调用 bullet
+        }
+        
+        
     }
 
     public void set() throws Exception {
@@ -312,23 +346,67 @@ public class Console {
     }
 
     public void list() throws ArgumentsMissMatchException {
-        if(args.size() == 1){
+        if (args.size() == 0) {
+            Printer.printExploitsInfo(exploits.values());
+            Printer.printPayloadsInfo(payloads.values());
+            Printer.printBulletsInfo(bullets.values());
+            return;
+        } else if (args.size() == 1) {
             String type = args.get(0);
-            switch(type){
+            switch (type) {
+                case "exploit":
                 case "exploits":
                     Printer.printExploitsInfo(exploits.values());
                     return;
+                case "payload":
                 case "payloads":
                     Printer.printPayloadsInfo(payloads.values());
                     return;
+                case "bullet":
                 case "bullets":
                     Printer.printBulletsInfo(bullets.values());
                     return;
             }
         }
-        throw new ArgumentsMissMatchException("list [payloads/exploits/bullets]");
+        throw new ArgumentsMissMatchException("list {payloads/exploits/bullets}");
     }
-
+    
+    public void search() throws ArgumentsMissMatchException {
+        String tips = "search <keyword>\n"+
+                "search {payload/exploit/bullet} <keyword>\n";
+        if (args.size() == 1) {  // list keyword 全局搜索
+            String keyword = args.get(0);
+            if ("-h".equals(keyword) || "help".equals(keyword)){
+                Logger.normal(tips);
+                return;
+            }
+            Printer.printExploitsInfo(getFilterList(exploits, keyword));
+            Printer.printPayloadsInfo(getFilterList(payloads, keyword));
+            Printer.printBulletsInfo(getFilterList(bullets, keyword));
+            return;
+        } else if (args.size() == 2) {  // search exploit/payload/bullet <keyword>
+            String type = args.get(0);
+            String keyword = args.get(1);
+    
+            switch (type) {
+                case "exploit":
+                case "exploits":
+                    Printer.printExploitsInfo(getFilterList(exploits, keyword));
+                    return;
+                case "payload":
+                case "payloads":
+                    Printer.printPayloadsInfo(getFilterList(payloads, keyword));
+                    return;
+                case "bullet":
+                case "bullets":
+                    Printer.printBulletsInfo(getFilterList(bullets, keyword));
+                    return;
+            }
+        }
+        
+        throw new ArgumentsMissMatchException(tips);
+    }
+    
     public void show() throws ArgumentsMissMatchException {
         if(args.size() == 1){
             String type = args.get(0);
@@ -410,37 +488,44 @@ public class Console {
             throw new ArgumentsMissMatchException("script /path/to/script");
         }
     }
-
-    public void help(){
-        String usage = "help                print this message\n" +
-                "list <type>         list exploits, bullets and payloads\n" +
-                "use <type> <name>   choose a exploit/payload/bullet\n" +
-                "set <key> <value>   set exploit/bullet's arguments\n" +
-                "run                 run current session\n" +
-                "show <type>         show payload/bullet/exploit details\n" +
-                "clear               clear current sessions\n" +
-                "session [c|i]       recover to a session or create a new session\n" +
-                "sessions            print current running exploit sessions\n" +
-                "stop                stop current session\n" +
-                "kill [uuid|all]     kill sessions, like 'kill uuid' or 'kill all'\n" +
-                "exit                exit ysomap\n";
+    
+    public void help() {
+        String usage =
+                        "help                    print this message\n" +
+                        "list [type]             list exploits, bullets and payloads\n" +
+                        "use <type> <name>       choose a exploit/payload/bullet\n" +
+                        "set <key> <value>       set exploit/bullet's arguments\n" +
+                        "run                     run current session\n" +
+                        "exploit                 same as the run command\n" +
+                        "search                  search exploit/payload/bullet/ keyword\n" +
+                        "show <type>             show payload/bullet/exploit details\n" +
+                        "clear                   clear current sessions\n" +
+                        "session {c|i}           recover to a session or create a new session\n" +
+                        "sessions                print current running exploit sessions\n" +
+                        "stop                    stop current session\n" +
+                        "kill {uuid|all}         kill sessions, like 'kill uuid' or 'kill all'\n" +
+                        "exit                    exit ysomap\n";
         System.out.println(usage);
     }
     
-    // 如果该paylaod只有一个bullet，那么就自动设置bullet
-    public void autoSetBullet(Class clazz) {
+    // 如果可选项仅有一个，那么自动设置payload或bullet
+    public void autoSetPayloadOrBullet(String type, Class clazz) throws Exception {
         List<String> candidates = Arrays.asList(Require.Utils.getRequiresFromClass(clazz));
-        if (candidates.size() == 1 && (!candidates.get(0).equalsIgnoreCase("*")) && (!candidates.get(0).equalsIgnoreCase("all gadgets"))) {
+        if (candidates.size() == 1 && !candidates.get(0).equalsIgnoreCase("*") && !candidates.get(0).equalsIgnoreCase("all gadgets") && !candidates.get(0).equals("")) {
+            Logger.normal(String.format("Auto set %s [%s]", type, ColorStyle.makeWordRedAndBoldAndUnderline(candidates.get(0))));
             List<String> list = new ArrayList<>();
-            list.add("bullet");
+            list.add(type);
             list.add(candidates.get(0));
             args = list;
-            try {
-                use();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            use();
         }
+    }
+    
+    // 过滤筛选
+    public Set<MetaData> getFilterList(Map<String, MetaData> type, String keyword) {
+        Stream<MetaData> metaDataStream = type.values().parallelStream().filter(x -> x.getSimpleName().toLowerCase().contains(keyword.toLowerCase()));
+        Set<MetaData> filteredList = metaDataStream.collect(Collectors.toSet());
+        return filteredList;
     }
     
     public void setArgs(List<String> args) {
