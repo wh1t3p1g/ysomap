@@ -28,7 +28,7 @@ public class JarHelper {
         if (clazz != null) {
             return clazz;
         } else {
-            Logger.error("not found Class: " + className);
+            Logger.error("Not found Class: " + className);
             return null;
         }
     }
@@ -53,15 +53,17 @@ public class JarHelper {
             
             if (!file.exists()) {
                 InputStream is = JarHelper.class.getResourceAsStream("/" + jarName);    // 从resources中获取jar包二进制流
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(is);
+                
                 if (is == null) {
                     Logger.error("Not found jar: " + jarName);
                     return;
                 }
                 FileOutputStream fileOutputStream = new FileOutputStream(jarPath);
                 byte[] bytes = new byte[1024 * 1024 * 10];
-                int bytesLength = is.read(bytes);
+                int bytesLength = bufferedInputStream.read(bytes);
                 fileOutputStream.write(bytes, 0, bytesLength);  // 写入到lib下，注意要控制字节的大小
-                Logger.normal("Write " + jarName + " to ./lib");
+                Logger.normal("Write " + jarName + "(" + bytesLength + " bytes) to ./lib");
             }
         } catch (Exception e) {
             e.printStackTrace();

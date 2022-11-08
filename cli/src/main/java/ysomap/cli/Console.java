@@ -259,7 +259,7 @@ public class Console {
 
         Completer commonCompleter = new Completers.TreeCompleter(
                 node("help","exit","run","sessions","kill","stop","script"));
-        return new AggregateCompleter(useCompleter, listCompleter, showCompleter, setCompleter, sessionCompleter,commonCompleter);
+        return new AggregateCompleter(useCompleter, listCompleter, searchCompleter, showCompleter, setCompleter, sessionCompleter,commonCompleter);
     }
 
     public Set<String> getAllParams(){
