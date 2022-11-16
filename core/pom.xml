@@ -14,7 +14,7 @@
         <hessian.group>com.caucho</hessian.group> <!-- com.caucho  com.alipay.sofa -->
         <hessian.version>4.0.38</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
         <xstream.version>1.4.17</xstream.version>
-        <jackson.version>2.9.5</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
         <fastjson.version>1.2.58</fastjson.version>
         <kryo.version>3.0.3</kryo.version>
         <cb.version>1.7.0</cb.version>
