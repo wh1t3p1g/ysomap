@@ -56,7 +56,7 @@ public class SerializerFactory {
                 String output = "payload."+payload.getName()+".ser";
                 out = new FileOutputStream(output);
                 needClose = true;
-                Logger.success("generate " + current + " success, plz see obj.ser");
+                Logger.success("generate " + current + " success, plz see "+output);
             }else if(serializer.getOutputType().equals("console")){
                 out = System.out;
                 Logger.normal("\n");

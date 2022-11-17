@@ -3,8 +3,6 @@ package ysomap.payloads.xstream;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.objects.ClassWithEvilConstructor;
 import ysomap.common.annotation.*;
-import ysomap.core.serializer.Serializer;
-import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
@@ -19,11 +17,6 @@ import ysomap.core.util.ReflectionHelper;
 @Dependencies({"<=com.thoughtworks.xstream:xstream:1.4.10"})
 @Require(bullets = {"ClassWithEvilConstructor","ClassWithEvilStaticBlock"}, param = false)
 public class LazyIterator extends XStreamPayload<Object> {
-
-    @Override
-    public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("xstream");
-    }
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {

@@ -46,7 +46,11 @@ public class ClassWithEvilStaticBlock extends AbstractBullet<byte[]> {
         ClassWithEvilStaticBlock bullet = new ClassWithEvilStaticBlock();
         bullet.set("type", "class");
         bullet.set("body", args[0]);
-        bullet.set("classname", "pwn"+new Random().nextLong());
+        if(args.length > 1) {
+            bullet.set("classname", args[1]);
+        }else{
+            bullet.set("classname", "pwn"+new Random().nextLong());
+        }
         return bullet;
     }
 }

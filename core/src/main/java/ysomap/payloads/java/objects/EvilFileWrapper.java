@@ -4,7 +4,6 @@ import ysomap.bullets.Bullet;
 import ysomap.bullets.objects.ClassWithEvilConstructor;
 import ysomap.common.annotation.*;
 import ysomap.core.serializer.Serializer;
-import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.ClassFiles;
 import ysomap.payloads.AbstractPayload;
 
@@ -48,6 +47,7 @@ public class EvilFileWrapper extends AbstractPayload<byte[]> {
 
     @Override
     public Serializer<?> getSerializer() {
-        return SerializerFactory.createSerializer("empty");
+        serializeType = "empty";
+        return super.getSerializer();
     }
 }
