@@ -6,3 +6,12 @@ set classname utils.MachineUtils.getIP
 set encoder base64
 set output console
 run
+
+use bullet ClassWithExistEviClass
+set type class
+set effect HTTPRequester
+set body "https://localhost:8080/"
+set classname utils.MachineUtils.getIP
+set encoder base64
+set output console
+run

