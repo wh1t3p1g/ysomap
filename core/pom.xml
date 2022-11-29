@@ -19,7 +19,7 @@
         <jackson.version>2.9.5</jackson.version>
         <fastjson.version>1.2.58</fastjson.version>
         <kryo.version>3.0.3</kryo.version>
-        <cb.version>1.7.0</cb.version>
+        <cb.version>1.9.2</cb.version>
         <cc.version>3.2.1</cc.version>
     </properties>
     <dependencies>
@@ -258,32 +258,24 @@
             <artifactId>xercesImpl</artifactId>
             <version>2.9.1</version>
         </dependency>
+        <!-- castor test end -->
 
         <dependency>
+            <!-- for payload HtmlUnit1-->
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit-core-js</artifactId>
             <version>2.55.0</version>
         </dependency>
-        <!-- castor test end -->
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-webmvc &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-webmvc</artifactId>-->
-<!--            <version>5.2.4.RELEASE</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-        <dependency>
+            <!-- for netty server-->
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.75.Final</version>
+            <version>4.1.85.Final</version>
         </dependency>
+
+
+
     </dependencies>
 
 </project>
