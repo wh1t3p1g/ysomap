@@ -4,6 +4,7 @@
 # mvn
 **/target/**
 **/secret/**
+**/taobao/**
 
 # eclipse
 .classpath
