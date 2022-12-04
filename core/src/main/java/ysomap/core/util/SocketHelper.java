@@ -19,7 +19,7 @@ public class SocketHelper {
         BufferedReader in = null;
         try {
             socket = new Socket(host, port);
-            socket.setSoTimeout(5000);
+            socket.setSoTimeout(10000);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             socket.getOutputStream().write(bytes);
             String resp = null;

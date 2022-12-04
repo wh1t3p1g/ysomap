@@ -79,9 +79,9 @@ public class TomcatRefBullet extends AbstractBullet<Reference> {
         Bullet bullet = new TomcatRefBullet();
         bullet.set("type", args[0]);
         bullet.set("body", args[1]);
-        if(args.length > 2) {
-            bullet.set("classname", args[2]);
-        }
+        bullet.set("classname", args[2]);
+        bullet.set("filepath", args[3]);
+
         return bullet;
     }
 }
