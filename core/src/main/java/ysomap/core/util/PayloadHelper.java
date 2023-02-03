@@ -67,8 +67,8 @@ public class PayloadHelper {
         ReflectionHelper.setAccessible(nodeCons);
 
         Object tbl = Array.newInstance(nodeC, 2);
-        Array.set(tbl, 0, nodeCons.newInstance(0, v1, v1, null));
-        Array.set(tbl, 1, nodeCons.newInstance(0, v2, v2, null));
+        Array.set(tbl, 0, nodeCons.newInstance(0, v1, "ysomap", null));
+        Array.set(tbl, 1, nodeCons.newInstance(0, v2, "ysomap", null));
         ReflectionHelper.setFieldValue(s, "table", tbl);
         return s;
     }

