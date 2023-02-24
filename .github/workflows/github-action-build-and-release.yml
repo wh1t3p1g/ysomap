@@ -1,0 +1,58 @@
+name: build-release
+run-name: Build And Release Tabby
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build_release:
+    runs-on: ubuntu-22.04
+    name: build_release
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+
+      - name: build
+        run: |
+          mvn clean package -DskipTests 
+          echo "artifactPath=$(pwd)/cli/target" >> $GITHUB_ENV
+          version=$(cat VERSION) 
+          tag=${GITHUB_REF_NAME}
+          echo "version=$version" >> $GITHUB_ENV
+          echo "tag=$tag" >> $GITHUB_ENV
+
+      # debug
+      - run: echo version is ${{ env.version }}
+      - run: echo tag is ${{ env.tag }}
+
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: true
+          prerelease: false
+          release_name: ${{ env.tag }}
+          tag_name: ${{ env.tag }}
+          body: ${{ env.version }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: upload release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.artifactPath }}/libs/tabby.jar
+          asset_name: tabby.jar
+          asset_content_type: application/java-archive
