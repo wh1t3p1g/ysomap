@@ -99,10 +99,6 @@
                 </exclusion>
                 <exclusion>
                     <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-servlet-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.tomcat</groupId>
                     <artifactId>tomcat-jsp-api</artifactId>
                 </exclusion>
                 <exclusion>
