@@ -14,26 +14,32 @@ import java.net.SocketTimeoutException;
  */
 public class SocketHelper {
 
-    public static String send(String host, int port, byte[] bytes){
+    public static String send(String host, int port, byte[] bytes, int timeout){
         Socket socket = null;
         BufferedReader in = null;
+        StringBuilder ret = new StringBuilder();
         try {
             socket = new Socket(host, port);
-            socket.setSoTimeout(10000);
+            socket.setSoTimeout(timeout);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             socket.getOutputStream().write(bytes);
             String resp = null;
-            StringBuilder ret = new StringBuilder();
+
             do{
                 resp = in.readLine();
                 if(resp != null){
-                    ret.append(resp);
+                    ret.append(resp).append("\n");
                 }
             }while (resp != null);
 
             return ret.toString();
         } catch (SocketTimeoutException e){
-            Logger.error(String.format("connect %s:%s timeout!", host, port));
+            String retStr = ret.toString();
+            if(retStr.isEmpty()){
+                Logger.error(String.format("connect %s:%s timeout!", host, port));
+            }else{
+                return retStr;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

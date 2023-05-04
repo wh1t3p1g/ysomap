@@ -19,7 +19,6 @@ import ysomap.core.util.ClassFiles;
 @Dependencies({"*"})
 public class ClassWithEvilStaticBlockFromExistClazz extends AbstractBullet<byte[]> {
 
-    @NotNull
     @Require(name = "classname", detail = "所需生成的类名")
     public String classname;
 
@@ -42,6 +41,10 @@ public class ClassWithEvilStaticBlockFromExistClazz extends AbstractBullet<byte[
             ClassPool pool = new ClassPool(true);
 
             CtClass cc = ClassFiles.makeClassFromExistClass(pool, clazz, null);
+            if(classname == null){
+                classname = "pwn"+System.currentTimeMillis();
+                Logger.normal("generte class: "+classname);
+            }
             cc.setName(classname);
             if(code != null && !code.isEmpty()){
                 ClassFiles.insertStaticBlock(cc, code);

