@@ -13,15 +13,20 @@
         <spring.version>4.3.16.RELEASE</spring.version> <!-- 5.3.4  4.3.16.RELEASE -->
 <!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
 <!--        <hessian.version>4.0.4</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
-<!--        <hessian.group>com.caucho</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
-<!--        <hessian.version>4.0.38</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
-        <hessian.group>com.alipay.sofa</hessian.group> <!-- com.caucho  com.alipay.sofa -->
-        <hessian.version>3.3.13</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
-        <xstream.version>1.4.17</xstream.version>
-        <jackson.version>2.9.5</jackson.version>
+        <hessian.group>com.caucho</hessian.group> <!-- com.caucho  com.alipay.sofa -->
+        <hessian.version>4.0.38</hessian.version>      <!-- 4.0.38      3.3.13 4.0.4    -->
+<!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
+<!--        <hessian.version>3.3.13</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
+<!--        <hessian.group>hessian</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
+<!--        <hessian.version>3.2.7.alipay</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
+        <xstream.version>1.4.10</xstream.version>
+<!--        <jackson.version>2.9.5</jackson.version>-->
+        <jackson.version>2.15.0</jackson.version>
         <fastjson.version>1.2.58</fastjson.version>
+<!--        <fastjson.version>2.0.24</fastjson.version>-->
         <kryo.version>3.0.3</kryo.version>
-        <cb.version>1.9.2</cb.version>
+<!--        <cb.version>1.9.2</cb.version>-->
+        <cb.version>1.7.0</cb.version>
         <cc.version>3.2.1</cc.version>
     </properties>
     <dependencies>
@@ -65,6 +70,13 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.23</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.esotericsoftware</groupId>
@@ -134,7 +146,13 @@
             <version>1.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mvel/mvel2 -->
 <!--        <dependency>-->
+<!--            <groupId>org.mvel</groupId>-->
+<!--            <artifactId>mvel2</artifactId>-->
+<!--            <version>2.4.15.Final</version>-->
+<!--        </dependency>-->
+        <!--        <dependency>-->
 <!--            <groupId>ch.qos.logback</groupId>-->
 <!--            <artifactId>logback-core</artifactId>-->
 <!--            <version>1.2.3</version>-->
@@ -207,8 +225,8 @@
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>2.4.3</version>
+            <artifactId>groovy-all</artifactId>
+            <version>2.1.9</version>
         </dependency>
         <dependency>
             <groupId>com.mchange</groupId>
@@ -276,7 +294,17 @@
             <version>4.1.85.Final</version>
         </dependency>
 
-
+<!--        <dependency>-->
+<!--            <groupId>org.apache.tomcat.embed</groupId>-->
+<!--            <artifactId>tomcat-embed-core</artifactId>-->
+<!--            <version>9.0.39</version>-->
+<!--        </dependency>-->
+<!--        for dubbo -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>hessian-lite</artifactId>
+            <version>3.2.12</version>
+        </dependency>
 
     </dependencies>
 
