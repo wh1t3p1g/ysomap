@@ -86,7 +86,6 @@
             <version>0.9.12</version>
         </dependency>
 
-
         <dependency>
             <groupId>ysomap</groupId>
             <artifactId>core</artifactId>
