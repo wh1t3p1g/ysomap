@@ -15,7 +15,7 @@ import java.util.Vector;
 @Payloads
 @Authors({ Authors.MBECHLER })
 @Targets({Targets.HESSIAN})
-@Require(bullets = {"JdbcRowSetImplBullet","LdapAttributeBullet", "TemplatesImplBullet"},param = false)
+@Require(bullets = {"JdbcRowSetImplBullet"},param = false)
 @Dependencies({"com.rometools:rome:1.11.1"})
 public class Rome extends HessianPayload{
 
