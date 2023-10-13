@@ -122,23 +122,6 @@ public class Session {
         return settings;
     }
 
-/*    public void setValue(String key, String value) throws ArgumentsMissMatchException {
-        if("serializeType".equals(key) && payload != null){
-            payload.setSerializeType(value);
-            return;
-        }else if("encoder".equals(key) && payload != null){
-            payload.setEncoder(value);
-            return;
-        }else if("output".equals(key) && payload != null){
-            payload.setOutputType(value);
-            return;
-        }else if("serialVersionUID".equals(key) && payload != null){
-            payload.setSerialVersionUID(value);
-            return;
-        }else if("checkRunning".equals(key)){
-            isCheckRunning = Boolean.parseBoolean(value);
-            return;
-        }*/
     public void setValue(String key, String value) throws Exception {
         if(payload != null && payload.has(key)){
             if("serializeType".equals(key) && payload != null){
