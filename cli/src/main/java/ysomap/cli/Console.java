@@ -544,6 +544,8 @@ public class Console {
                         "session {c|i}           recover to a session or create a new session\n" +
                         "sessions                print current running exploit sessions\n" +
                         "stop                    stop current session\n" +
+                        "dump                    dump current session's parameters\n" +
+                        "script /path/to/yso     load a yso script\n" +
                         "kill {uuid|all}         kill sessions, like 'kill uuid' or 'kill all'\n" +
                         "exit                    exit ysomap\n";
         System.out.println(usage);
