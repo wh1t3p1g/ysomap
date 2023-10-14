@@ -86,7 +86,7 @@ public class XercesValue extends XStreamPayload<Object> {
         XRTreeFrag xrTreeFrag = new XRTreeFrag(1, new XPathContext());
         ReflectionHelper.setFieldValue(xrTreeFrag, "m_DTMXRTreeFrag", dtmxrTreeFrag);
 
-        return PayloadHelper.makeTreeSetWithXString(xrTreeFrag);
+        return PayloadHelper.makeTreeSetWithXStringToStringTrigger(xrTreeFrag);
     }
 
 }

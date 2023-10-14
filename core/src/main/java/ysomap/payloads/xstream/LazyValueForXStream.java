@@ -53,7 +53,7 @@ public class LazyValueForXStream extends XStreamPayload<Object> {
                 ReflectionHelper.newInstance("javax.swing.MultiUIDefaults", new Object[]{new UIDefaults[]{uiDefaults}});
         uiDefaults.put("lazyValue", obj);
 
-        return PayloadHelper.makeTreeSetWithXString(multiUIDefaults);
+        return PayloadHelper.makeTreeSetWithXStringToStringTrigger(multiUIDefaults);
     }
 
 }

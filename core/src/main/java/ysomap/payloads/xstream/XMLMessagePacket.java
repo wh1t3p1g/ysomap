@@ -65,6 +65,6 @@ public class XMLMessagePacket extends XStreamPayload<Object> {
         ReflectionHelper.setFieldValue(msg, "bodyParts", new ArrayList<Element>());
         ReflectionHelper.setFieldValue(packet, "satellites", null);
         ReflectionHelper.setFieldValue(packet, "viewthis", null);
-        return PayloadHelper.makeTreeSetWithXString(packet);
+        return PayloadHelper.makeTreeSetWithXStringToStringTrigger(packet);
     }
 }
