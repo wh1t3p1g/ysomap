@@ -378,7 +378,7 @@ public class Console {
     }
 
     public void dump(){
-        if(curSession != null){
+        if(args.size() == 1 && curSession != null){
             StringBuilder sb = new StringBuilder();
             Map<String, String> parameters = new HashMap<>();
             if(curSession.exploit != null){
@@ -405,7 +405,7 @@ public class Console {
 
             sb.append("run\n");
             try {
-                FileHelper.filePutContent("dumped.yso", sb.toString().getBytes());
+                FileHelper.filePutContent(args.get(0), sb.toString().getBytes());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -544,7 +544,7 @@ public class Console {
                         "session {c|i}           recover to a session or create a new session\n" +
                         "sessions                print current running exploit sessions\n" +
                         "stop                    stop current session\n" +
-                        "dump                    dump current session's parameters\n" +
+                        "dump /path/to/yso       dump current session's parameters\n" +
                         "script /path/to/yso     load a yso script\n" +
                         "kill {uuid|all}         kill sessions, like 'kill uuid' or 'kill all'\n" +
                         "exit                    exit ysomap\n";
