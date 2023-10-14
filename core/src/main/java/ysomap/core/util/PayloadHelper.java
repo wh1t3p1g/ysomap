@@ -3,6 +3,7 @@ package ysomap.core.util;
 import com.sun.org.apache.bcel.internal.classfile.Utility;
 import com.sun.org.apache.xpath.internal.objects.XString;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.springframework.aop.framework.AdvisedSupport;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.undo.UndoManager;
@@ -44,6 +45,15 @@ public class PayloadHelper {
             System.arraycopy(ifaces, 0, allIfaces, 1, ifaces.length);
         }
         return iface.cast(Proxy.newProxyInstance(PayloadHelper.class.getClassLoader(), allIfaces, ih));
+    }
+
+    public static Object makeSpringAOPProxy(Class<?> clazz, Object obj) throws Exception {
+        AdvisedSupport advisedSupport = new AdvisedSupport();
+        advisedSupport.setTarget(obj);
+        InvocationHandler handler =
+                (InvocationHandler) ReflectionHelper.createWithoutConstructor("org.springframework.aop.framework.JdkDynamicAopProxy");
+        ReflectionHelper.setFieldValue(handler, "advised", advisedSupport);
+        return Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[]{clazz}, handler);
     }
 
 

