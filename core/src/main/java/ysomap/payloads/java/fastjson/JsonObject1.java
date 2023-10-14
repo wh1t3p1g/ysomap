@@ -20,7 +20,6 @@ import java.util.List;
 @Targets({Targets.JDK, Targets.JNDI})
 @Require(bullets = {
         "LdapAttributeBullet",
-        "JdbcRowSetImplBullet",
         "TemplatesImplBullet"}, param = false)
 @Dependencies({"fastjson"})
 public class JsonObject1 extends AbstractPayload<Object> {

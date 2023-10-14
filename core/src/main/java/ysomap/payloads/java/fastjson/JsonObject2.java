@@ -11,12 +11,12 @@ import ysomap.payloads.AbstractPayload;
  * @author wh1t3p1g
  * @since 2022/9/5
  */
-//@Payloads
+@Payloads
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Targets({Targets.JDK, Targets.JNDI})
-@Require(bullets = {"LdapAttributeBullet", "JdbcRowSetImplBullet", "TemplatesImplBullet"}, param = false)
-@Dependencies({"fastjson 2.x", "仅用于学习使用"})
+@Require(bullets = {"LdapAttributeBullet", "TemplatesImplBullet"}, param = false)
+@Dependencies({"fastjson 2.x"})
 public class JsonObject2 extends AbstractPayload<Object> {
 
     @Override
