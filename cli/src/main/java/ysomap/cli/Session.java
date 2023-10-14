@@ -194,7 +194,6 @@ public class Session {
             if(payload == null){
                 Printer.printCandidates("payloads", clazz, false, null);
             }
-            Printer.printSettings(clazz, settings.get("exploit"));
         }
 
         if(payload != null){
@@ -212,7 +211,13 @@ public class Session {
         if(bullet != null){
             Class<?> clazz = bullet.getClass();
             Logger.normal("Current Bullet: "+ColorStyle.makeWordRed(clazz.getSimpleName()));
-            Printer.printSettings(clazz, settings.get("bullet"));
+        }
+
+        if(isExploit && exploit != null){
+            Printer.printSettings("Exploit", exploit.getClass(), settings.get("exploit"));
+        }
+        if(bullet != null){
+            Printer.printSettings("Bullet", bullet.getClass(), settings.get("bullet"));
         }
     }
 

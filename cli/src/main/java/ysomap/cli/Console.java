@@ -24,6 +24,7 @@ import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.SerializerTypeCodes;
 import ysomap.core.util.DetailHelper;
+import ysomap.core.util.FileHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,6 +143,10 @@ public class Console {
                 if(curSession != null){
                     curSession.close();
                 }
+                break;
+            case "dump":
+                dump();
+                Logger.success("Dump to dumped.yso.");
                 break;
             case "":
                 //do nothing
@@ -371,7 +376,42 @@ public class Console {
         }
         throw new ArgumentsMissMatchException("list {payloads/exploits/bullets}");
     }
-    
+
+    public void dump(){
+        if(curSession != null){
+            StringBuilder sb = new StringBuilder();
+            Map<String, String> parameters = new HashMap<>();
+            if(curSession.exploit != null){
+                sb.append(curSession.exploit.dump());
+                parameters.putAll(curSession.exploit.getAllParameters());
+            }
+
+            if(curSession.payload != null){
+                if(curSession.bullet != null){
+                    curSession.payload.setBullet(curSession.bullet);
+                }
+                sb.append(curSession.payload.dump());
+                parameters.putAll(curSession.payload.getAllParameters());
+            }
+
+            for(Map.Entry<String, String> entry:parameters.entrySet()){
+                sb.append(String.format("set %s %s\n", entry.getKey(), entry.getValue()));
+            }
+
+            if(sb.toString().isEmpty()){
+                Logger.normal("Nothing to dump.");
+                return;
+            }
+
+            sb.append("run\n");
+            try {
+                FileHelper.filePutContent("dumped.yso", sb.toString().getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public void search() throws ArgumentsMissMatchException {
         String tips = "search <keyword>\n"+
                 "search {payload/exploit/bullet} <keyword>\n";

@@ -3,6 +3,8 @@ package ysomap.payloads;
 import ysomap.bullets.Bullet;
 import ysomap.core.serializer.Serializer;
 
+import java.util.Map;
+
 /**
  * @author wh1t3P1g
  * @since 2021/6/13
@@ -49,4 +51,8 @@ public interface Payload<T> {
     boolean has(String key);
 
     String getName();
+
+    Map<String, String> getAllParameters();
+
+    String dump();
 }

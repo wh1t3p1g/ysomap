@@ -3,6 +3,7 @@ package ysomap.core.util;
 import com.nqzero.permit.Permit;
 import sun.reflect.ReflectionFactory;
 import ysomap.common.annotation.NotNull;
+import ysomap.common.annotation.Require;
 import ysomap.common.exception.ArgumentsNotCompleteException;
 import ysomap.common.util.Logger;
 
@@ -10,6 +11,8 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings ( {"restriction","rawtypes", "unchecked"} )
 public class ReflectionHelper {
@@ -48,6 +51,21 @@ public class ReflectionHelper {
 	public static Object getFieldValue(final Object obj, final String fieldName) throws Exception {
 		final Field field = getField(obj.getClass(), fieldName);
 		return field.get(obj);
+	}
+
+	public static Map<String, String> getAllRequireParameters(Class<?> clazz, Object obj){
+		Field[] fields = clazz.getDeclaredFields();
+		Map<String, String> ret = new HashMap<>();
+		for(Field field: fields){
+			if(field != null && field.isAnnotationPresent(Require.class)){
+				try{
+					Require anno = field.getAnnotation(Require.class);
+					String value = (String) field.get(obj);
+					ret.put(anno.name(), value);
+				}catch (Exception ig){}
+			}
+		}
+		return ret;
 	}
 
 	public static Constructor<?> getFirstCtor(final String name) throws Exception {

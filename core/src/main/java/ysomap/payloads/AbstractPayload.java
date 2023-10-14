@@ -9,6 +9,9 @@ import ysomap.core.serializer.Serializer;
 import ysomap.core.serializer.SerializerFactory;
 import ysomap.core.util.ReflectionHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author wh1t3P1g
  * @since 2021/6/13
@@ -138,5 +141,23 @@ public abstract class AbstractPayload<T> implements Payload<T>{
             name += "."+bullet.getClass().getSimpleName();
         }
         return name;
+    }
+
+    @Override
+    public Map<String, String> getAllParameters() {
+        if(bullet != null){
+            return bullet.getAllParameters();
+        }
+        return new HashMap<>();
+    }
+
+    @Override
+    public String dump() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("use payload %s\n", getClass().getSimpleName()));
+        if(bullet != null){
+            sb.append(String.format("use bullet %s\n", bullet.getClass().getSimpleName()));
+        }
+        return sb.toString();
     }
 }

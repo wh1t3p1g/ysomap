@@ -79,23 +79,31 @@ public class Printer {
         return Arrays.toString(ret.toArray());
     }
 
-    public static void printSettings(Class<?> clazz, HashMap<String, Object> settings){
+    public static void printSettings(String type, Class<?> clazz, HashMap<String, Object> settings){
         AsciiTable at = new AsciiTable();
         at.addRule();
-        at.addRow("Arguments", "Types", "Values", "Details");
-        at.addRule();
-        Map<String,String[]> bullets = Require.Utils.getRequiresFromFields(clazz);
-        for(Map.Entry<String,String[]> item: bullets.entrySet()){
-            String key = item.getKey();
-            String[] detail = item.getValue();
-            String value = (String)settings.get(key);
-            at.addRow(
-                    key,
-                    detail[0],
-                    value == null?"":value,
-                    detail[1]);
+        at.addRow(String.format("%s Settings", type), "", "", "");
+        if(settings.isEmpty()){
             at.addRule();
+            at.addRow("Nothing to set.", "", "", "");
+            at.addRule();
+        }else{
+            at.addRow("Arguments", "Types", "Values", "Details");
+            at.addRule();
+            Map<String,String[]> bullets = Require.Utils.getRequiresFromFields(clazz);
+            for(Map.Entry<String,String[]> item: bullets.entrySet()){
+                String key = item.getKey();
+                String[] detail = item.getValue();
+                String value = (String)settings.get(key);
+                at.addRow(
+                        key,
+                        detail[0],
+                        value == null?"":value,
+                        detail[1]);
+                at.addRule();
+            }
         }
+
         CWC_FixedWidth cwc = new CWC_FixedWidth();
         cwc.add(25);
         cwc.add(20);
