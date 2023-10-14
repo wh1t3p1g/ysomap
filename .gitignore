@@ -5,6 +5,7 @@
 **/target/**
 **/secret/**
 **/taobao/**
+**/alipay/**
 
 # eclipse
 .classpath
