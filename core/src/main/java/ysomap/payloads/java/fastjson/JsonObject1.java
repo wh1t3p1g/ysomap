@@ -18,7 +18,10 @@ import java.util.List;
 @SuppressWarnings({"rawtypes"})
 @Authors({ Authors.WH1T3P1G })
 @Targets({Targets.JDK, Targets.JNDI})
-@Require(bullets = {"LdapAttributeBullet", "JdbcRowSetImplBullet", "TemplatesImplBullet"}, param = false)
+@Require(bullets = {
+        "LdapAttributeBullet",
+        "JdbcRowSetImplBullet",
+        "TemplatesImplBullet"}, param = false)
 @Dependencies({"fastjson"})
 public class JsonObject1 extends AbstractPayload<Object> {
 

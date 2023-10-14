@@ -23,6 +23,7 @@ import ysomap.common.exception.YsoFileNotFoundException;
 import ysomap.common.util.ColorStyle;
 import ysomap.common.util.Logger;
 import ysomap.core.serializer.SerializerTypeCodes;
+import ysomap.core.util.DetailHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -346,7 +347,7 @@ public class Console {
     }
 
     public void list() throws ArgumentsMissMatchException {
-        if (args.size() == 0) {
+        if (args.isEmpty()) {
             Printer.printExploitsInfo(exploits.values());
             Printer.printPayloadsInfo(payloads.values());
             Printer.printBulletsInfo(bullets.values());
@@ -509,16 +510,26 @@ public class Console {
     }
     
     // 如果可选项仅有一个，那么自动设置payload或bullet
-    public void autoSetPayloadOrBullet(String type, Class clazz) throws Exception {
+    public void autoSetPayloadOrBullet(String type, Class<?> clazz) throws Exception {
         List<String> candidates = Arrays.asList(Require.Utils.getRequiresFromClass(clazz));
-        if (candidates.size() == 1 && !candidates.get(0).equalsIgnoreCase("*") && !candidates.get(0).equalsIgnoreCase("all gadgets") && !candidates.get(0).equals("")) {
-            Logger.normal(String.format("Auto set %s [%s]", type, ColorStyle.makeWordRedAndBoldAndUnderline(candidates.get(0))));
-            List<String> list = new ArrayList<>();
-            list.add(type);
-            list.add(candidates.get(0));
-            args = list;
-            use();
-        }
+        if(candidates.size() != 1) return;
+
+        String candidate = candidates.get(0);
+        if(DetailHelper.ALL_PAYLOAD.equals(candidate)
+                || DetailHelper.ALL_JAVA_PAYLOAD.equals(candidate)
+                || DetailHelper.ALL_HESSIAN_PAYLOAD.equals(candidate)
+                || DetailHelper.NO_NEED_PAYLOAD.equals(candidate)
+        ) return;
+
+        Logger.normal(
+                String.format("Auto set %s [%s]", type,
+                        ColorStyle.makeWordRedAndBoldAndUnderline(candidate)));
+
+        List<String> list = new ArrayList<>();
+        list.add(type);
+        list.add(candidate);
+        args = list;
+        use();
     }
     
     // 过滤筛选

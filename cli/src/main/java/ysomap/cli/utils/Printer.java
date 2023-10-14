@@ -47,7 +47,7 @@ public class Printer {
 
     public static void printCandidates(String type, Class<?> clazz, boolean detail, Map<String, MetaData> dataMap){
         List<String> candidates = Arrays.asList(Require.Utils.getRequiresFromClass(clazz));
-        if(candidates.size() > 0){
+        if(!candidates.isEmpty()){
             String c = collect(candidates);
             Logger.normal("You can choose "+type+": "+c);
             if(detail){

