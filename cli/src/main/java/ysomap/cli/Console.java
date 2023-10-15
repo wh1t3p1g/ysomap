@@ -146,7 +146,6 @@ public class Console {
                 break;
             case "dump":
                 dump();
-                Logger.success("Dump to dumped.yso.");
                 break;
             case "":
                 //do nothing
@@ -378,24 +377,40 @@ public class Console {
     }
 
     public void dump(){
+        if(args.isEmpty()){
+            args.add("dumped.yso");
+        }
+
         if(args.size() == 1 && curSession != null){
             StringBuilder sb = new StringBuilder();
-            Map<String, String> parameters = new HashMap<>();
             if(curSession.exploit != null){
+                sb.append("# exploit settings\n");
                 sb.append(curSession.exploit.dump());
-                parameters.putAll(curSession.exploit.getAllParameters());
+                Map<String, String> parameters = curSession.exploit.getAllParameters();
+
+                for(Map.Entry<String, String> entry:parameters.entrySet()){
+                    sb.append(String.format("set %s %s\n", entry.getKey(), entry.getValue()));
+                }
             }
 
             if(curSession.payload != null){
                 if(curSession.bullet != null){
                     curSession.payload.setBullet(curSession.bullet);
                 }
+                sb.append("\n");
+                sb.append("# payload settings\n");
                 sb.append(curSession.payload.dump());
-                parameters.putAll(curSession.payload.getAllParameters());
-            }
-
-            for(Map.Entry<String, String> entry:parameters.entrySet()){
-                sb.append(String.format("set %s %s\n", entry.getKey(), entry.getValue()));
+                sb.append("# serializer settings\n");
+                sb.append(String.format("set serializeType %s\n", curSession.payload.getSerializeType()));
+                sb.append(String.format("set encoder %s\n", curSession.payload.getEncoder()));
+                sb.append(String.format("set output %s\n", curSession.payload.getOutputType()));
+                sb.append(String.format("set serialVersionUID %s\n", curSession.payload.getSerialVersionUID()));
+                sb.append(String.format("set checkRunning %s\n", curSession.payload.getCheckRunning()));
+                Map<String, String> parameters = curSession.payload.getAllParameters();
+                sb.append("# bullet settings\n");
+                for(Map.Entry<String, String> entry:parameters.entrySet()){
+                    sb.append(String.format("set %s %s\n", entry.getKey(), entry.getValue()));
+                }
             }
 
             if(sb.toString().isEmpty()){
@@ -403,9 +418,11 @@ public class Console {
                 return;
             }
 
+            sb.append("# start to run\n");
             sb.append("run\n");
             try {
                 FileHelper.filePutContent(args.get(0), sb.toString().getBytes());
+                Logger.success(String.format("Dump settings to '%s'.", args.get(0)));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

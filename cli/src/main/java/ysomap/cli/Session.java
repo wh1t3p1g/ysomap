@@ -123,6 +123,10 @@ public class Session {
     }
 
     public void setValue(String key, String value) throws ArgumentsMissMatchException {
+        if("null".equals(value)){
+            value = null;
+        }
+
         if("serializeType".equals(key) && payload != null){
             payload.setSerializeType(value);
             return;
@@ -137,6 +141,7 @@ public class Session {
             return;
         }else if("checkRunning".equals(key)){
             isCheckRunning = Boolean.parseBoolean(value);
+            payload.setCheckRunning(isCheckRunning);
             return;
         }
 

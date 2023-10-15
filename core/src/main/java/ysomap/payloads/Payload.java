@@ -28,7 +28,9 @@ public interface Payload<T> {
     void setOutputType(String outputType);
 
     void setSerialVersionUID(String uid);
+    void setCheckRunning(boolean flag);
 
+    boolean getCheckRunning();
     String getSerializeType();
 
     String getEncoder();

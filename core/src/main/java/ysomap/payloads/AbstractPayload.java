@@ -24,6 +24,7 @@ public abstract class AbstractPayload<T> implements Payload<T>{
     // 自由定义
     public String serializerEncoder;
     public String serializerSerialVersionUID;
+    public boolean checkRunning = false;
     public Bullet bullet;
 
     public AbstractPayload(){
@@ -52,6 +53,16 @@ public abstract class AbstractPayload<T> implements Payload<T>{
     @Override
     public void setSerialVersionUID(String uid) {
         this.serializerSerialVersionUID = uid;
+    }
+
+    @Override
+    public void setCheckRunning(boolean flag) {
+        checkRunning = flag;
+    }
+
+    @Override
+    public boolean getCheckRunning() {
+        return checkRunning;
     }
 
     @Override
