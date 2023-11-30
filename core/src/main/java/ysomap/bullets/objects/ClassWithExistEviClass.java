@@ -101,7 +101,7 @@ public class ClassWithExistEviClass extends AbstractBullet<byte[]> {
         }else if("read".equals(action) && data instanceof String){
             return FileHelper.fileGetContent((String) data);
         }else if("base64".equals(action) && data instanceof byte[]){
-            return Strings.base64ToString((byte[]) data);
+            return Strings.encodeToString((byte[]) data);
         }else if("gzip".equals(action) && data instanceof byte[]){
             ByteArrayOutputStream outBuf = new ByteArrayOutputStream();
             GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outBuf);
