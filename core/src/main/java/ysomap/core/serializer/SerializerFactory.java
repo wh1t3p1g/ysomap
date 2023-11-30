@@ -90,7 +90,7 @@ public class SerializerFactory {
             Logger.error("no serialize type found!");
         }
         if("base64".equals(encoder)){
-            serializedBytes = Strings.base64(serializedBytes);
+            serializedBytes = Strings.base64encode(serializedBytes);
         }
 
         out.write(serializedBytes);

@@ -51,12 +51,17 @@ public class Strings {
         public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString()); }
     }
 
-    public static String base64ToString(byte[] data){
+    public static String encodeToString(byte[] data){
         Base64 base64 = new Base64();
         return base64.encodeToString(data);
     }
 
-    public static byte[] base64(byte[] data){
+    public static byte[] base64encode(byte[] data){
+        Base64 base64 = new Base64();
+        return base64.encode(data);
+    }
+
+    public static byte[] base64decode(byte[] data){
         Base64 base64 = new Base64();
         return base64.encode(data);
     }
