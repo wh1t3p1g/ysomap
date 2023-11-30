@@ -51,7 +51,7 @@ public class Strings {
         public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString()); }
     }
 
-    public static String encodeToString(byte[] data){
+    public static String encodeToBase64String(byte[] data){
         Base64 base64 = new Base64();
         return base64.encodeToString(data);
     }
