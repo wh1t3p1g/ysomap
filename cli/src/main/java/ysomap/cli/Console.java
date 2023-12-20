@@ -51,6 +51,7 @@ public class Console {
     private String command;
     private List<String> args;
     private String prompt;
+    private static String version = "v0.1.5";
 
     public void init(){
         sessions = new HashMap<>();
@@ -58,7 +59,7 @@ public class Console {
         exploits = loadMetaData("ysomap.exploits", Exploits.class);
         payloads = loadMetaData("ysomap.payloads", Payloads.class);
         bullets = loadMetaData("ysomap.bullets", Bullets.class);
-        Logger.success("exploits("+exploits.values().size()+") payloads("+payloads.values().size()+") bullets("+bullets.values().size()+")");
+        Logger.success("version: "+version+", exploits("+exploits.values().size()+") payloads("+payloads.values().size()+") bullets("+bullets.values().size()+")");
     }
 
     public void run(){
@@ -578,6 +579,7 @@ public class Console {
                 || DetailHelper.ALL_JAVA_PAYLOAD.equals(candidate)
                 || DetailHelper.ALL_HESSIAN_PAYLOAD.equals(candidate)
                 || DetailHelper.NO_NEED_PAYLOAD.equals(candidate)
+                || candidate.isEmpty()
         ) return;
 
         Logger.normal(
