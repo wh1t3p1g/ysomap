@@ -2,11 +2,11 @@ package ysomap.core.util;
 
 import ysomap.common.util.Logger;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.*;
 
 /**
  * @author wh1t3p1g
@@ -14,41 +14,45 @@ import java.net.SocketTimeoutException;
  */
 public class SocketHelper {
 
-    public static String send(String host, int port, byte[] bytes, int timeout){
-        Socket socket = null;
-        BufferedReader in = null;
-        StringBuilder ret = new StringBuilder();
-        try {
-            socket = new Socket(host, port);
+    public static String sendAndReceive(String host, int port, byte[] bytes, int timeout){
+        byte[] ret = send(host, port, bytes, timeout);
+        return new String(ret);
+    }
+
+    public static byte[] send(String host, int port, byte[] bytes, int timeout){
+        try(Socket socket = new Socket()){
             socket.setSoTimeout(timeout);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            socket.getOutputStream().write(bytes);
-            String resp = null;
+            socket.connect(new InetSocketAddress(host, port), timeout);
+            Logger.normal(String.format("Connected %s:%s success!", host, port));
+            OutputStream output = socket.getOutputStream();
 
-            do{
-                resp = in.readLine();
-                if(resp != null){
-                    ret.append(resp).append("\n");
+            output.write(bytes);
+            output.flush();
+
+            InputStream input = socket.getInputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] dataReceived = new byte[1024];
+            int bytesRead;
+
+            try{
+                while((bytesRead = input.read(dataReceived)) != -1){
+                    baos.write(dataReceived, 0, bytesRead);
                 }
-            }while (resp != null);
+            }catch (SocketTimeoutException ig){
+                // read all bytes until read timeout
+            }
 
-            return ret.toString();
+            output.close();
+            input.close();
+            return baos.toByteArray();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
         } catch (SocketTimeoutException e){
-            String retStr = ret.toString();
-            if(retStr.isEmpty()){
-                Logger.error(String.format("connect %s:%s timeout!", host, port));
-            }else{
-                return retStr;
-            }
+            Logger.error(String.format("connect %s:%s timeout!", host, port));
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                socket.close();
-                in.close();
-            } catch (Exception e) {
-                // do nothing
-            }
+            throw new RuntimeException(e);
         }
         return null;
     }
