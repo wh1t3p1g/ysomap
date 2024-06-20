@@ -35,7 +35,13 @@ public class ReflectionHelper {
 	}
 
 	public static void setFieldValue(final Object obj, final String fieldName, final Object value) throws Exception {
-		final Field field = getField(obj.getClass(), fieldName);
+		Field field = null;
+		if(obj instanceof Class){
+			field = getField((Class<?>) obj, fieldName);
+		}else{
+			field = getField(obj.getClass(), fieldName);
+		}
+
 		if(field != null) {
 			field.set(obj, value);
 		}
@@ -49,7 +55,13 @@ public class ReflectionHelper {
 	}
 
 	public static Object getFieldValue(final Object obj, final String fieldName) throws Exception {
-		final Field field = getField(obj.getClass(), fieldName);
+		Field field = null;
+		if(obj instanceof Class){
+			field = getField((Class<?>) obj, fieldName);
+		}else{
+			field = getField(obj.getClass(), fieldName);
+		}
+
 		return field.get(obj);
 	}
 
@@ -109,7 +121,7 @@ public class ReflectionHelper {
 	public static void checkValueNotNull(Object obj, String field) throws ArgumentsNotCompleteException {
 		Object fvalue = null;
 		try {
-			fvalue = ReflectionHelper.getFieldValue(obj, field);
+			fvalue = getFieldValue(obj, field);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -144,13 +156,13 @@ public class ReflectionHelper {
 
 
 	public static <T> T set(T thisObj, String key, Object value) throws Exception {
-		ReflectionHelper.setFieldValue(thisObj, key, value);
+		setFieldValue(thisObj, key, value);
 		return thisObj;
 	}
 
 	public static String get(Object thisObj, String key) {
 		try {
-			Object obj = ReflectionHelper.getFieldValue(thisObj, key);
+			Object obj = getFieldValue(thisObj, key);
 			if(obj != null){
 				return obj.toString();
 			}
@@ -162,6 +174,6 @@ public class ReflectionHelper {
 	}
 
 	public static boolean has(Object thisObj, String key) {
-		return ReflectionHelper.getField(thisObj.getClass(), key) != null;
+		return getField(thisObj.getClass(), key) != null;
 	}
 }
