@@ -29,6 +29,7 @@ public @interface Authors {
     String KINGX = "kingx";
     String JANG = "Jang";
     String whocansee = "whocansee";
+    String TYSKILL = "tyskill";
 
     String[] value() default {};
 

