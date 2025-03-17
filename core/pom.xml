@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core</artifactId>
     <properties>
-        <spring.version>4.3.16.RELEASE</spring.version> <!-- 5.3.4  4.3.16.RELEASE -->
+        <spring.version>5.2.22.RELEASE</spring.version> <!-- 5.3.4  4.3.16.RELEASE -->
 <!--        <hessian.group>com.alipay.sofa</hessian.group> &lt;!&ndash; com.caucho  com.alipay.sofa &ndash;&gt;-->
 <!--        <hessian.version>4.0.4</hessian.version>      &lt;!&ndash; 4.0.38      3.3.13 4.0.4    &ndash;&gt;-->
         <hessian.group>com.caucho</hessian.group> <!-- com.caucho  com.alipay.sofa -->
