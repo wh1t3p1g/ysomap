@@ -1,5 +1,5 @@
 package ysomap.core.serializer;
-
+import org.apache.commons.io.serialization.ValidatingObjectInputStream;
 import java.io.*;
 
 /**
@@ -22,7 +22,8 @@ public class DefaultSerializer extends BaseSerializer<byte[]> {
     @Override
     public Object deserialize(byte[] obj) throws Exception {
         ByteArrayInputStream in = new ByteArrayInputStream(obj);
-        ObjectInputStream objIn = new ObjectInputStream(in);
+        ValidatingObjectInputStream ois = new ValidatingObjectInputStream(stream);{
+        ois.accept(LinkedList.class, LogMutation.class, HashMap.class, String.class);
         return objIn.readObject();
     }
 
